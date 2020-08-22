@@ -10,8 +10,7 @@ import {
 import Page from 'src/components/Page';
 import Header from './Header';
 import General from './General';
-import Subscription from './Subscription';
-import Notifications from './Notifications';
+import Permissions from './Permissions';
 import Security from './Security';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,8 +27,7 @@ function AccountView() {
   const [currentTab, setCurrentTab] = useState('general');
   const tabs = [
     { value: 'general', label: 'General' },
-    { value: 'subscription', label: 'Subscription' },
-    { value: 'notifications', label: 'Notifications' },
+    { value: 'permissions', label: 'Permissions' },
     { value: 'security', label: 'Security' }
   ];
 
@@ -65,8 +63,7 @@ function AccountView() {
         <Divider />
         <Box mt={3}>
           {currentTab === 'general' && <General />}
-          {currentTab === 'subscription' && <Subscription />}
-          {currentTab === 'notifications' && <Notifications />}
+          {currentTab === 'permissions' && <Permissions />}
           {currentTab === 'security' && <Security />}
         </Box>
       </Container>

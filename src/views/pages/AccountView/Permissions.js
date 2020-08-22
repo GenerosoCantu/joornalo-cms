@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function Notifications({ className, ...rest }) {
+function Permissions({ className, ...rest }) {
   const classes = useStyles();
 
   const handleSubmit = async (event) => {
@@ -35,7 +35,7 @@ function Notifications({ className, ...rest }) {
         className={clsx(classes.root, className)}
         {...rest}
       >
-        <CardHeader title="Notifications" />
+        <CardHeader title="Permissions" />
         <Divider />
         <CardContent>
           <Grid
@@ -74,7 +74,7 @@ function Notifications({ className, ...rest }) {
               <div>
                 <FormControlLabel
                   control={<Checkbox />}
-                  label="Push Notifications"
+                  label="Push Permissions"
                 />
               </div>
               <div>
@@ -139,7 +139,7 @@ function Notifications({ className, ...rest }) {
                   control={(
                     <Checkbox defaultChecked />
                   )}
-                  label="Push notifications"
+                  label="Push permissions"
                 />
               </div>
             </Grid>
@@ -164,8 +164,8 @@ function Notifications({ className, ...rest }) {
   );
 }
 
-Notifications.propTypes = {
+Permissions.propTypes = {
   className: PropTypes.string
 };
 
-export default Notifications;
+export default Permissions;

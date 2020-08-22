@@ -34,7 +34,7 @@ class AuthService {
   }
 
   loginWithEmailAndPassword = (email, password) => new Promise((resolve, reject) => {
-    axios.post('/api/account/login', { email, password })
+    axios.post('http://localhost:4000/login', { username: email, password })
       .then((response) => {
         if (response.data.user) {
           this.setSession(response.data.accessToken);
@@ -49,7 +49,7 @@ class AuthService {
   })
 
   loginInWithToken = () => new Promise((resolve, reject) => {
-    axios.get('/api/account/me')
+    axios.get('http://localhost:4000/users/profile')
       .then((response) => {
         if (response.data.user) {
           resolve(response.data.user);

@@ -17,7 +17,8 @@ import {
   List,
   ListSubheader,
   Typography,
-  makeStyles
+  makeStyles,
+  ListItemIcon
 } from '@material-ui/core';
 import ReceiptIcon from '@material-ui/icons/ReceiptOutlined';
 import {
@@ -29,6 +30,7 @@ import {
   Lock as LockIcon,
   UserPlus as UserPlusIcon,
   Shield as ShieldIcon,
+  Settings as SettingsIcon,
   AlertCircle as AlertCircleIcon,
   Trello as TrelloIcon,
   User as UserIcon,
@@ -39,7 +41,19 @@ import {
   MessageCircle as MessageCircleIcon,
   PieChart as PieChartIcon,
   Share2 as ShareIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
+  Sliders as SlidersIcon,
+  CloudLightning as CloudLightningIcon,
+  Menu as MenuIcon,
+  List as ListIcon,
+  PlayCircle as PlayCircleIcon,
+  Server as ServerIcon,
+  GitPullRequest as GitPullRequestIcon,
+  Upload as UploadIcon,
+  Image as ImageIcon,
+  Printer as PrinterIcon,
+  Activity as ActivityIcon,
+  Bell as BellIcon
 } from 'react-feather';
 import Logo from 'src/components/Logo';
 import NavItem from './NavItem';
@@ -52,11 +66,6 @@ const navConfig = [
         title: 'Dashboard',
         icon: PieChartIcon,
         href: '/app/reports/dashboard'
-      },
-      {
-        title: 'Dashboard Alternative',
-        icon: BarChartIcon,
-        href: '/app/reports/dashboard-alternative'
       }
     ]
   },
@@ -64,238 +73,156 @@ const navConfig = [
     subheader: 'Management',
     items: [
       {
-        title: 'Customers',
-        icon: UsersIcon,
-        href: '/app/management/customers',
+        title: 'Security',
+        icon: ShieldIcon,
+        href: '/app/management/users',
         items: [
           {
-            title: 'List Customers',
-            href: '/app/management/customers'
+            title: 'Users',
+            icon: UsersIcon,
+            href: '/app/management/users'
           },
           {
-            title: 'View Customer',
-            href: '/app/management/customers/1'
-          },
-          {
-            title: 'Edit Customer',
-            href: '/app/management/customers/1/edit'
+            title: 'Roles',
+            icon: GitPullRequestIcon,
+            href: '/app/management/users/1'
           }
         ]
       },
       {
-        title: 'Products',
-        icon: ShoppingCartIcon,
+        title: 'Configuration',
+        icon: SettingsIcon,
         href: '/app/management/products',
         items: [
           {
-            title: 'List Products',
+            title: 'Sections',
+            icon: ListIcon,
             href: '/app/management/products'
           },
           {
-            title: 'Create Product',
+            title: 'Menus',
+            icon: MenuIcon,
             href: '/app/management/products/create'
+          },
+          {
+            title: 'Authors',
+            icon: UsersIcon,
+            href: '/app/management/products/create'
+          },
+          {
+            title: 'Banners',
+            icon: ServerIcon,
+            href: '/app/management/products/create'
+          },
+          {
+            title: 'Analytics',
+            icon: BarChartIcon,
+            href: '/app/management/products/create'
+          },
+          {
+            title: 'Weather',
+            icon: CloudLightningIcon,
+            href: '/app/management/products/create'
+          },
+          {
+            title: 'Social Platforms',
+            icon: ShareIcon,
+            href: '/app/management/products/create'
+          },
+          {
+            title: 'Setup',
+            icon: SlidersIcon,
+            href: '/app/management/products/create'
+          },
+          {
+            title: 'Notifications',
+            href: '/app/mail',
+            icon: BellIcon
           }
         ]
       },
       {
-        title: 'Orders',
-        icon: FolderIcon,
-        href: '/app/management/orders',
+        title: 'Stats',
+        icon: BarChartIcon,
+        href: '/app/management/customers',
         items: [
           {
-            title: 'List Orders',
-            href: '/app/management/orders'
+            title: 'Overview',
+            href: '/app/management/customers'
           },
           {
-            title: 'View Order',
-            href: '/app/management/orders/1'
-          }
-        ]
-      },
-      {
-        title: 'Invoices',
-        icon: ReceiptIcon,
-        href: '/app/management/invoices',
-        items: [
-          {
-            title: 'List Invoices',
-            href: '/app/management/invoices'
-          },
-          {
-            title: 'View Invoice',
-            href: '/app/management/invoices/1'
+            title: 'Sections',
+            href: '/app/management/customers/1'
           }
         ]
       }
     ]
   },
   {
-    subheader: 'Applications',
+    subheader: 'News',
     items: [
       {
-        title: 'Projects Platform',
-        href: '/app/projects',
-        icon: BriefcaseIcon,
-        items: [
-          {
-            title: 'Overview',
-            href: '/app/projects/overview'
-          },
-          {
-            title: 'Browse Projects',
-            href: '/app/projects/browse'
-          },
-          {
-            title: 'Create Project',
-            href: '/app/projects/create'
-          },
-          {
-            title: 'View Project',
-            href: '/app/projects/1'
-          }
-        ]
+        title: 'News Stories',
+        icon: EditIcon,
+        href: '/app/kanban1'
       },
       {
-        title: 'Social Platform',
-        href: '/app/social',
-        icon: ShareIcon,
-        items: [
-          {
-            title: 'Profile',
-            href: '/app/social/profile'
-          },
-          {
-            title: 'Feed',
-            href: '/app/social/feed'
-          }
-        ]
-      },
-      {
-        title: 'Kanban',
-        href: '/app/kanban',
+        title: 'Featured News',
+        href: '/app/kanban2',
         icon: TrelloIcon
       },
       {
-        title: 'Mail',
-        href: '/app/mail',
-        icon: MailIcon,
-        info: () => (
-          <Chip
-            color="secondary"
-            size="small"
-            label="Updated"
-          />
-        )
+        title: 'Front Sections',
+        icon: LayoutIcon,
+        href: '/app/kanban3'
       },
       {
-        title: 'Chat',
-        href: '/app/chat',
-        icon: MessageCircleIcon,
-        info: () => (
-          <Chip
-            color="secondary"
-            size="small"
-            label="Updated"
-          />
-        )
+        title: 'Publish',
+        icon: UploadIcon,
+        href: '/app/kanban'
+      }
+    ]
+  },
+  {
+    subheader: 'Modules',
+    items: [
+      {
+        title: 'Multimedia',
+        href: '/app/kanban',
+        icon: PlayCircleIcon
+      },
+      {
+        title: 'Galleries',
+        href: '/app/kanban',
+        icon: ImageIcon
+      },
+      {
+        title: 'Print Edition',
+        href: '/app/kanban',
+        icon: PrinterIcon
+      },
+      {
+        title: 'Polls',
+        href: '/app/kanban',
+        icon: ActivityIcon
+      },
+      {
+        title: 'Comments',
+        href: '/app/kanban',
+        icon: MessageCircleIcon
       },
       {
         title: 'Calendar',
         href: '/app/calendar',
-        icon: CalendarIcon
+        icon: CalendarIcon,
+        info: () => (
+          <Chip
+            color="secondary"
+            size="small"
+            label="Updated"
+          />
+        )
       },
-    ]
-  },
-  {
-    subheader: 'Auth',
-    items: [
-      {
-        title: 'Login',
-        href: '/login-unprotected',
-        icon: LockIcon
-      },
-      {
-        title: 'Register',
-        href: '/register-unprotected',
-        icon: UserPlusIcon
-      },
-      {
-        title: 'Login: Guest Protected',
-        href: '/login',
-        icon: ShieldIcon
-      },
-      {
-        title: 'Register: Guest Protected',
-        href: '/register',
-        icon: ShieldIcon
-      }
-    ]
-  },
-  {
-    subheader: 'Pages',
-    href: '/app/pages',
-    items: [
-      {
-        title: 'Account',
-        href: '/app/account',
-        icon: UserIcon
-      },
-      {
-        title: 'Error',
-        href: '/404',
-        icon: AlertCircleIcon
-      },
-      {
-        title: 'Pricing',
-        href: '/pricing',
-        icon: DollarSignIcon
-      }
-    ]
-  },
-  {
-    subheader: 'Extra',
-    items: [
-      {
-        title: 'Charts',
-        href: '/app/extra/charts',
-        icon: BarChartIcon,
-        items: [
-          {
-            title: 'Apex Charts',
-            href: '/app/extra/charts/apex'
-          }
-        ]
-      },
-      {
-        title: 'Forms',
-        href: '/app/extra/forms',
-        icon: EditIcon,
-        items: [
-          {
-            title: 'Formik',
-            href: '/app/extra/forms/formik'
-          },
-          {
-            title: 'Redux Forms',
-            href: '/app/extra/forms/redux'
-          },
-        ]
-      },
-      {
-        title: 'Editors',
-        href: '/app/extra/editors',
-        icon: LayoutIcon,
-        items: [
-          {
-            title: 'DraftJS Editor',
-            href: '/app/extra/editors/draft-js'
-          },
-          {
-            title: 'Quill Editor',
-            href: '/app/extra/editors/quill'
-          }
-        ]
-      }
     ]
   }
 ];
