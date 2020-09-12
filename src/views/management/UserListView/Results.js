@@ -222,7 +222,7 @@ function Results({ className, users, ...rest }) {
 
   const handleSelectAllUsers = (event) => {
     setSelectedUsers(event.target.checked
-      ? users.map((user) => user.id)
+      ? users.map((user) => user._id)
       : []);
   };
 
@@ -230,7 +230,7 @@ function Results({ className, users, ...rest }) {
     if (!selectedUsers.includes(userId)) {
       setSelectedUsers((prevSelected) => [...prevSelected, userId]);
     } else {
-      setSelectedUsers((prevSelected) => prevSelected.filter((id) => id !== userId));
+      setSelectedUsers((prevSelected) => prevSelected.filter((_id) => _id !== userId));
     }
   };
 
@@ -353,12 +353,6 @@ function Results({ className, users, ...rest }) {
             >
               Delete
             </Button>
-            <Button
-              variant="outlined"
-              className={classes.bulkAction}
-            >
-              Edit
-            </Button>
           </div>
         </div>
       )}
@@ -393,7 +387,7 @@ function Results({ className, users, ...rest }) {
             </TableHead>
             <TableBody>
               {paginatedUsers.map((user) => {
-                const isUserSelected = selectedUsers.includes(user.id);
+                const isUserSelected = selectedUsers.includes(user._id);
 
                 return (
                   <TableRow
@@ -404,7 +398,7 @@ function Results({ className, users, ...rest }) {
                     <TableCell padding="checkbox">
                       <Checkbox
                         checked={isUserSelected}
-                        onChange={(event) => handleSelectOneUser(event, user.id)}
+                        onChange={(event) => handleSelectOneUser(event, user._id)}
                         value={isUserSelected}
                       />
                     </TableCell>
@@ -423,7 +417,7 @@ function Results({ className, users, ...rest }) {
                           <Link
                             color="inherit"
                             component={RouterLink}
-                            to="/app/management/users/{user._id}"
+                            to={`/app/management/users/${user._id}`}
                             variant="h6"
                           >
                             {user.firstName} {user.lastName}
@@ -443,7 +437,7 @@ function Results({ className, users, ...rest }) {
                     <TableCell align="right">
                       <IconButton
                         component={RouterLink}
-                        to="/app/management/users/{user._id}"
+                        to={`/app/management/users/${user._id}`}
                       >
                         <SvgIcon fontSize="small">
                           <EditIcon />
