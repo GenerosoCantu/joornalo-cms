@@ -29,7 +29,7 @@ import {
   MessageCircle as MessageIcon,
   Truck as TruckIcon
 } from 'react-feather';
-import { getNotifications } from 'src/actions/notificationsActions';
+import { getNotifications } from 'src/store/actions/notificationsActions';
 
 const iconsMap = {
   order_placed: PackageIcon,
@@ -107,55 +107,55 @@ function Notifications() {
             </Typography>
           </Box>
         ) : (
-          <>
-            <List
-              className={classes.list}
-              disablePadding
-            >
-              {notifications.map((notification) => {
-                const Icon = iconsMap[notification.type];
-
-                return (
-                  <ListItem
-                    className={classes.listItem}
-                    component={RouterLink}
-                    divider
-                    key={notification.id}
-                    to="#"
-                  >
-                    <ListItemAvatar>
-                      <Avatar
-                        className={classes.icon}
-                      >
-                        <SvgIcon fontSize="small">
-                          <Icon />
-                        </SvgIcon>
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={notification.title}
-                      primaryTypographyProps={{ variant: 'subtitle2', color: 'textPrimary' }}
-                      secondary={notification.description}
-                    />
-                  </ListItem>
-                );
-              })}
-            </List>
-            <Box
-              p={1}
-              display="flex"
-              justifyContent="center"
-            >
-              <Button
-                component={RouterLink}
-                size="small"
-                to="#"
+            <>
+              <List
+                className={classes.list}
+                disablePadding
               >
-                Mark all as read
+                {notifications.map((notification) => {
+                  const Icon = iconsMap[notification.type];
+
+                  return (
+                    <ListItem
+                      className={classes.listItem}
+                      component={RouterLink}
+                      divider
+                      key={notification.id}
+                      to="#"
+                    >
+                      <ListItemAvatar>
+                        <Avatar
+                          className={classes.icon}
+                        >
+                          <SvgIcon fontSize="small">
+                            <Icon />
+                          </SvgIcon>
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={notification.title}
+                        primaryTypographyProps={{ variant: 'subtitle2', color: 'textPrimary' }}
+                        secondary={notification.description}
+                      />
+                    </ListItem>
+                  );
+                })}
+              </List>
+              <Box
+                p={1}
+                display="flex"
+                justifyContent="center"
+              >
+                <Button
+                  component={RouterLink}
+                  size="small"
+                  to="#"
+                >
+                  Mark all as read
               </Button>
-            </Box>
-          </>
-        )}
+              </Box>
+            </>
+          )}
       </Popover>
     </>
   );

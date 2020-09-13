@@ -17,7 +17,7 @@ import { Trash as TrashIcon } from 'react-feather';
 import {
   updateCheckItem,
   deleteCheckItem
-} from 'src/actions/kanbanActions';
+} from 'src/store/actions/kanbanActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -166,29 +166,29 @@ function CheckItem({
           </Box>
         </Box>
       ) : (
-        <Box
-          display="flex"
-          alignItems="center"
-          flexGrow={1}
-        >
-          <Typography
-            onClick={onEditInit}
-            color="textPrimary"
-            variant="body1"
-            className={classes.name}
+          <Box
+            display="flex"
+            alignItems="center"
+            flexGrow={1}
           >
-            {checkItem.name}
-          </Typography>
-          <IconButton
-            onClick={handleDelete}
-            className={classes.deleteButton}
-          >
-            <SvgIcon fontSize="small">
-              <TrashIcon />
-            </SvgIcon>
-          </IconButton>
-        </Box>
-      )}
+            <Typography
+              onClick={onEditInit}
+              color="textPrimary"
+              variant="body1"
+              className={classes.name}
+            >
+              {checkItem.name}
+            </Typography>
+            <IconButton
+              onClick={handleDelete}
+              className={classes.deleteButton}
+            >
+              <SvgIcon fontSize="small">
+                <TrashIcon />
+              </SvgIcon>
+            </IconButton>
+          </Box>
+        )}
     </div>
   );
 }
@@ -206,9 +206,9 @@ CheckItem.propTypes = {
 
 CheckItem.defaultProps = {
   editing: false,
-  onEditCancel: () => {},
-  onEditComplete: () => {},
-  onEditInit: () => {}
+  onEditCancel: () => { },
+  onEditComplete: () => { },
+  onEditInit: () => { }
 };
 
 export default CheckItem;

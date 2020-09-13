@@ -5,7 +5,7 @@ import React, {
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import SplashScreen from 'src/components/SplashScreen';
-import { setUserData, logout } from 'src/actions/accountActions';
+import { setUserData, logout } from 'src/store/actions/accountActions';
 import authService from 'src/services/authService';
 
 function Auth({ children }) {

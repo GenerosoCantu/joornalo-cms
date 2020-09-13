@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Divider, makeStyles } from '@material-ui/core';
-import { getMails } from 'src/actions/mailActions';
+import { getMails } from 'src/store/actions/mailActions';
 import Toolbar from './Toolbar';
 import MailItem from './MailItem';
 

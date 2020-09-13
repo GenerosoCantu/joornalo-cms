@@ -19,7 +19,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import { updateProfile } from 'src/actions/accountActions';
+import { updateProfile } from 'src/store/actions/accountActions';
 
 const roleOptions = ['Admin', 'Editor', 'Reporter'];
 

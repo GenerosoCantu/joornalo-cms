@@ -11,7 +11,7 @@ import {
   FormHelperText,
   makeStyles
 } from '@material-ui/core';
-import { login } from 'src/actions/accountActions';
+import { login } from 'src/store/actions/accountActions';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -57,60 +57,60 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
         touched,
         values
       }) => (
-        <form
-          noValidate
-          className={clsx(classes.root, className)}
-          onSubmit={handleSubmit}
-          {...rest}
-        >
-          <TextField
-            error={Boolean(touched.email && errors.email)}
-            fullWidth
-            autoFocus
-            helperText={touched.email && errors.email}
-            label="Email Address"
-            margin="normal"
-            name="email"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            type="email"
-            value={values.email}
-            variant="outlined"
-          />
-          <TextField
-            error={Boolean(touched.password && errors.password)}
-            fullWidth
-            helperText={touched.password && errors.password}
-            label="Password"
-            margin="normal"
-            name="password"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            type="password"
-            value={values.password}
-            variant="outlined"
-          />
-          <Box mt={2}>
-            <Button
-              color="secondary"
-              disabled={isSubmitting}
+          <form
+            noValidate
+            className={clsx(classes.root, className)}
+            onSubmit={handleSubmit}
+            {...rest}
+          >
+            <TextField
+              error={Boolean(touched.email && errors.email)}
               fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-            >
-              Log In
+              autoFocus
+              helperText={touched.email && errors.email}
+              label="Email Address"
+              margin="normal"
+              name="email"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              type="email"
+              value={values.email}
+              variant="outlined"
+            />
+            <TextField
+              error={Boolean(touched.password && errors.password)}
+              fullWidth
+              helperText={touched.password && errors.password}
+              label="Password"
+              margin="normal"
+              name="password"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              type="password"
+              value={values.password}
+              variant="outlined"
+            />
+            <Box mt={2}>
+              <Button
+                color="secondary"
+                disabled={isSubmitting}
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+              >
+                Log In
             </Button>
-            {errors.submit && (
-              <Box mt={3}>
-                <FormHelperText error>
-                  {errors.submit}
-                </FormHelperText>
-              </Box>
-            )}
-          </Box>
-        </form>
-      )}
+              {errors.submit && (
+                <Box mt={3}>
+                  <FormHelperText error>
+                    {errors.submit}
+                  </FormHelperText>
+                </Box>
+              )}
+            </Box>
+          </form>
+        )}
     </Formik>
   );
 }
@@ -121,7 +121,7 @@ LoginForm.propTypes = {
 };
 
 LoginForm.defaultProps = {
-  onSubmitSuccess: () => {}
+  onSubmitSuccess: () => { }
 };
 
 export default LoginForm;

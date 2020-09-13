@@ -4,6 +4,10 @@ import React, {
   useEffect
 } from 'react';
 import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
+import {
   Box,
   Container,
   makeStyles
@@ -13,6 +17,7 @@ import Page from 'src/components/Page';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import UserEditForm from './UserEditForm';
 import Header from './Header';
+import { getUser } from 'src/store/actions/userActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,22 +34,29 @@ function UserEditView({ match }) {
   } = match;
 
   const classes = useStyles();
-  const isMountedRef = useIsMountedRef();
-  const [user, setUser] = useState();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
-  const getUser = useCallback(() => {
-    axios
-      .get(`http://localhost:4000/users/${userid}`)
-      .then((response) => {
-        if (isMountedRef.current) {
-          setUser(response.data);
-        }
-      });
-  }, [isMountedRef]);
+  // const isMountedRef = useIsMountedRef();
+  // const [user, setUser] = useState();
+
+  // const getUser = useCallback(() => {
+  //   axios
+  //     .get(`http://localhost:4000/users/${userid}`)
+  //     .then((response) => {
+  //       if (isMountedRef.current) {
+  //         setUser(response.data);
+  //       }
+  //     });
+  // }, [isMountedRef]);
 
   useEffect(() => {
-    getUser();
-  }, [getUser]);
+    dispatch(getUser(userid));
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   getUser();
+  // }, [getUser]);
 
   if (!user) {
     return null;

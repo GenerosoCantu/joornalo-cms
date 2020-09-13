@@ -12,7 +12,7 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux';
-import { getThreads } from 'src/actions/chatActions';
+import { getThreads } from 'src/store/actions/chatActions';
 import {
   Avatar,
   Box,
@@ -128,43 +128,43 @@ function ThreadList({ className, ...rest }) {
             />
           </div>
           {displaySearchResults && (
-          <Box mt={2}>
-            <Typography
-              variant="h6"
-              color="textSecondary"
-            >
-              Contacts
+            <Box mt={2}>
+              <Typography
+                variant="h6"
+                color="textSecondary"
+              >
+                Contacts
             </Typography>
-            <List>
-              {filterContacts(contacts, searchText).map((contactId) => {
-                const contact = contacts.byId[contactId];
+              <List>
+                {filterContacts(contacts, searchText).map((contactId) => {
+                  const contact = contacts.byId[contactId];
 
-                return (
-                  <ListItem
-                    button
-                    component={RouterLink}
-                    key={contact.id}
-                    to={`/app/chat/${contact.username}`}
-                  >
-                    <ListItemAvatar>
-                      <Avatar
-                        src={contact.avatar}
-                        className={classes.contactAvatar}
+                  return (
+                    <ListItem
+                      button
+                      component={RouterLink}
+                      key={contact.id}
+                      to={`/app/chat/${contact.username}`}
+                    >
+                      <ListItemAvatar>
+                        <Avatar
+                          src={contact.avatar}
+                          className={classes.contactAvatar}
+                        />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={contact.name}
+                        primaryTypographyProps={{
+                          noWrap: true,
+                          variant: 'h6',
+                          color: 'textPrimary'
+                        }}
                       />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={contact.name}
-                      primaryTypographyProps={{
-                        noWrap: true,
-                        variant: 'h6',
-                        color: 'textPrimary'
-                      }}
-                    />
-                  </ListItem>
-                );
-              })}
-            </List>
-          </Box>
+                    </ListItem>
+                  );
+                })}
+              </List>
+            </Box>
           )}
         </div>
       </ClickAwayListener>

@@ -19,7 +19,7 @@ import ReplyIcon from '@material-ui/icons/ReplyOutlined';
 import ReplyAllIcon from '@material-ui/icons/ReplyAllOutlined';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import getInitials from 'src/utils/getInitials';
-import { getMail } from 'src/actions/mailActions';
+import { getMail } from 'src/store/actions/mailActions';
 import Toolbar from './Toolbar';
 import MailReply from './MailReply';
 

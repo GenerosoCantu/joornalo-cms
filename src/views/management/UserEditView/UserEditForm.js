@@ -4,7 +4,8 @@ import clsx from 'clsx';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { useSnackbar } from 'notistack';
-import axios from 'src/utils/axios';
+import { useHistory } from 'react-router';
+import wait from 'src/utils/wait';
 import {
   Box,
   Button,
@@ -17,7 +18,10 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import wait from 'src/utils/wait';
+import {
+  useDispatch
+} from 'react-redux';
+import { updateUser } from 'src/store/actions/userActions';
 
 const roles = [
   {
@@ -61,12 +65,6 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-export function updateUser(update) {
-  const request = axios.patch(`http://localhost:4000/users/${update._id}`, update);
-  console.log('request*****************************');
-  console.log(request);
-}
-
 function UserEditForm({
   className,
   user,
@@ -74,6 +72,8 @@ function UserEditForm({
 }) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   return (
     <Formik
@@ -103,21 +103,23 @@ function UserEditForm({
         setSubmitting
       }) => {
         try {
-          updateUser(values);
-          //resetForm();
-          setStatus({ success: true });
           setSubmitting(false);
+          await dispatch(updateUser(values));
           enqueueSnackbar('User updated', {
-            variant: 'success',
-            action: <Button>See all</Button>
+            variant: 'success'
           });
+          setStatus({ success: true });
+          resetForm();
+          history.push('/app/management/users');
         } catch (error) {
+          console.log('Fail-------------------------------------------', error);
           setStatus({ success: false });
           setErrors({ submit: error.message });
           setSubmitting(false);
+          enqueueSnackbar(`Something went wrong! (${error})`, {
+            variant: 'error'
+          });
         }
-        console.log('+++++++++');
-        //history.push('/app/management/users');
       }}
     >
       {({

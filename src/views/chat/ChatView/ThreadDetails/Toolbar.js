@@ -32,7 +32,7 @@ import {
   BellOff as BellOffIcon
 } from 'react-feather';
 import OnlineIndicator from 'src/components/OnlineIndicator';
-import { openSidebar } from 'src/actions/chatActions';
+import { openSidebar } from 'src/store/actions/chatActions';
 
 function contactSelector(state, participantIds) {
   const { contacts } = state.chat;
@@ -137,15 +137,15 @@ function Toolbar({
                   </Typography>
                 </>
               ) : (
-                <Typography
-                  color="textSecondary"
-                  variant="caption"
-                >
-                  Active
-                  {' '}
-                  {moment(contact.lastActivity).fromNow()}
-                </Typography>
-              )}
+                  <Typography
+                    color="textSecondary"
+                    variant="caption"
+                  >
+                    Active
+                    {' '}
+                    {moment(contact.lastActivity).fromNow()}
+                  </Typography>
+                )}
             </Box>
           </Box>
         </Box>

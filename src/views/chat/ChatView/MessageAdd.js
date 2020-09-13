@@ -17,7 +17,7 @@ import {
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import { Send as SendIcon } from 'react-feather';
-import { addMessage } from 'src/actions/chatActions';
+import { addMessage } from 'src/store/actions/chatActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -167,7 +167,7 @@ MessageAdd.propTypes = {
 MessageAdd.defaultProps = {
   className: '',
   disabled: false,
-  onAdd: () => {}
+  onAdd: () => { }
 };
 
 export default MessageAdd;

@@ -12,7 +12,7 @@ import {
   Divider,
   makeStyles
 } from '@material-ui/core';
-import { closeSidebar, openNewMessage } from 'src/actions/mailActions';
+import { closeSidebar, openNewMessage } from 'src/store/actions/mailActions';
 import LabelItem from './LabelItem';
 
 const useStyles = makeStyles(() => ({

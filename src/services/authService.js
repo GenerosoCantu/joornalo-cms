@@ -40,10 +40,12 @@ class AuthService {
           this.setSession(response.data.accessToken);
           resolve(response.data.user);
         } else {
+          console.log('login fail---------------------------1');
           reject(response.data.error);
         }
       })
       .catch((error) => {
+        console.log('login fail---------------------------0');
         reject(error);
       });
   })

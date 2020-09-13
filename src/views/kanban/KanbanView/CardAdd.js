@@ -9,7 +9,7 @@ import {
   TextField,
   makeStyles
 } from '@material-ui/core';
-import { createCard } from 'src/actions/kanbanActions';
+import { createCard } from 'src/store/actions/kanbanActions';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -87,15 +87,15 @@ function CardAdd({ className, listId, ...rest }) {
           </Box>
         </>
       ) : (
-        <Box
-          display="flex"
-          justifyContent="center"
-        >
-          <Button onClick={handleAddInit}>
-            Add another card
+          <Box
+            display="flex"
+            justifyContent="center"
+          >
+            <Button onClick={handleAddInit}>
+              Add another card
           </Button>
-        </Box>
-      )}
+          </Box>
+        )}
     </div>
   );
 }

@@ -8,7 +8,7 @@ import {
   ADD_MESSAGE,
   OPEN_SIDEBAR,
   CLOSE_SIDEBAR
-} from 'src/actions/chatActions';
+} from 'src/store/actions/chatActions';
 import objFromArray from 'src/utils/objFromArray';
 
 const initialState = {

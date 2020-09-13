@@ -19,7 +19,7 @@ Here is how to use it:
 // SettingsView.js
 
 import { useDispatch } from 'react-redux';
-import { logout } from 'src/actions/accountActions';
+import { logout } from 'src/store/actions/accountActions';
 
 function SettingsView() {
   const dispatch = useDispatch();
@@ -43,7 +43,7 @@ function SettingsView() {
 When clicking "logout" we dispatch the logout action. Now this action uses `authService` to clear the session and remove the JWT from future API requests.
 
 ```jsx
-// src/actions/accountActions.js
+// src/store/actions/accountActions.js
 
 export function logout() {
   return async (dispatch) => {
@@ -59,7 +59,7 @@ export function logout() {
 AuthService does not control the app state, it only removes your authentication from next requests. So, now all we have to do is to ensure that we remove the user data from the store. Here is when the reducer does its job.
 
 ```jsx
-// src/reducers/accountReducer.js
+// src/store/reducers/accountReducer.js
 
     case LOGOUT: {
       return produce(state, (draft) => {

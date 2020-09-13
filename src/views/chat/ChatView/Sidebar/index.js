@@ -11,7 +11,7 @@ import {
   Hidden,
   makeStyles
 } from '@material-ui/core';
-import { closeSidebar } from 'src/actions/chatActions';
+import { closeSidebar } from 'src/store/actions/chatActions';
 import Toolbar from './Toolbar';
 import ThreadList from './ThreadList';
 

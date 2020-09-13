@@ -23,6 +23,8 @@ export function login(email, password) {
         }
       });
     } catch (error) {
+      console.log('login fail---------------------------2');
+
       dispatch({ type: LOGIN_FAILURE });
       throw error;
     }

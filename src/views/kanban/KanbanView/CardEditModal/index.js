@@ -28,7 +28,7 @@ import {
   deleteCard,
   updateCard,
   addChecklist
-} from 'src/actions/kanbanActions';
+} from 'src/store/actions/kanbanActions';
 import Details from './Details';
 import Checklist from './Checklist';
 import NewComment from './NewComment';
@@ -257,13 +257,13 @@ function CardEditModal({
                   Unwatch
                 </ActionButton>
               ) : (
-                <ActionButton
-                  icon={EyeIcon}
-                  onClick={handleSubscribe}
-                >
-                  Watch
-                </ActionButton>
-              )}
+                  <ActionButton
+                    icon={EyeIcon}
+                    onClick={handleSubscribe}
+                  >
+                    Watch
+                  </ActionButton>
+                )}
               <Divider />
               <ActionButton
                 icon={ArchiveIcon}
@@ -289,7 +289,7 @@ CardEditModal.propTypes = {
 
 CardEditModal.defaultProps = {
   open: false,
-  onClose: () => {}
+  onClose: () => { }
 };
 
 export default CardEditModal;

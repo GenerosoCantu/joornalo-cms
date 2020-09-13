@@ -10,7 +10,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import { updateCard } from 'src/actions/kanbanActions';
+import { updateCard } from 'src/store/actions/kanbanActions';
 
 const useStyles = makeStyles(() => ({
   root: {}

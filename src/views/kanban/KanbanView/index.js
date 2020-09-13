@@ -4,7 +4,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { useSnackbar } from 'notistack';
 import { Box, makeStyles } from '@material-ui/core';
 import Page from 'src/components/Page';
-import { getBoard, moveCard } from 'src/actions/kanbanActions';
+import { getBoard, moveCard } from 'src/store/actions/kanbanActions';
 import Header from './Header';
 import List from './List';
 import ListAdd from './ListAdd';
@@ -41,7 +41,7 @@ function KanbanView() {
 
   const handleDragEnd = async ({ source, destination, draggableId }) => {
     try {
-    // Dropped outside the list
+      // Dropped outside the list
       if (!destination) {
         return;
       }
@@ -54,10 +54,10 @@ function KanbanView() {
       }
 
       if (source.droppableId === destination.droppableId) {
-      // Moved to the same list on diferent position
+        // Moved to the same list on diferent position
         await dispatch(moveCard(draggableId, destination.index));
       } else {
-      // Moved to another list
+        // Moved to another list
         await dispatch(moveCard(draggableId, destination.index, destination.droppableId));
       }
 

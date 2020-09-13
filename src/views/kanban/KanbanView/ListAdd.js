@@ -11,7 +11,7 @@ import {
   TextField,
   makeStyles
 } from '@material-ui/core';
-import { createList } from 'src/actions/kanbanActions';
+import { createList } from 'src/store/actions/kanbanActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -99,15 +99,15 @@ function ListAdd({ className, ...rest }) {
               </Box>
             </>
           ) : (
-            <Box
-              display="flex"
-              justifyContent="center"
-            >
-              <Button onClick={handleAddInit}>
-                Add another list
+              <Box
+                display="flex"
+                justifyContent="center"
+              >
+                <Button onClick={handleAddInit}>
+                  Add another list
               </Button>
-            </Box>
-          )}
+              </Box>
+            )}
         </Box>
       </Card>
     </div>

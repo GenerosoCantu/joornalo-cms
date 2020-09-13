@@ -9,7 +9,7 @@ import {
   makeStyles,
   TextField
 } from '@material-ui/core';
-import { addCheckItem } from 'src/actions/kanbanActions';
+import { addCheckItem } from 'src/store/actions/kanbanActions';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -92,14 +92,14 @@ function CheckItemAdd({
           </Box>
         </div>
       ) : (
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={handleAdd}
-        >
-          Add an item
-        </Button>
-      )}
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={handleAdd}
+          >
+            Add an item
+          </Button>
+        )}
     </div>
   );
 }

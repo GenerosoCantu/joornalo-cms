@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 import Page from 'src/components/Page';
-import { getLabels } from 'src/actions/mailActions';
+import { getLabels } from 'src/store/actions/mailActions';
 import Sidebar from './Sidebar';
 import MailList from './MailList';
 import MailDetails from './MailDetails';

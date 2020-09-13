@@ -22,7 +22,7 @@ import {
   Search as SearchIcon,
   Menu as MenuIcon
 } from 'react-feather';
-import { openSidebar } from 'src/actions/mailActions';
+import { openSidebar } from 'src/store/actions/mailActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -165,8 +165,8 @@ Toolbar.propTypes = {
 };
 
 Toolbar.defualtProps = {
-  onDeselectAll: () => {},
-  onSelectAll: () => {}
+  onDeselectAll: () => { },
+  onSelectAll: () => { }
 };
 
 export default Toolbar;

@@ -10,7 +10,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { Menu as MenuIcon } from 'react-feather';
-import { openSidebar } from 'src/actions/chatActions';
+import { openSidebar } from 'src/store/actions/chatActions';
 import MessageAdd from '../MessageAdd';
 import Search from './Search';
 

@@ -8,7 +8,7 @@ import {
   CLOSE_SIDEBAR,
   OPEN_NEW_MESSAGE,
   CLOSE_NEW_MESSAGE
-} from 'src/actions/mailActions';
+} from 'src/store/actions/mailActions';
 import objFromArray from 'src/utils/objFromArray';
 
 const initialState = {

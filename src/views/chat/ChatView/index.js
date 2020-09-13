@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 import Page from 'src/components/Page';
-import { getContacts } from 'src/actions/chatActions';
+import { getContacts } from 'src/store/actions/chatActions';
 import Sidebar from './Sidebar';
 import ThreadDetails from './ThreadDetails';
 import ThreadNew from './ThreadNew';
@@ -38,7 +38,7 @@ function ChatView() {
       ref={pageRef}
     >
       <Sidebar containerRef={pageRef} />
-      {threadKey ? <ThreadDetails /> : <ThreadNew /> }
+      {threadKey ? <ThreadDetails /> : <ThreadNew />}
     </Page>
   );
 }

@@ -8,7 +8,7 @@ import {
   TextField,
   makeStyles
 } from '@material-ui/core';
-import { addComment } from 'src/actions/kanbanActions';
+import { addComment } from 'src/store/actions/kanbanActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {

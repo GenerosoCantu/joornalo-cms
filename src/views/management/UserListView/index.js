@@ -4,15 +4,19 @@ import React, {
   useCallback
 } from 'react';
 import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
+import {
   Box,
   Container,
   makeStyles
 } from '@material-ui/core';
-import axios from 'src/utils/axios';
 import Page from 'src/components/Page';
-import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Header from './Header';
 import Results from './Results';
+import { getUsers } from 'src/store/actions/userActions';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,22 +29,12 @@ const useStyles = makeStyles((theme) => ({
 
 function UserListView() {
   const classes = useStyles();
-  const isMountedRef = useIsMountedRef();
-  const [users, setUsers] = useState(null);
-
-  const getUsers = useCallback(() => {
-    axios
-      .get('http://localhost:4000/users')
-      .then((response) => {
-        if (isMountedRef.current) {
-          setUsers(response.data);
-        }
-      });
-  }, [isMountedRef]);
+  const dispatch = useDispatch();
+  const { users } = useSelector((state) => state.user);
 
   useEffect(() => {
-    getUsers();
-  }, [getUsers]);
+    dispatch(getUsers());
+  }, [dispatch]);
 
   if (!users) {
     return null;

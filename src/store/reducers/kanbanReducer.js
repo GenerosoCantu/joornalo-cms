@@ -18,7 +18,7 @@ import {
   ADD_CHECK_ITEM,
   UPDATE_CHECK_ITEM,
   DELETE_CHECK_ITEM
-} from 'src/actions/kanbanActions';
+} from 'src/store/actions/kanbanActions';
 import objFromArray from 'src/utils/objFromArray';
 
 const initialState = {

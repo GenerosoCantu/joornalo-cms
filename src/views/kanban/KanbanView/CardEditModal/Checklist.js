@@ -16,7 +16,7 @@ import { List as ListIcon } from 'react-feather';
 import {
   updateChecklist,
   deleteChecklist
-} from 'src/actions/kanbanActions';
+} from 'src/store/actions/kanbanActions';
 import CheckItem from './CheckItem';
 import CheckItemAdd from './CheckItemAdd';
 
@@ -146,27 +146,27 @@ function Checklist({
             </Box>
           </Box>
         ) : (
-          <Box
-            display="flex"
-            alignItems="center"
-            flexGrow={1}
-          >
-            <Typography
-              variant="h4"
-              color="textPrimary"
-              onClick={handleNameEdit}
+            <Box
+              display="flex"
+              alignItems="center"
+              flexGrow={1}
             >
-              {checklist.name}
-            </Typography>
-            <Box flexGrow={1} />
-            <Button
-              size="small"
-              onClick={handleDelete}
-            >
-              Delete
+              <Typography
+                variant="h4"
+                color="textPrimary"
+                onClick={handleNameEdit}
+              >
+                {checklist.name}
+              </Typography>
+              <Box flexGrow={1} />
+              <Button
+                size="small"
+                onClick={handleDelete}
+              >
+                Delete
             </Button>
-          </Box>
-        )}
+            </Box>
+          )}
       </Box>
       <Box
         mt={1}

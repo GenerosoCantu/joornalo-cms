@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer';
-import { GET_NOTIFICATIONS } from 'src/actions/notificationsActions';
+import { GET_NOTIFICATIONS } from 'src/store/actions/notificationsActions';
 
 const initialState = {
   notifications: []

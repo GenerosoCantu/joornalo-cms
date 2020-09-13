@@ -24,7 +24,7 @@ import {
   Maximize as MaximizeIcon,
   Minimize as MinimizeIcon
 } from 'react-feather';
-import { closeNewMessage } from 'src/actions/mailActions';
+import { closeNewMessage } from 'src/store/actions/mailActions';
 import QuillEditor from 'src/components/QuillEditor';
 import clsx from 'clsx';
 
@@ -119,12 +119,12 @@ function MailNew() {
               </SvgIcon>
             </IconButton>
           ) : (
-            <IconButton onClick={handleEnterFullScreen}>
-              <SvgIcon fontSize="small">
-                <MaximizeIcon />
-              </SvgIcon>
-            </IconButton>
-          )}
+              <IconButton onClick={handleEnterFullScreen}>
+                <SvgIcon fontSize="small">
+                  <MaximizeIcon />
+                </SvgIcon>
+              </IconButton>
+            )}
           <IconButton onClick={handleClose}>
             <SvgIcon fontSize="small">
               <XIcon />

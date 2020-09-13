@@ -26,7 +26,7 @@ import {
   deleteList,
   clearList,
   updateList
-} from 'src/actions/kanbanActions';
+} from 'src/store/actions/kanbanActions';
 import Card from './Card';
 import CardAdd from './CardAdd';
 
@@ -172,15 +172,15 @@ function List({
               />
             </ClickAwayListener>
           ) : (
-            <Typography
-              color="inherit"
-              variant="h5"
-              className={classes.name}
-              onClick={handleRenameInit}
-            >
-              {list.name}
-            </Typography>
-          )}
+              <Typography
+                color="inherit"
+                variant="h5"
+                className={classes.name}
+                onClick={handleRenameInit}
+              >
+                {list.name}
+              </Typography>
+            )}
           <Box flexGrow={1} />
           <IconButton
             color="inherit"
