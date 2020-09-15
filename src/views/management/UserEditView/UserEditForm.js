@@ -16,7 +16,8 @@ import {
   Switch,
   TextField,
   Typography,
-  makeStyles
+  makeStyles,
+  FormHelperText
 } from '@material-ui/core';
 import {
   useDispatch
@@ -112,7 +113,9 @@ function UserEditForm({
           resetForm();
           history.push('/app/management/users');
         } catch (error) {
-          console.log('Fail-------------------------------------------', error);
+          console.log(error);
+
+
           setStatus({ success: false });
           setErrors({ submit: error.message });
           setSubmitting(false);
@@ -342,6 +345,15 @@ function UserEditForm({
                 >
                   Update User
                 </Button>
+
+                {errors.submit && (
+                  <Box mt={3}>
+                    <FormHelperText error>
+                      {errors.submit}
+                    </FormHelperText>
+                  </Box>
+                )}
+
               </Box>
             </Card>
           </form>

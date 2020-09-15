@@ -1,33 +1,28 @@
 import axios from 'src/utils/axios';
+import apiService from 'src/services/apiService';
 
 class UserService {
 
-  updateUser = (user) => new Promise((resolve, reject) => {
-    console.log(user);
-    axios.patch(`http://localhost:4000/users/${user._id}`, user)
-      .then((response) => {
-        console.log(response);
-        if (response.data) {
-          resolve(response.data);
-        } else {
-          reject('usr001');
-        }
-      })
-      .catch(err => {
-        if (err.response) {
-          console.log(err.response);
-          // client received an error response (5xx, 4xx)
-          reject('usr002');
-        } else if (err.request) {
-          console.log(err.request);
-          reject('usr003');
-          // client never received a response, or request never left
-        } else {
-          reject('usr004');
-          // anything else
-        }
-      })
-  })
+  getUser = (userid) => {
+    return apiService.makeRequest('get', `http://localhost:4000/users/${userid}`, 'usr-g');
+  }
+
+  getUsers = () => {
+    return apiService.makeRequest('get', `http://localhost:4000/users/`, 'usr-gs');
+  }
+
+  updateUser = (user) => {
+    return apiService.makeRequest('patch', `http://localhost:4000/users/${user._id}`, 'usr-u', user);
+  }
+
+  createUser = (user) => {
+    return apiService.makeRequest('post', `http://localhost:4000/users/`, 'usr-c', user);
+  }
+
+  deleteUser = (userid) => {
+    return apiService.makeRequest('delete', `http://localhost:4000/users/${userid}`, 'usr-d');
+  }
+
 }
 
 const userService = new UserService();

@@ -11,7 +11,7 @@ export const GET_USER_REQUEST = '@user/get-user-request';
 export function getUsers() {
   return async (dispatch) => {
     try {
-      const users = await axios.get('http://localhost:4000/users');
+      const users = await userService.getUsers();
       dispatch({
         type: GET_USERS,
         payload: {
@@ -19,7 +19,6 @@ export function getUsers() {
         }
       });
     } catch (error) {
-      // dispatch({ type: LOGIN_FAILURE });
       throw error;
     }
   };
@@ -29,7 +28,7 @@ export function getUser(userid) {
   return async (dispatch) => {
     try {
       dispatch({ type: GET_USER_REQUEST });
-      const user = await axios.get(`http://localhost:4000/users/${userid}`);
+      const user = await userService.getUser(userid);
       dispatch({
         type: GET_USER,
         payload: {
@@ -37,7 +36,6 @@ export function getUser(userid) {
         }
       });
     } catch (error) {
-      // dispatch({ type: LOGIN_FAILURE });
       throw error;
     }
   };
@@ -56,8 +54,6 @@ export function updateUser(user) {
       });
 
     } catch (error) {
-      //dispatch({ type: UPDATE_USER_FAILURE });
-      console.log(error);
       throw error;
     }
   };

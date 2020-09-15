@@ -23,7 +23,7 @@ const userReducer = (state = initialState, action) => {
       const { users } = action.payload;
 
       return produce(state, (draft) => {
-        draft.users = users.data;
+        draft.users = users;
       });
     }
 
@@ -37,7 +37,7 @@ const userReducer = (state = initialState, action) => {
       const { user } = action.payload;
 
       return produce(state, (draft) => {
-        draft.user = user.data;
+        draft.user = user;
       });
     }
 
