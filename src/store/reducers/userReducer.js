@@ -8,7 +8,6 @@ import {
   DELETE_USER,
   GET_USER_REQUEST
 } from 'src/store/actions/userActions';
-// import objFromArray from 'src/utils/objFromArray';
 
 const initialState = {
   users: [],
@@ -43,8 +42,6 @@ const userReducer = (state = initialState, action) => {
 
     case UPDATE_USER: {
       const { user } = action.payload;
-
-      console.log(user);
 
       return produce(state, (draft) => {
         draft.user = user;

@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Header from './Header';
+import Error from '../../../components/Error';
 import Results from './Results';
 import { getUsers } from 'src/store/actions/userActions';
 
@@ -47,6 +48,7 @@ function UserListView() {
     >
       <Container maxWidth={false}>
         <Header />
+        <Error />
         {users && (
           <Box mt={3}>
             <Results users={users} />

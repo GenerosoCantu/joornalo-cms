@@ -1,5 +1,6 @@
 import axios from 'src/utils/axios';
 import userService from 'src/services/userService';
+import { setError, clearError } from 'src/store/actions/errorActions';
 
 export const GET_USERS = '@user/get-users';
 export const GET_USER = '@user/get-user';
@@ -7,6 +8,8 @@ export const CREATE_USER = '@user/create-user';
 export const UPDATE_USER = '@user/update-user';
 export const DELETE_USER = '@user/delete-user';
 export const GET_USER_REQUEST = '@user/get-user-request';
+export const SET_ERROR = '@error/set-error';
+export const CLEAR_ERROR = '@error/set-error';
 
 export function getUsers() {
   return async (dispatch) => {
@@ -18,7 +21,9 @@ export function getUsers() {
           users
         }
       });
+      dispatch(clearError());
     } catch (error) {
+      dispatch(setError(error));
       throw error;
     }
   };
@@ -35,7 +40,9 @@ export function getUser(userid) {
           user
         }
       });
+      dispatch(clearError());
     } catch (error) {
+      dispatch(setError(error));
       throw error;
     }
   };
@@ -52,8 +59,9 @@ export function updateUser(user) {
           user: request
         }
       });
-
+      dispatch(clearError());
     } catch (error) {
+      dispatch(setError(error));
       throw error;
     }
   };

@@ -7,6 +7,7 @@ import mailReducer from './mailReducer';
 import kanbanReducer from './kanbanReducer';
 
 import userReducer from './userReducer';
+import errorReducer from './errorReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   mail: mailReducer,
   kanban: kanbanReducer,
   form: formReducer,
-  user: userReducer
+  user: userReducer,
+  error: errorReducer
 });
 
 export default rootReducer;

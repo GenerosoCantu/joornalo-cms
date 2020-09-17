@@ -10,14 +10,16 @@ import {
 import {
   Box,
   Container,
-  makeStyles
+  makeStyles,
+  FormHelperText
 } from '@material-ui/core';
-import axios from 'src/utils/axios';
-import Page from 'src/components/Page';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
+import Page from 'src/components/Page';
 import UserEditForm from './UserEditForm';
 import Header from './Header';
+import Error from '../../../components/Error';
 import { getUser } from 'src/store/actions/userActions';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,32 +37,14 @@ function UserEditView({ match }) {
 
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
-
-  // const isMountedRef = useIsMountedRef();
-  // const [user, setUser] = useState();
-
-  // const getUser = useCallback(() => {
-  //   axios
-  //     .get(`http://localhost:4000/users/${userid}`)
-  //     .then((response) => {
-  //       if (isMountedRef.current) {
-  //         setUser(response.data);
-  //       }
-  //     });
-  // }, [isMountedRef]);
+  const isMountedRef = useIsMountedRef();
+  const { user } = useSelector((state) => {
+    return state.user;
+  });
 
   useEffect(() => {
     dispatch(getUser(userid));
-  }, [dispatch]);
-
-  // useEffect(() => {
-  //   getUser();
-  // }, [getUser]);
-
-  if (!user) {
-    return null;
-  }
+  }, [isMountedRef]);
 
   return (
     <Page
@@ -69,9 +53,12 @@ function UserEditView({ match }) {
     >
       <Container maxWidth="lg">
         <Header />
-        <Box mt={3}>
-          <UserEditForm user={user} />
-        </Box>
+        <Error />
+        {user && (
+          <Box mt={3}>
+            <UserEditForm user={user} />
+          </Box>
+        )}
       </Container>
     </Page>
   );

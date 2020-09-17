@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import * as Yup from 'yup';
@@ -19,9 +23,6 @@ import {
   makeStyles,
   FormHelperText
 } from '@material-ui/core';
-import {
-  useDispatch
-} from 'react-redux';
 import { updateUser } from 'src/store/actions/userActions';
 
 const roles = [
@@ -76,6 +77,20 @@ function UserEditForm({
   const dispatch = useDispatch();
   const history = useHistory();
 
+  if (!user) {
+    user = {
+      _id: '',
+      email: '',
+      role: 'Author',
+      firstName: '',
+      lastName: '',
+      phone: '',
+      status: 'Pending',
+      verified: false,
+      locked: false
+    }
+  }
+
   return (
     <Formik
       initialValues={{
@@ -115,13 +130,9 @@ function UserEditForm({
         } catch (error) {
           console.log(error);
 
-
           setStatus({ success: false });
           setErrors({ submit: error.message });
           setSubmitting(false);
-          enqueueSnackbar(`Something went wrong! (${error})`, {
-            variant: 'error'
-          });
         }
       }}
     >
