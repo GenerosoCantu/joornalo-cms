@@ -13,7 +13,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import Header from './Header';
+import Header from '../../../components/Header';
 import Error from '../../../components/Error';
 import Results from './Results';
 import { getUsers } from 'src/store/actions/userActions';
@@ -33,6 +33,16 @@ function UserListView() {
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.user);
 
+  const breadcrumbs = [
+    {
+      label: "Dashboard",
+      link: "/app"
+    },
+    {
+      label: "Users"
+    }
+  ];
+
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
@@ -47,7 +57,7 @@ function UserListView() {
       title="User List"
     >
       <Container maxWidth={false}>
-        <Header />
+        <Header breadcrumbs={breadcrumbs} headerTitle="All Users" />
         <Error />
         {users && (
           <Box mt={3}>

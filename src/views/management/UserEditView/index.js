@@ -16,7 +16,7 @@ import {
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Page from 'src/components/Page';
 import UserEditForm from './UserEditForm';
-import Header from './Header';
+import Header from '../../../components/Header';
 import Error from '../../../components/Error';
 import { getUser } from 'src/store/actions/userActions';
 
@@ -42,6 +42,20 @@ function UserEditView({ match }) {
     return state.user;
   });
 
+  const breadcrumbs = [
+    {
+      label: "Dashboard",
+      link: "/app"
+    },
+    {
+      label: "Users",
+      link: "/app/management/users"
+    },
+    {
+      label: "Edit User"
+    }
+  ];
+
   useEffect(() => {
     dispatch(getUser(userid));
   }, [isMountedRef]);
@@ -52,7 +66,7 @@ function UserEditView({ match }) {
       title="User Edit"
     >
       <Container maxWidth="lg">
-        <Header />
+        <Header breadcrumbs={breadcrumbs} headerTitle="Edit User" />
         <Error />
         {user && (
           <Box mt={3}>

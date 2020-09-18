@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function Header({ className, ...rest }) {
+function Header({ className, breadcrumbs, headerTitle, ...rest }) {
   const classes = useStyles();
 
   return (
@@ -26,34 +26,36 @@ function Header({ className, ...rest }) {
         separator={<NavigateNextIcon fontSize="small" />}
         aria-label="breadcrumb"
       >
-        <Link
-          variant="body1"
-          color="inherit"
-          to="/app"
-          component={RouterLink}
-        >
-          Dashboard
-        </Link>
-        <Link
-          variant="body1"
-          color="inherit"
-          to="/app/management/users"
-          component={RouterLink}
-        >
-          Users
-        </Link>
-        <Typography
-          variant="body1"
-          color="textPrimary"
-        >
-          Edit User
-        </Typography>
+        {breadcrumbs.map((breadcrumb) => {
+
+          if (breadcrumb.link) {
+            return (
+              <Link
+                variant="body1"
+                color="inherit"
+                to={breadcrumb.link}
+                component={RouterLink}
+              >
+                {breadcrumb.label}
+              </Link>
+            );
+          } else {
+            return (
+              <Typography
+                variant="body1"
+                color="textPrimary"
+              >
+                {breadcrumb.label}
+              </Typography>
+            )
+          }
+        })}
       </Breadcrumbs>
       <Typography
         variant="h3"
         color="textPrimary"
       >
-        Edit User
+        {headerTitle}
       </Typography>
     </div>
   );
