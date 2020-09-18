@@ -24,44 +24,7 @@ import {
   FormHelperText
 } from '@material-ui/core';
 import { updateUser } from 'src/store/actions/userActions';
-
-const roles = [
-  {
-    id: 'Admin',
-    name: 'Admin'
-  },
-  {
-    id: 'Author',
-    name: 'Author'
-  },
-  {
-    id: 'Editor',
-    name: 'Editor'
-  },
-  {
-    id: 'Contributor',
-    name: 'Contributor'
-  }
-];
-
-const statusType = [
-  {
-    id: 'Active',
-    name: 'Active'
-  },
-  {
-    id: 'Inactive',
-    name: 'Inactive'
-  },
-  {
-    id: 'Pending',
-    name: 'Pending'
-  },
-  {
-    id: 'Suspended',
-    name: 'Suspended'
-  }
-];
+import { UserRoles, StatusTypes } from 'src/constants';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -192,7 +155,7 @@ function UserEditForm({
                       value={values.role}
                       variant="outlined"
                     >
-                      {roles.map((role) => (
+                      {UserRoles.map((role) => (
                         <option
                           key={role.id}
                           value={role.id}
@@ -274,7 +237,7 @@ function UserEditForm({
                       value={values.status}
                       variant="outlined"
                     >
-                      {statusType.map((status) => (
+                      {StatusTypes.map((status) => (
                         <option
                           key={status.id}
                           value={status.id}

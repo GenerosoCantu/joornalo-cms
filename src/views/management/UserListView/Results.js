@@ -32,48 +32,7 @@ import {
   Search as SearchIcon
 } from 'react-feather';
 import getInitials from 'src/utils/getInitials';
-
-const statusOptions = [
-  {
-    value: 'All',
-    label: 'All'
-  },
-  {
-    value: 'Active',
-    label: 'Active'
-  },
-  {
-    value: 'Suspended',
-    label: 'Suspended'
-  },
-  {
-    value: 'Pending',
-    label: 'Pending'
-  }
-];
-
-const roleOptions = [
-  {
-    value: 'All',
-    label: 'All'
-  },
-  {
-    value: 'Admin',
-    label: 'Admin'
-  },
-  {
-    value: 'Editor',
-    label: 'Editor'
-  },
-  {
-    value: 'Author',
-    label: 'Author'
-  },
-  {
-    value: 'Contributor',
-    label: 'Contributor'
-  }
-];
+import { UserRoles, StatusTypes } from 'src/constants';
 
 const sortOptions = [
   {
@@ -197,8 +156,8 @@ function Results({ className, users, ...rest }) {
   const [limit, setLimit] = useState(10);
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState(sortOptions[0].value);
-  const [role, setRole] = useState(roleOptions[0].value);
-  const [status, setStatus] = useState(statusOptions[0].value);
+  const [role, setRole] = useState('All');
+  const [status, setStatus] = useState('All');
 
   const handleQueryChange = (event) => {
     event.persist();
@@ -291,12 +250,18 @@ function Results({ className, users, ...rest }) {
           value={role}
           variant="outlined"
         >
-          {roleOptions.map((option) => (
+          <option
+            key="All"
+            value="All"
+          >
+            All
+          </option>
+          {UserRoles.map((option) => (
             <option
-              key={option.value}
-              value={option.value}
+              key={option.id}
+              value={option.id}
             >
-              {option.label}
+              {option.name}
             </option>
           ))}
         </TextField>
@@ -310,12 +275,18 @@ function Results({ className, users, ...rest }) {
           value={status}
           variant="outlined"
         >
-          {statusOptions.map((option) => (
+          <option
+            key="All"
+            value="All"
+          >
+            All
+          </option>
+          {StatusTypes.map((option) => (
             <option
-              key={option.value}
-              value={option.value}
+              key={option.id}
+              value={option.id}
             >
-              {option.label}
+              {option.name}
             </option>
           ))}
         </TextField>
