@@ -19,6 +19,8 @@ import UserEditForm from './UserEditForm';
 import Header from '../../../components/Header';
 import Error from '../../../components/Error';
 import { getUser } from 'src/store/actions/userActions';
+import { getSections } from 'src/store/actions/sectionActions';
+import { getModules } from 'src/store/actions/moduleActions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -58,6 +60,8 @@ function UserEditView({ match }) {
 
   useEffect(() => {
     dispatch(getUser(userid));
+    dispatch(getSections());
+    dispatch(getModules());
   }, [isMountedRef]);
 
   return (

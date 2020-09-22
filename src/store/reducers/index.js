@@ -6,8 +6,10 @@ import chatReducer from './chatReducer';
 import mailReducer from './mailReducer';
 import kanbanReducer from './kanbanReducer';
 
-import userReducer from './userReducer';
 import errorReducer from './errorReducer';
+import userReducer from './userReducer';
+import sectionReducer from './sectionReducer';
+import moduleReducer from './moduleReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -16,8 +18,11 @@ const rootReducer = combineReducers({
   mail: mailReducer,
   kanban: kanbanReducer,
   form: formReducer,
+  error: errorReducer,
   user: userReducer,
-  error: errorReducer
+  section: sectionReducer,
+  module: moduleReducer
+
 });
 
 export default rootReducer;

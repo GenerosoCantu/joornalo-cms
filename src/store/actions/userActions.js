@@ -8,8 +8,8 @@ export const CREATE_USER = '@user/create-user';
 export const UPDATE_USER = '@user/update-user';
 export const DELETE_USER = '@user/delete-user';
 export const GET_USER_REQUEST = '@user/get-user-request';
-export const SET_ERROR = '@error/set-error';
-export const CLEAR_ERROR = '@error/set-error';
+// export const SET_ERROR = '@error/set-error';
+// export const CLEAR_ERROR = '@error/set-error';
 
 export function getUsers() {
   return async (dispatch) => {

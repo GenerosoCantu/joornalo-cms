@@ -1,4 +1,3 @@
-import axios from 'src/utils/axios';
 import apiService from 'src/services/apiService';
 
 class UserService {
