@@ -40,9 +40,9 @@ function UserEditView({ match }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();
-  const { user } = useSelector((state) => {
-    return state.user;
-  });
+  const { user } = useSelector((state) => { return state.user; });
+  const { sections } = useSelector((state) => { return state.section; });
+  const { modules } = useSelector((state) => { return state.module; });
 
   const breadcrumbs = [
     {
@@ -73,9 +73,9 @@ function UserEditView({ match }) {
         <Header breadcrumbs={breadcrumbs} headerTitle="Edit User" />
         <Error />
         {user && (
-          <Box mt={3}>
-            <UserEditForm user={user} />
-          </Box>
+          // <Box mt={3}>
+          <UserEditForm user={user} sections={sections} modules={modules} />
+          // </Box>
         )}
       </Container>
     </Page>

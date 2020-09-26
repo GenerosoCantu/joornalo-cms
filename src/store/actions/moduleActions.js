@@ -6,7 +6,14 @@ export const GET_MODULES = '@section/get-modules';
 // export const CLEAR_ERROR = '@error/set-error';
 
 export function getModules() {
-  return async (dispatch) => {
+
+  return async (dispatch, getState) => {
+    const state = getState()
+
+    if (state.module?.modules?.length > 0) {
+      return;
+    }
+
     try {
       const modules = await moduleService.getModules();
       dispatch({

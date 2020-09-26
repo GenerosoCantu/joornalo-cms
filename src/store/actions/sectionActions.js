@@ -10,8 +10,14 @@ export const GET_SECTION_REQUEST = '@section/get-section-request';
 // export const SET_SECTION_ERROR = '@error/set-error';
 // export const CLEAR_SECTION_ERROR = '@error/set-error';
 
-export function getSections() {
-  return async (dispatch) => {
+export function getSections(force = false) {
+  return async (dispatch, getState) => {
+    const state = getState()
+
+    if (!force && state.section?.sections?.length > 0) {
+      return;
+    }
+
     try {
       const sections = await sectionService.getSections();
       dispatch({
