@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  useState
+} from 'react';
 import {
   useDispatch,
   useSelector
@@ -48,8 +50,11 @@ function UserEditForm({
   const dispatch = useDispatch();
   const history = useHistory();
 
-  console.log(sections);
-  console.log(modules);
+  const sectionsOption = sections.map(({ id, name }) => ({ id, name, selected: user.sections.includes(id) }));
+  const modulesOption = modules.map(({ id, name }) => ({ id, name, selected: user.modules.includes(id) }));
+
+  const [selectedSections, setSelectedSections] = useState(user.sections);
+  const [selectedModules, setSelectedModules] = useState(user.modules);
 
   if (!user) {
     user = {
@@ -61,12 +66,27 @@ function UserEditForm({
       phone: '',
       status: 'Pending',
       verified: false,
-      locked: false
+      locked: false,
+      sections: [],
+      modules: []
     }
   }
-  // if (!sections) {
-  //   sections = [];
-  // }
+
+  const handleSelectSection = (event, sectionId) => {
+    if (!selectedSections.includes(sectionId)) {
+      setSelectedSections((prevSelected) => [...prevSelected, sectionId]);
+    } else {
+      setSelectedSections((prevSelected) => prevSelected.filter((id) => id !== sectionId));
+    }
+  };
+
+  const handleSelectModule = (event, moduleId) => {
+    if (!selectedModules.includes(moduleId)) {
+      setSelectedModules((prevSelected) => [...prevSelected, moduleId]);
+    } else {
+      setSelectedModules((prevSelected) => prevSelected.filter((id) => id !== moduleId));
+    }
+  };
 
   return (
     <Formik
@@ -79,7 +99,9 @@ function UserEditForm({
         phone: user.phone || '',
         status: user.status || 'Pending',
         verified: user.verified || true,
-        locked: user.locked || false
+        locked: user.locked || false,
+        sections: user.sections || [],
+        modules: user.modules || []
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
@@ -87,7 +109,9 @@ function UserEditForm({
         lastName: Yup.string().max(255).required('Last Name is required'),
         phone: Yup.string().max(15),
         verified: Yup.bool(),
-        locked: Yup.bool()
+        locked: Yup.bool(),
+        sections: Yup.array(),
+        modules: Yup.array()
       })}
       onSubmit={async (values, {
         resetForm,
@@ -97,6 +121,7 @@ function UserEditForm({
       }) => {
         try {
           setSubmitting(false);
+          values = { ...values, sections: selectedSections, modules: selectedModules };
           await dispatch(updateUser(values));
           enqueueSnackbar('User updated', {
             variant: 'success'
@@ -345,30 +370,32 @@ function UserEditForm({
                     />
                     <Divider />
                     <List>
-                      {sections.map((section, i) => (
-                        <ListItem
-                          divider={i < section.length - 1}
-                          key={section.id}
-                        >
-                          <ListItemIcon>
-                            <Checkbox
-                              checked=""
-                              onChange={handleChange}
-                              value={section.id}
-                              name=""
-                            />
-                          </ListItemIcon>
-                          <ListItemText>
-                            <Typography
-                              variant="body2"
-                              color="textSecondary"
-                            >
-                              {section.name}
-                            </Typography>
-                          </ListItemText>
+                      {sectionsOption.map((section, i) => {
+                        const isSectionSelected = selectedSections.includes(section.id);
+                        return (
+                          <ListItem
+                            divider={i < section.length - 1}
+                            key={section.id}
+                          >
+                            <ListItemIcon>
+                              <Checkbox
+                                checked={isSectionSelected}
+                                onChange={(event) => handleSelectSection(event, section.id)}
+                                value={isSectionSelected}
+                              />
+                            </ListItemIcon>
+                            <ListItemText>
+                              <Typography
+                                variant="body2"
+                                color="textSecondary"
+                              >
+                                {section.name}
+                              </Typography>
+                            </ListItemText>
 
-                        </ListItem>
-                      ))}
+                          </ListItem>
+                        )
+                      })}
                     </List>
                   </Card>
                 </Box>
@@ -386,38 +413,36 @@ function UserEditForm({
                     />
                     <Divider />
                     <List>
-                      {modules.map((module, i) => (
-                        <ListItem
-                          divider={i < module.length - 1}
-                          key={module.id}
-                        >
-                          <ListItemIcon>
-                            <Checkbox
-                              checked=""
-                              onChange={handleChange}
-                              value={module.id}
-                              name=""
-                            />
-                          </ListItemIcon>
-                          <ListItemText>
-                            <Typography
-                              variant="body2"
-                              color="textSecondary"
-                            >
-                              {module.name}
-                            </Typography>
-                          </ListItemText>
+                      {modulesOption.map((modules, i) => {
+                        const isModuleSelected = selectedModules.includes(modules.id);
+                        return (
+                          <ListItem
+                            divider={i < modules.length - 1}
+                            key={modules.id}
+                          >
+                            <ListItemIcon>
+                              <Checkbox
+                                checked={isModuleSelected}
+                                onChange={(event) => handleSelectModule(event, modules.id)}
+                                value={isModuleSelected}
+                              />
+                            </ListItemIcon>
+                            <ListItemText>
+                              <Typography
+                                variant="body2"
+                                color="textSecondary"
+                              >
+                                {modules.name}
+                              </Typography>
+                            </ListItemText>
 
-                        </ListItem>
-                      ))}
+                          </ListItem>
+                        )
+                      })}
                     </List>
                   </Card>
                 </Box>
               </Grid>
-
-
-
-
 
               <Divider />
               <Box

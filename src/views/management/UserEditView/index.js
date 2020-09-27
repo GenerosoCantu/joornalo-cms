@@ -72,7 +72,7 @@ function UserEditView({ match }) {
       <Container maxWidth="lg">
         <Header breadcrumbs={breadcrumbs} headerTitle="Edit User" />
         <Error />
-        {user && (
+        {user && sections.length > 0 && modules.length > 0 && (
           // <Box mt={3}>
           <UserEditForm user={user} sections={sections} modules={modules} />
           // </Box>

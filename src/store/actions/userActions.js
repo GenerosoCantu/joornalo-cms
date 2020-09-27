@@ -52,7 +52,6 @@ export function updateUser(user) {
   return async (dispatch) => {
     try {
       const request = await userService.updateUser(user);
-
       dispatch({
         type: UPDATE_USER,
         payload: {

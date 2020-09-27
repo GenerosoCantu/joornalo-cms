@@ -10,8 +10,8 @@ const initialState = {
 };
 
 const errorReducer = (state = initialState, action) => {
-  console.log('action.type:', action.type);
-  console.log('action.payload:', action.payload);
+  // console.log('action.type:', action.type);
+  // console.log('action.payload:', action.payload);
   switch (action.type) {
 
     case CLEAR_ERROR: {

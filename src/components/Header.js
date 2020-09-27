@@ -26,11 +26,12 @@ function Header({ className, breadcrumbs, headerTitle, ...rest }) {
         separator={<NavigateNextIcon fontSize="small" />}
         aria-label="breadcrumb"
       >
-        {breadcrumbs.map((breadcrumb) => {
+        {breadcrumbs.map((breadcrumb, index) => {
 
           if (breadcrumb.link) {
             return (
               <Link
+                key={index.toString()}
                 variant="body1"
                 color="inherit"
                 to={breadcrumb.link}
@@ -42,6 +43,7 @@ function Header({ className, breadcrumbs, headerTitle, ...rest }) {
           } else {
             return (
               <Typography
+                key={index.toString()}
                 variant="body1"
                 color="textPrimary"
               >
