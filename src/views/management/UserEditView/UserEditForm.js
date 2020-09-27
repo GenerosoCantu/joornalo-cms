@@ -26,6 +26,12 @@ import {
   ListItemText,
   Grid,
   Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
   TextField,
   Typography,
   makeStyles,
@@ -56,6 +62,13 @@ function UserEditForm({
   const [selectedSections, setSelectedSections] = useState(user.sections);
   const [selectedModules, setSelectedModules] = useState(user.modules);
 
+  const selectedSomeSections = selectedSections.length > 0 && selectedSections.length < sectionsOption.length;
+  const selectedAllSections = selectedSections.length === sectionsOption.length;
+
+  const selectedSomeModules = selectedModules.length > 0 && selectedModules.length < modulesOption.length;
+  const selectedAllModules = selectedModules.length === modulesOption.length;
+
+
   if (!user) {
     user = {
       _id: '',
@@ -74,7 +87,7 @@ function UserEditForm({
 
   const handleSelectSection = (event, sectionId) => {
     if (!selectedSections.includes(sectionId)) {
-      setSelectedSections((prevSelected) => [...prevSelected, sectionId]);
+      setSelectedSections((module) => [...module, sectionId]);
     } else {
       setSelectedSections((prevSelected) => prevSelected.filter((id) => id !== sectionId));
     }
@@ -82,10 +95,24 @@ function UserEditForm({
 
   const handleSelectModule = (event, moduleId) => {
     if (!selectedModules.includes(moduleId)) {
-      setSelectedModules((prevSelected) => [...prevSelected, moduleId]);
+      setSelectedModules((section) => [...section, moduleId]);
     } else {
       setSelectedModules((prevSelected) => prevSelected.filter((id) => id !== moduleId));
     }
+  };
+
+  const handleSelectAllSections = (event) => {
+    console.log(event.target.checked);
+    console.log(selectedSections);
+    setSelectedSections(event.target.checked
+      ? sectionsOption.map((section) => section.id)
+      : []);
+  };
+
+  const handleSelectAllModules = (event) => {
+    setSelectedModules(event.target.checked
+      ? modulesOption.map((module) => module.id)
+      : []);
   };
 
   return (
@@ -306,14 +333,14 @@ function UserEditForm({
                             color="textPrimary"
                           >
                             Email Verified
-                    </Typography>
+                          </Typography>
                           <Typography
                             variant="body2"
                             color="textSecondary"
                           >
                             Disabling this will automatically send the user a verification
                             email
-                    </Typography>
+                          </Typography>
                           <Switch
                             checked={values.verified}
                             color="secondary"
@@ -334,13 +361,13 @@ function UserEditForm({
                             color="textPrimary"
                           >
                             Locked
-                    </Typography>
+                          </Typography>
                           <Typography
                             variant="body2"
                             color="textSecondary"
                           >
                             Locked account can not login into the system.
-                    </Typography>
+                          </Typography>
                           <Switch
                             checked={values.locked}
                             color="secondary"
@@ -365,38 +392,50 @@ function UserEditForm({
               >
                 <Box mt={3}>
                   <Card>
-                    <CardHeader
-                      title="Sections"
-                    />
-                    <Divider />
-                    <List>
-                      {sectionsOption.map((section, i) => {
-                        const isSectionSelected = selectedSections.includes(section.id);
-                        return (
-                          <ListItem
-                            divider={i < section.length - 1}
-                            key={section.id}
-                          >
-                            <ListItemIcon>
-                              <Checkbox
-                                checked={isSectionSelected}
-                                onChange={(event) => handleSelectSection(event, section.id)}
-                                value={isSectionSelected}
-                              />
-                            </ListItemIcon>
-                            <ListItemText>
-                              <Typography
-                                variant="body2"
-                                color="textSecondary"
-                              >
-                                {section.name}
-                              </Typography>
-                            </ListItemText>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell padding="checkbox">
+                            <Checkbox
+                              checked={selectedAllSections}
+                              indeterminate={selectedSomeSections}
+                              onChange={handleSelectAllSections}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            Access to this Sections
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {sectionsOption.map((section, i) => {
+                          const isSectionSelected = selectedSections.includes(section.id);
+                          return (
+                            <TableRow
+                              hover
+                              key={section.id}
+                            >
+                              <TableCell padding="checkbox">
+                                <Checkbox
+                                  checked={isSectionSelected}
+                                  onChange={(event) => handleSelectSection(event, section.id)}
+                                  value={isSectionSelected}
+                                />
+                              </TableCell>
+                              <TableCell>
+                                <Typography
+                                  variant="body2"
+                                  color="textSecondary"
+                                >
+                                  {section.name}
+                                </Typography>
+                              </TableCell>
+                            </TableRow>
+                          )
+                        })}
+                      </TableBody>
+                    </Table>
 
-                          </ListItem>
-                        )
-                      })}
-                    </List>
                   </Card>
                 </Box>
               </Grid>
@@ -408,7 +447,53 @@ function UserEditForm({
               >
                 <Box mt={3}>
                   <Card>
-                    <CardHeader
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell padding="checkbox">
+                            <Checkbox
+                              checked={selectedAllModules}
+                              indeterminate={selectedSomeModules}
+                              onChange={handleSelectAllModules}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            Access to this Modules
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {modulesOption.map((module, i) => {
+                          const isModuleSelected = selectedModules.includes(module.id);
+                          return (
+                            <TableRow
+                              hover
+                              key={module.id}
+                            >
+                              <TableCell padding="checkbox">
+                                <Checkbox
+                                  checked={isModuleSelected}
+                                  onChange={(event) => handleSelectModule(event, module.id)}
+                                  value={isModuleSelected}
+                                />
+                              </TableCell>
+                              <TableCell>
+                                <Typography
+                                  variant="body2"
+                                  color="textSecondary"
+                                >
+                                  {module.name}
+                                </Typography>
+                              </TableCell>
+                            </TableRow>
+                          )
+                        })}
+                      </TableBody>
+                    </Table>
+
+
+
+                    {/* <CardHeader
                       title="Modules"
                     />
                     <Divider />
@@ -439,7 +524,7 @@ function UserEditForm({
                           </ListItem>
                         )
                       })}
-                    </List>
+                    </List> */}
                   </Card>
                 </Box>
               </Grid>
