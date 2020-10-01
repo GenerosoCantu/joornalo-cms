@@ -48,12 +48,61 @@ export function getUser(userid) {
   };
 }
 
+export function newUser() {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: GET_USER_REQUEST });
+      const user = {
+        _id: null,
+        email: '',
+        role: 'Author',
+        firstName: '',
+        lastName: '',
+        phone: '',
+        status: 'Pending',
+        verified: false,
+        locked: false,
+        sections: [],
+        modules: []
+      }
+      dispatch({
+        type: GET_USER,
+        payload: {
+          user
+        }
+      });
+      dispatch(clearError());
+    } catch (error) {
+      dispatch(setError(error));
+      throw error;
+    }
+  };
+}
+
 export function updateUser(user) {
   return async (dispatch) => {
     try {
       const request = await userService.updateUser(user);
       dispatch({
         type: UPDATE_USER,
+        payload: {
+          user: request
+        }
+      });
+      dispatch(clearError());
+    } catch (error) {
+      dispatch(setError(error));
+      throw error;
+    }
+  };
+}
+
+export function createUser(user) {
+  return async (dispatch) => {
+    try {
+      const request = await userService.createUser(user);
+      dispatch({
+        type: CREATE_USER,
         payload: {
           user: request
         }

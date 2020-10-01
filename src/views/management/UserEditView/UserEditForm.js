@@ -37,7 +37,7 @@ import {
   makeStyles,
   FormHelperText, CardHeader
 } from '@material-ui/core';
-import { updateUser } from 'src/store/actions/userActions';
+import { updateUser, createUser } from 'src/store/actions/userActions';
 import { UserRoles, StatusTypes } from 'src/constants';
 
 const useStyles = makeStyles(() => ({
@@ -68,22 +68,7 @@ function UserEditForm({
   const selectedSomeModules = selectedModules.length > 0 && selectedModules.length < modulesOption.length;
   const selectedAllModules = selectedModules.length === modulesOption.length;
 
-
-  if (!user) {
-    user = {
-      _id: '',
-      email: '',
-      role: 'Author',
-      firstName: '',
-      lastName: '',
-      phone: '',
-      status: 'Pending',
-      verified: false,
-      locked: false,
-      sections: [],
-      modules: []
-    }
-  }
+  const saveButtonText = (!user._id) ? "Create User" : "Update User";
 
   const handleSelectSection = (event, sectionId) => {
     if (!selectedSections.includes(sectionId)) {
@@ -102,8 +87,6 @@ function UserEditForm({
   };
 
   const handleSelectAllSections = (event) => {
-    console.log(event.target.checked);
-    console.log(selectedSections);
     setSelectedSections(event.target.checked
       ? sectionsOption.map((section) => section.id)
       : []);
@@ -118,7 +101,7 @@ function UserEditForm({
   return (
     <Formik
       initialValues={{
-        _id: user._id || '',
+        _id: user._id || null,
         email: user.email || '',
         role: user.role || 'Author',
         firstName: user.firstName || '',
@@ -149,7 +132,11 @@ function UserEditForm({
         try {
           setSubmitting(false);
           values = { ...values, sections: selectedSections, modules: selectedModules };
-          await dispatch(updateUser(values));
+          if (!user._id) {
+            await dispatch(createUser(values));
+          } else {
+            await dispatch(updateUser(values));
+          }
           enqueueSnackbar('User updated', {
             variant: 'success'
           });
@@ -157,8 +144,6 @@ function UserEditForm({
           resetForm();
           history.push('/app/management/users');
         } catch (error) {
-          console.log(error);
-
           setStatus({ success: false });
           setErrors({ submit: error.message });
           setSubmitting(false);
@@ -490,41 +475,6 @@ function UserEditForm({
                         })}
                       </TableBody>
                     </Table>
-
-
-
-                    {/* <CardHeader
-                      title="Modules"
-                    />
-                    <Divider />
-                    <List>
-                      {modulesOption.map((modules, i) => {
-                        const isModuleSelected = selectedModules.includes(modules.id);
-                        return (
-                          <ListItem
-                            divider={i < modules.length - 1}
-                            key={modules.id}
-                          >
-                            <ListItemIcon>
-                              <Checkbox
-                                checked={isModuleSelected}
-                                onChange={(event) => handleSelectModule(event, modules.id)}
-                                value={isModuleSelected}
-                              />
-                            </ListItemIcon>
-                            <ListItemText>
-                              <Typography
-                                variant="body2"
-                                color="textSecondary"
-                              >
-                                {modules.name}
-                              </Typography>
-                            </ListItemText>
-
-                          </ListItem>
-                        )
-                      })}
-                    </List> */}
                   </Card>
                 </Box>
               </Grid>
@@ -541,7 +491,7 @@ function UserEditForm({
                   type="submit"
                   disabled={isSubmitting}
                 >
-                  Update User
+                  {saveButtonText}
                 </Button>
 
                 {errors.submit && (

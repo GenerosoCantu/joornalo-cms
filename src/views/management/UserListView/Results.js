@@ -29,7 +29,8 @@ import {
 import {
   Edit as EditIcon,
   ArrowRight as ArrowRightIcon,
-  Search as SearchIcon
+  Search as SearchIcon,
+  Trash as TrashIcon
 } from 'react-feather';
 import getInitials from 'src/utils/getInitials';
 import { UserRoles, StatusTypes } from 'src/constants';
@@ -412,6 +413,14 @@ function Results({ className, users, ...rest }) {
                       >
                         <SvgIcon fontSize="small">
                           <EditIcon />
+                        </SvgIcon>
+                      </IconButton>
+                      <IconButton
+                        component={RouterLink}
+                        to="/app/management/customers/1"
+                      >
+                        <SvgIcon fontSize="small">
+                          <TrashIcon />
                         </SvgIcon>
                       </IconButton>
                     </TableCell>

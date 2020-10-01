@@ -1,4 +1,5 @@
 import apiService from 'src/services/apiService';
+import { v4 as uuidv4 } from 'uuid';
 
 class UserService {
 
@@ -15,7 +16,8 @@ class UserService {
   }
 
   createUser = (user) => {
-    return apiService.makeRequest('post', `http://localhost:4000/users/`, 'usr-c', user);
+    const newUser = { ...user, _id: uuidv4() };
+    return apiService.makeRequest('post', `http://localhost:4000/users/`, 'usr-c', newUser);
   }
 
   deleteUser = (userid) => {
