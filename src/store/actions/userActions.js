@@ -114,3 +114,23 @@ export function createUser(user) {
     }
   };
 }
+
+export function deleteUser(userid) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: GET_USER_REQUEST });
+      const user = await userService.deleteUser(userid);
+      dispatch({
+        type: DELETE_USER,
+        payload: {
+          user
+        }
+      });
+      dispatch(clearError());
+    } catch (error) {
+      dispatch(setError(error));
+      throw error;
+    }
+  };
+}
+

@@ -9,7 +9,6 @@ import {
   Box,
   Button,
   Card,
-  Checkbox,
   Divider,
   IconButton,
   InputAdornment,
@@ -149,8 +148,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1)
   }
 }));
-
-function Results({ className, users, ...rest }) {
+function Results({
+  className,
+  users,
+  onUserDelete,
+  ...rest
+}) {
   const classes = useStyles();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [page, setPage] = useState(0);
@@ -180,20 +183,6 @@ function Results({ className, users, ...rest }) {
     setStatus(event.target.value);
   };
 
-  const handleSelectAllUsers = (event) => {
-    setSelectedUsers(event.target.checked
-      ? users.map((user) => user._id)
-      : []);
-  };
-
-  const handleSelectOneUser = (event, userId) => {
-    if (!selectedUsers.includes(userId)) {
-      setSelectedUsers((prevSelected) => [...prevSelected, userId]);
-    } else {
-      setSelectedUsers((prevSelected) => prevSelected.filter((_id) => _id !== userId));
-    }
-  };
-
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
@@ -206,7 +195,6 @@ function Results({ className, users, ...rest }) {
   const filteredUsers = applyFilters(users, query, role, status);
   const sortedUsers = applySort(filteredUsers, sort);
   const paginatedUsers = applyPagination(sortedUsers, page, limit);
-  const enableBulkOperations = selectedUsers.length > 0;
   const selectedSomeUsers = selectedUsers.length > 0 && selectedUsers.length < users.length;
   const selectedAllUsers = selectedUsers.length === users.length;
 
@@ -311,35 +299,11 @@ function Results({ className, users, ...rest }) {
           ))}
         </TextField>
       </Box>
-      {enableBulkOperations && (
-        <div className={classes.bulkOperations}>
-          <div className={classes.bulkActions}>
-            <Checkbox
-              checked={selectedAllUsers}
-              indeterminate={selectedSomeUsers}
-              onChange={handleSelectAllUsers}
-            />
-            <Button
-              variant="outlined"
-              className={classes.bulkAction}
-            >
-              Delete
-            </Button>
-          </div>
-        </div>
-      )}
       <PerfectScrollbar>
         <Box minWidth={700}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedAllUsers}
-                    indeterminate={selectedSomeUsers}
-                    onChange={handleSelectAllUsers}
-                  />
-                </TableCell>
                 <TableCell>
                   Name
                 </TableCell>
@@ -367,13 +331,6 @@ function Results({ className, users, ...rest }) {
                     key={user._id}
                     selected={isUserSelected}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isUserSelected}
-                        onChange={(event) => handleSelectOneUser(event, user._id)}
-                        value={isUserSelected}
-                      />
-                    </TableCell>
                     <TableCell>
                       <Box
                         display="flex"
@@ -416,8 +373,7 @@ function Results({ className, users, ...rest }) {
                         </SvgIcon>
                       </IconButton>
                       <IconButton
-                        component={RouterLink}
-                        to="/app/management/customers/1"
+                        onClick={() => onUserDelete(user)}
                       >
                         <SvgIcon fontSize="small">
                           <TrashIcon />
@@ -446,11 +402,13 @@ function Results({ className, users, ...rest }) {
 
 Results.propTypes = {
   className: PropTypes.string,
-  users: PropTypes.array
+  users: PropTypes.array,
+  onUserDelete: PropTypes.func
 };
 
 Results.defaultProps = {
-  users: []
+  users: [],
+  onUserDelete: () => { }
 };
 
 export default Results;

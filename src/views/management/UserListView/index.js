@@ -25,6 +25,7 @@ import Header from '../../../components/Header';
 import Error from '../../../components/Error';
 import Results from './Results';
 import { getUsers, newUser } from 'src/store/actions/userActions';
+import UserDeleteModal from './UserDeleteModal';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,6 +50,10 @@ function UserListView() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.user);
+  const [modal, setModal] = useState({
+    user: null,
+    open: false
+  });
 
   const breadcrumbs = [
     {
@@ -71,6 +76,29 @@ function UserListView() {
   if (!users) {
     return null;
   }
+
+  const resetModal = () => {
+    setModal({
+      user: null,
+      open: false
+    });
+  };
+
+  const handleModalClose = () => {
+    resetModal();
+  };
+
+  const handleUserDelete = () => {
+    dispatch(getUsers());
+    resetModal();
+  };
+
+  const handleUserDeleteClick = (user) => {
+    setModal({
+      open: true,
+      user
+    });
+  };
 
   return (
     <Page
@@ -108,9 +136,16 @@ function UserListView() {
         <Error />
         {users && (
           <Box mt={3}>
-            <Results users={users} />
+            <Results users={users} onUserDelete={handleUserDeleteClick} />
           </Box>
         )}
+
+        <UserDeleteModal
+          user={modal.user}
+          onCancel={handleModalClose}
+          onDelete={handleUserDelete}
+          open={modal.open}
+        />
       </Container>
     </Page>
   );
