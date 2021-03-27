@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useCallback
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import {
   useDispatch,
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function UserListView() {
+  const { t, i18n } = useTranslation(['translation', 'users']);
   const classes = useStyles();
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.user);
@@ -57,11 +59,11 @@ function UserListView() {
 
   const breadcrumbs = [
     {
-      label: "Dashboard",
+      label: t('dashboard'),
       link: "/app"
     },
     {
-      label: "Users"
+      label: t('users')
     }
   ];
 
@@ -103,7 +105,7 @@ function UserListView() {
   return (
     <Page
       className={classes.root}
-      title="User List"
+      title={t('users:user-list')}
     >
       <Container maxWidth={false}>
         <Grid
@@ -112,7 +114,7 @@ function UserListView() {
           justify="space-between"
         >
           <Grid item>
-            <Header breadcrumbs={breadcrumbs} headerTitle="All Users" />
+            <Header breadcrumbs={breadcrumbs} headerTitle={t('users:all-users')} />
           </Grid>
 
           <Grid item>
@@ -128,7 +130,7 @@ function UserListView() {
               >
                 <PlusCircleIcon />
               </SvgIcon>
-              New User
+              {t('users:new-user')}
             </Button>
           </Grid>
         </Grid>

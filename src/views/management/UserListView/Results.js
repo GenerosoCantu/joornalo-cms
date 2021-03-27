@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -7,14 +8,12 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Avatar,
   Box,
-  Button,
   Card,
   Divider,
   IconButton,
   InputAdornment,
   Link,
   SvgIcon,
-  Tab,
   Table,
   TableBody,
   TableCell,
@@ -22,36 +21,16 @@ import {
   TablePagination,
   TableRow,
   TextField,
-  Typography,
   makeStyles
 } from '@material-ui/core';
 import {
   Edit as EditIcon,
-  ArrowRight as ArrowRightIcon,
   Search as SearchIcon,
   Trash as TrashIcon
 } from 'react-feather';
 import getInitials from 'src/utils/getInitials';
 import { UserRoles, StatusTypes } from 'src/constants';
 
-const sortOptions = [
-  {
-    value: 'reg_time|desc',
-    label: 'Last update (newest first)'
-  },
-  {
-    value: 'reg_time|asc',
-    label: 'Last update (oldest first)'
-  },
-  {
-    value: 'firstName|asc',
-    label: 'Name (ascending)'
-  },
-  {
-    value: 'firstName|desc',
-    label: 'Name (descending)'
-  }
-];
 
 function applyFilters(users, query, role, status) {
   return users.filter((user) => {
@@ -148,6 +127,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1)
   }
 }));
+
 function Results({
   className,
   users,
@@ -155,6 +135,27 @@ function Results({
   ...rest
 }) {
   const classes = useStyles();
+  const { t, i18n } = useTranslation(['translation', 'users']);
+
+  const sortOptions = [
+    {
+      value: 'reg_time|desc',
+      label: t('users:last-update-newest-first')
+    },
+    {
+      value: 'reg_time|asc',
+      label: t('users:last-update-oldest-first')
+    },
+    {
+      value: 'firstName|asc',
+      label: t('users:name-ascending')
+    },
+    {
+      value: 'firstName|desc',
+      label: t('users:name-descending')
+    }
+  ];
+
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -195,8 +196,6 @@ function Results({
   const filteredUsers = applyFilters(users, query, role, status);
   const sortedUsers = applySort(filteredUsers, sort);
   const paginatedUsers = applyPagination(sortedUsers, page, limit);
-  const selectedSomeUsers = selectedUsers.length > 0 && selectedUsers.length < users.length;
-  const selectedAllUsers = selectedUsers.length === users.length;
 
   return (
     <Card
@@ -225,7 +224,7 @@ function Results({
             )
           }}
           onChange={handleQueryChange}
-          placeholder="Search users"
+          placeholder={t('users:search-users')}
           value={query}
           variant="outlined"
         />
@@ -243,7 +242,7 @@ function Results({
             key="All"
             value="All"
           >
-            All
+            {t('all')}
           </option>
           {UserRoles.map((option) => (
             <option
@@ -268,7 +267,7 @@ function Results({
             key="All"
             value="All"
           >
-            All
+            {t('all')}
           </option>
           {StatusTypes.map((option) => (
             <option
@@ -305,19 +304,19 @@ function Results({
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Name
+                  {t('translation:Name')}
                 </TableCell>
                 <TableCell>
-                  Email
+                  {t('translation:Email')}
                 </TableCell>
                 <TableCell>
-                  Role
+                  {t('translation:Role')}
                 </TableCell>
                 <TableCell>
-                  Status
+                  {t('translation:Status')}
                 </TableCell>
                 <TableCell align="right">
-                  Actions
+                  {t('translation:Actions')}
                 </TableCell>
               </TableRow>
             </TableHead>

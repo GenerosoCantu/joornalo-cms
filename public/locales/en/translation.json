@@ -1,0 +1,19 @@
+{
+  "default": "English",
+  "dashboard": "Dashboard",
+  "users": "Users",
+  "all": "All",
+  "UserRoles-Admin": "Admin",
+  "UserRoles-Author": "Author",
+  "UserRoles-Editor": "Editor",
+  "UserRoles-Contributor": "Contributor",
+  "StatusTypes-Active": "Active",
+  "StatusTypes-Inactive": "Inactive",
+  "StatusTypes-Pending": "Pending",
+  "StatusTypes-Suspended": "Suspended",
+  "Name": "Name",
+  "Email": "Email",
+  "Role": "Role",
+  "Status": "Status",
+  "Actions": "Actions"
+}

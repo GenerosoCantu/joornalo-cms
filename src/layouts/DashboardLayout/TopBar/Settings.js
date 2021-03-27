@@ -16,7 +16,8 @@ import {
 } from '@material-ui/core';
 import { Settings as SettingsIcon } from 'react-feather';
 import useSettings from 'src/hooks/useSettings';
-import { THEMES } from 'src/constants';
+import { LANGUAGES, THEMES } from 'src/constants';
+import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   badge: {
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Settings() {
+  const { t, i18n } = useTranslation();
   const classes = useStyles();
   const ref = useRef(null);
   const { settings, saveSettings } = useSettings();
@@ -40,7 +42,8 @@ function Settings() {
   const [values, setValues] = useState({
     direction: settings.direction,
     responsiveFontSizes: settings.responsiveFontSizes,
-    theme: settings.theme
+    theme: settings.theme,
+    language: settings.language
   });
 
   const handleOpen = () => {
@@ -60,6 +63,7 @@ function Settings() {
 
   const handleSave = () => {
     saveSettings(values);
+    i18n.changeLanguage(values.language);
     setOpen(false);
   };
 
@@ -147,6 +151,27 @@ function Settings() {
                 value={theme}
               >
                 {capitalCase(theme)}
+              </option>
+            ))}
+          </TextField>
+        </Box>
+        <Box mt={2}>
+          <TextField
+            fullWidth
+            label="Language"
+            name="language"
+            onChange={(event) => handleChange('language', event.target.value)}
+            select
+            SelectProps={{ native: true }}
+            value={values.language}
+            variant="outlined"
+          >
+            {LANGUAGES.map((language) => (
+              <option
+                key={language.name}
+                value={language.code}
+              >
+                {language.name}
               </option>
             ))}
           </TextField>

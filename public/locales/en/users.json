@@ -1,0 +1,10 @@
+{
+  "all-users": "All Users",
+  "user-list": "User List",
+  "new-user": "New User",
+  "last-update-newest-first": "Last update (ascending)",
+  "last-update-oldest-first": "Last update (descending)",
+  "name-ascending": "Name (ascending)",
+  "name-descending": "Name (descending)",
+  "search-users": "Search users"
+}

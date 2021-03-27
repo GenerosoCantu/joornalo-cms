@@ -5,6 +5,7 @@ import { colors, createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 import typography from './typography';
 import { softShadows, strongShadows } from './shadows';
 import { THEMES } from '../constants';
+import { enUS, esES } from '@material-ui/core/locale';
 
 const baseConfig = {
   direction: 'ltr',
@@ -127,7 +128,8 @@ const themeConfigs = [
   }
 ];
 
-export function createTheme(settings = {}) {
+export function createTheme(settings = {}, language = 'ES') {
+
   let themeConfig = themeConfigs.find((theme) => theme.name === settings.theme);
 
   if (!themeConfig) {
@@ -142,7 +144,7 @@ export function createTheme(settings = {}) {
       themeConfig,
       { direction: settings.direction }
     )
-  );
+    , (settings.language == 'ES') ? esES : enUS);
 
   if (settings.responsiveFontSizes) {
     theme = responsiveFontSizes(theme);
