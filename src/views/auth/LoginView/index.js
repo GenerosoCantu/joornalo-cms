@@ -49,17 +49,18 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(8, 4, 3, 4)
   },
   icon: {
-    backgroundColor: colors.green[500],
+    backgroundColor: colors.grey[600],
     color: theme.palette.common.white,
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(1),
     position: 'absolute',
     top: -32,
-    left: theme.spacing(3),
+    right: theme.spacing(3),
     height: 64,
     width: 64
   },
   media: {
+    background: colors.grey[100],
     borderTopRightRadius: 4,
     borderBottomRightRadius: 4,
     padding: theme.spacing(3),
@@ -70,6 +71,11 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('md')]: {
       display: 'none'
     }
+  },
+  logo: {
+    position: 'relative',
+    top: '-14rem',
+    left: '3.5rem'
   }
 }));
 
@@ -104,6 +110,10 @@ function LoginView() {
           </Button>
         </Box>
         <Card className={classes.card}>
+
+          <CardContent className={classes.media}>
+            <img className={classes.logo} src="./static/joornalo_logo.png" alt="Joornalo" height="80" width="293"></img>
+          </CardContent>
           <CardContent className={classes.content}>
             <Avatar className={classes.icon}>
               <LockIcon fontSize="large" />
@@ -120,21 +130,6 @@ function LoginView() {
             >
               Sign in on the internal platform
             </Typography>
-            <Box mt={2}>
-              <Alert
-                severity="info"
-              >
-                <div>
-                  Use
-                  {' '}
-                  <b>admin@devias.io</b>
-                  {' '}
-                  and password
-                  {' '}
-                  <b>admin</b>
-                </div>
-              </Alert>
-            </Box>
             <Box mt={3}>
               <LoginForm onSubmitSuccess={handleSubmitSuccess} />
             </Box>
@@ -150,43 +145,7 @@ function LoginView() {
               Create new account
             </Link>
           </CardContent>
-          <CardMedia
-            className={classes.media}
-            image="/static/images/auth.png"
-            title="Cover"
-          >
-            <Typography
-              color="inherit"
-              variant="subtitle1"
-            >
-              Hella narvwhal Cosby sweater McSweeney&apos;s,
-              salvia kitsch before they sold out High Life.
-            </Typography>
-            <Box
-              alignItems="center"
-              display="flex"
-              mt={3}
-            >
-              <Avatar
-                alt="Person"
-                src="/static/images/avatars/avatar_2.png"
-              />
-              <Box ml={3}>
-                <Typography
-                  color="inherit"
-                  variant="body1"
-                >
-                  Ekaterina Tankova
-                </Typography>
-                <Typography
-                  color="inherit"
-                  variant="body2"
-                >
-                  Manager at inVision
-                </Typography>
-              </Box>
-            </Box>
-          </CardMedia>
+
         </Card>
       </Container>
     </Page>

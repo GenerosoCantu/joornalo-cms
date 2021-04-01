@@ -25,8 +25,8 @@ import Page from 'src/components/Page';
 import Header from '../../../components/Header';
 import Error from '../../../components/Error';
 import Results from './Results';
-import { getUsers, newUser } from 'src/store/actions/userActions';
-import UserDeleteModal from './UserDeleteModal';
+import { getSections, createSection } from 'src/store/actions/sectionActions';
+import SectionDeleteModal from './SectionDeleteModal';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -47,13 +47,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function UserListView() {
-  const { t, i18n } = useTranslation(['translation', 'users']);
+function SectionListView() {
+  const { t, i18n } = useTranslation(['translation', 'sections']);
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { users } = useSelector((state) => state.user);
+  const { sections } = useSelector((state) => state.section);
   const [modal, setModal] = useState({
-    user: null,
+    section: null,
     open: false
   });
 
@@ -63,25 +63,25 @@ function UserListView() {
       link: "/app"
     },
     {
-      label: t('Users')
+      label: t('Sections')
     }
   ];
 
   const history = useHistory();
-  const handleNewUser = () => history.push('/app/management/users/create');
+  const handleCreateSection = () => history.push('/app/management/sections/create');
 
   useEffect(() => {
-    dispatch(getUsers());
-    dispatch(newUser());
+    dispatch(getSections());
+    dispatch(createSection());
   }, [dispatch]);
 
-  if (!users) {
+  if (!sections) {
     return null;
   }
 
   const resetModal = () => {
     setModal({
-      user: null,
+      section: null,
       open: false
     });
   };
@@ -90,22 +90,22 @@ function UserListView() {
     resetModal();
   };
 
-  const handleUserDelete = () => {
-    dispatch(getUsers());
+  const handleSectionDelete = () => {
+    dispatch(getSections());
     resetModal();
   };
 
-  const handleUserDeleteClick = (user) => {
+  const handleSectionDeleteClick = (section) => {
     setModal({
       open: true,
-      user
+      section
     });
   };
 
   return (
     <Page
       className={classes.root}
-      title={t('users:user-list')}
+      title={t('sections:section-list')}
     >
       <Container maxWidth={false}>
         <Grid
@@ -114,7 +114,7 @@ function UserListView() {
           justify="space-between"
         >
           <Grid item>
-            <Header breadcrumbs={breadcrumbs} headerTitle={t('users:all-users')} />
+            <Header breadcrumbs={breadcrumbs} headerTitle={t('sections:all-sections')} />
           </Grid>
 
           <Grid item>
@@ -122,7 +122,7 @@ function UserListView() {
               color="secondary"
               variant="contained"
               className={classes.action}
-              onClick={handleNewUser}
+              onClick={handleCreateSection}
             >
               <SvgIcon
                 fontSize="small"
@@ -130,22 +130,22 @@ function UserListView() {
               >
                 <PlusCircleIcon />
               </SvgIcon>
-              {t('users:new-user')}
+              {t('sections:new-section')}
             </Button>
           </Grid>
         </Grid>
 
         <Error />
-        {users && (
+        {sections && (
           <Box mt={3}>
-            <Results users={users} onUserDelete={handleUserDeleteClick} />
+            <Results sections={sections} onSectionDelete={handleSectionDeleteClick} />
           </Box>
         )}
 
-        <UserDeleteModal
-          user={modal.user}
+        <SectionDeleteModal
+          section={modal.section}
           onCancel={handleModalClose}
-          onDelete={handleUserDelete}
+          onDelete={handleSectionDelete}
           open={modal.open}
         />
       </Container>
@@ -153,4 +153,4 @@ function UserListView() {
   );
 }
 
-export default UserListView;
+export default SectionListView;

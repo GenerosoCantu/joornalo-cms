@@ -2,9 +2,9 @@
   "all-users": "All Users",
   "user-list": "User List",
   "new-user": "New User",
-  "last-update-newest-first": "Last update (ascending)",
-  "last-update-oldest-first": "Last update (descending)",
-  "name-ascending": "Name (ascending)",
-  "name-descending": "Name (descending)",
+  "last-update-newest-first": "Last update (asc)",
+  "last-update-oldest-first": "Last update (des)",
+  "name-ascending": "Name (asc)",
+  "name-descending": "Name (des)",
   "search-users": "Search users"
 }

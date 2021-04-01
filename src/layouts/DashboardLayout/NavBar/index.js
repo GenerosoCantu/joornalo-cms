@@ -75,7 +75,6 @@ const navConfig = [
       {
         title: 'Security',
         icon: ShieldIcon,
-        href: '/app/management/users',
         items: [
           {
             title: 'Users',
@@ -92,12 +91,11 @@ const navConfig = [
       {
         title: 'Configuration',
         icon: SettingsIcon,
-        href: '/app/management/products',
         items: [
           {
             title: 'Sections',
             icon: ListIcon,
-            href: '/app/management/products'
+            href: '/app/management/sections'
           },
           {
             title: 'Menus',

@@ -1,8 +1,8 @@
 {
   "default": "Espanol",
-  "dashboard": "Dashboard",
-  "users": "Usuarios",
-  "all": "Todos",
+  "Dashboard": "Dashboard",
+  "Users": "Usuarios",
+  "All": "Todos",
   "UserRoles-Admin": "Admin",
   "UserRoles-Author": "Autor",
   "UserRoles-Editor": "Editor",

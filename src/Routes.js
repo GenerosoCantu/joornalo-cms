@@ -52,21 +52,6 @@ const routesConfig = [
       },
       {
         exact: true,
-        path: '/app/account',
-        component: lazy(() => import('src/views/pages/AccountView'))
-      },
-      {
-        exact: true,
-        path: '/app/reports/dashboard',
-        component: lazy(() => import('src/views/reports/DashboardView'))
-      },
-      {
-        exact: true,
-        path: '/app/reports/dashboard-alternative',
-        component: lazy(() => import('src/views/reports/DashboardAlternativeView'))
-      },
-      {
-        exact: true,
         path: '/app/reports',
         component: () => <Redirect to="/app/reports/dashboard" />
       },
@@ -79,6 +64,33 @@ const routesConfig = [
         exact: true,
         path: '/app/management/users/:userid',
         component: lazy(() => import('src/views/management/UserEditView'))
+      },
+      {
+        exact: true,
+        path: '/app/management/sections',
+        component: lazy(() => import('src/views/management/SectionListView'))
+      },
+      {
+        exact: true,
+        path: '/app/management/sections/:sectionid',
+        component: lazy(() => import('src/views/management/SectionEditView'))
+      },
+
+
+      {
+        exact: true,
+        path: '/app/account',
+        component: lazy(() => import('src/views/pages/AccountView'))
+      },
+      {
+        exact: true,
+        path: '/app/reports/dashboard',
+        component: lazy(() => import('src/views/reports/DashboardView'))
+      },
+      {
+        exact: true,
+        path: '/app/reports/dashboard-alternative',
+        component: lazy(() => import('src/views/reports/DashboardAlternativeView'))
       },
       {
         exact: true,

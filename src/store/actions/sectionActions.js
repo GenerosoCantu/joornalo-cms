@@ -53,6 +53,44 @@ export function getSection(sectionid) {
   };
 }
 
+
+export function createSection() {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: GET_SECTION_REQUEST });
+      const user = {
+        _id: null,
+        name: '',
+        email: '',
+        desc: '',
+        status: 'Pending',
+        oder: 0,
+        config: {
+          front_headlines: true,
+          headline_mode: 'news_flow',
+          split_paragraphs: true,
+          photo_default_size: "default",
+          remainder_subsection: true,
+          subsection_topic: true,
+          summary_max_characters: 300
+        },
+        subsections: [],
+        covers: []
+      }
+      dispatch({
+        type: GET_SECTION,
+        payload: {
+          user
+        }
+      });
+      dispatch(clearError());
+    } catch (error) {
+      dispatch(setError(error));
+      throw error;
+    }
+  };
+}
+
 export function updateSection(section) {
   return async (dispatch) => {
     try {
@@ -62,6 +100,25 @@ export function updateSection(section) {
         type: UPDATE_SECTION,
         payload: {
           section: request
+        }
+      });
+      dispatch(clearError());
+    } catch (error) {
+      dispatch(setError(error));
+      throw error;
+    }
+  };
+}
+
+export function deleteSection(sectionid) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: GET_SECTION_REQUEST });
+      const section = await sectionService.deleteSection(sectionid);
+      dispatch({
+        type: DELETE_SECTION,
+        payload: {
+          section
         }
       });
       dispatch(clearError());

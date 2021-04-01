@@ -1,8 +1,8 @@
 {
   "default": "English",
-  "dashboard": "Dashboard",
-  "users": "Users",
-  "all": "All",
+  "Dashboard": "Dashboard",
+  "Users": "Users",
+  "All": "All",
   "UserRoles-Admin": "Admin",
   "UserRoles-Author": "Author",
   "UserRoles-Editor": "Editor",
