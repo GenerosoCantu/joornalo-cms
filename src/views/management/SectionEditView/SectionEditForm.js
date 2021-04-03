@@ -12,6 +12,7 @@ import { Formik } from 'formik';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router';
 import Toolbar from '@material-ui/core/Toolbar';
+import JooTextField from 'src/components/JooTextField';
 import {
   Box,
   Button,
@@ -200,18 +201,7 @@ function SectionEditForm({
                         md={6}
                         xs={12}
                       >
-                        <TextField
-                          error={Boolean(touched.name && errors.name)}
-                          fullWidth
-                          helperText={touched.name && errors.name}
-                          label="Section Name"
-                          name="name"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          required
-                          value={values.name}
-                          variant="outlined"
-                        />
+                        <JooTextField label="Section Name" name="name" required />
                       </Grid>
 
                       <Grid
@@ -219,26 +209,7 @@ function SectionEditForm({
                         md={6}
                         xs={12}
                       >
-                        <TextField
-                          fullWidth
-                          label="Status"
-                          name="status"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          select
-                          SelectProps={{ native: true }}
-                          value={values.status}
-                          variant="outlined"
-                        >
-                          {SectionStatus.map((status) => (
-                            <option
-                              key={status.id}
-                              value={status.id}
-                            >
-                              {status.name}
-                            </option>
-                          ))}
-                        </TextField>
+                        <JooTextField label="Status" name="status" options={SectionStatus} />
                       </Grid>
 
                       <Grid
@@ -246,18 +217,7 @@ function SectionEditForm({
                         md={6}
                         xs={12}
                       >
-                        <TextField
-                          error={Boolean(touched.id && errors.id)}
-                          fullWidth
-                          helperText={touched.id && errors.id}
-                          label="Section Id"
-                          name="id"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          required
-                          value={values.id}
-                          variant="outlined"
-                        />
+                        <JooTextField label="Section Id" name="id" required />
                       </Grid>
 
                       <Grid
@@ -265,18 +225,7 @@ function SectionEditForm({
                         md={6}
                         xs={12}
                       >
-                        <TextField
-                          error={Boolean(touched.email && errors.email)}
-                          fullWidth
-                          helperText={touched.email && errors.email}
-                          label="Section Email"
-                          name="email"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          required
-                          value={values.email}
-                          variant="outlined"
-                        />
+                        <JooTextField label="Section Email" name="email" />
                       </Grid>
 
                       <Grid
@@ -284,20 +233,7 @@ function SectionEditForm({
                         md={12}
                         xs={12}
                       >
-                        <TextField
-                          error={Boolean(touched.desc && errors.desc)}
-                          fullWidth
-                          multiline
-                          rows={2}
-                          helperText={touched.desc && errors.desc}
-                          label="Section Description"
-                          name="desc"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          required
-                          value={values.desc}
-                          variant="outlined"
-                        />
+                        <JooTextField label="Section Description" name="desc" rows="2" />
                       </Grid>
 
                     </Grid>
@@ -486,19 +422,7 @@ function SectionEditForm({
                           </Typography>
                         </TableCell>
                         <TableCell padding="default" align="right" className={classes.configCell}>
-                          <TextField
-                            error={Boolean(touched.summary_max_characters && errors.summary_max_characters)}
-                            fullWidth
-                            helperText={touched.summary_max_characters && errors.summary_max_characters}
-                            label=""
-                            name="summary_max_characters"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            required
-                            value={values.summary_max_characters}
-                            margin="dense"
-                            variant="outlined"
-                          />
+                          <JooTextField label="" name="summary_max_characters" required />
                         </TableCell>
                       </TableRow>
 
@@ -512,26 +436,7 @@ function SectionEditForm({
                           </Typography>
                         </TableCell>
                         <TableCell padding="default" align="right" className={classes.configCell}>
-                          <TextField
-                            fullWidth
-                            name="photo_default_size"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            select
-                            SelectProps={{ native: true }}
-                            value={values.photo_default_size}
-                            margin="dense"
-                            variant="outlined"
-                          >
-                            {PhotoSizes.map((size) => (
-                              <option
-                                key={size.id}
-                                value={size.id}
-                              >
-                                {size.name}
-                              </option>
-                            ))}
-                          </TextField>
+                          <JooTextField label="" name="photo_default_size" options={PhotoSizes} />
                         </TableCell>
                       </TableRow>
 
@@ -566,6 +471,13 @@ function SectionEditForm({
                 </Box>
               )}
 
+            </Box>
+
+            <Divider />
+            <Box >
+              <div>{JSON.stringify(values, null, 2)}</div>
+              <Divider />
+              <div>{JSON.stringify(errors, null, 2)}</div>
             </Box>
 
           </Grid>

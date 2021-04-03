@@ -1,17 +1,12 @@
-import React, {
-  useState
-} from 'react';
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import * as Yup from 'yup';
-import { Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router';
-import wait from 'src/utils/wait';
+import JooTextField from 'src/components/JooTextField';
 import {
   Box,
   Button,
@@ -19,23 +14,16 @@ import {
   CardContent,
   Checkbox,
   Divider,
-  FormControlLabel,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Grid,
   Switch,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
   TableRow,
-  TextField,
   Typography,
   makeStyles,
-  FormHelperText, CardHeader
+  FormHelperText
 } from '@material-ui/core';
 import { updateUser, createUser } from 'src/store/actions/userActions';
 import { UserRoles, StatusTypes } from 'src/constants';
@@ -114,7 +102,7 @@ function UserEditForm({
         modules: user.modules || []
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+        email: Yup.string().email('Must be a valid email').max(255, 'Email Address must be at most 255 characters').required('Email is required'),
         firstName: Yup.string().max(255).required('First Name is required'),
         lastName: Yup.string().max(255).required('Last Name is required'),
         phone: Yup.string().max(15),
@@ -159,10 +147,8 @@ function UserEditForm({
         touched,
         values
       }) => (
-        <form
+        <Form
           className={clsx(classes.root, className)}
-          onSubmit={handleSubmit}
-          {...rest}
         >
           <Grid
             container
@@ -186,18 +172,7 @@ function UserEditForm({
                         md={6}
                         xs={12}
                       >
-                        <TextField
-                          error={Boolean(touched.email && errors.email)}
-                          fullWidth
-                          helperText={touched.email && errors.email}
-                          label="Email Address"
-                          name="email"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          required
-                          value={values.email}
-                          variant="outlined"
-                        />
+                        <JooTextField label="Email Address" name="email" />
                       </Grid>
 
                       <Grid
@@ -205,25 +180,7 @@ function UserEditForm({
                         md={6}
                         xs={12}
                       >
-                        <TextField
-                          fullWidth
-                          label="Role"
-                          name="role"
-                          onChange={handleChange}
-                          select
-                          SelectProps={{ native: true }}
-                          value={values.role}
-                          variant="outlined"
-                        >
-                          {UserRoles.map((role) => (
-                            <option
-                              key={role.id}
-                              value={role.id}
-                            >
-                              {role.name}
-                            </option>
-                          ))}
-                        </TextField>
+                        <JooTextField label="Role" name="role" options={UserRoles} />
                       </Grid>
 
                       <Grid
@@ -231,18 +188,7 @@ function UserEditForm({
                         md={6}
                         xs={12}
                       >
-                        <TextField
-                          error={Boolean(touched.firstName && errors.firstName)}
-                          fullWidth
-                          helperText={touched.firstName && errors.firstName}
-                          label="First Name"
-                          name="firstName"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          required
-                          value={values.firstName}
-                          variant="outlined"
-                        />
+                        <JooTextField label="First Name" name="firstName" />
                       </Grid>
 
                       <Grid
@@ -250,18 +196,7 @@ function UserEditForm({
                         md={6}
                         xs={12}
                       >
-                        <TextField
-                          error={Boolean(touched.lastName && errors.lastName)}
-                          fullWidth
-                          helperText={touched.lastName && errors.lastName}
-                          label="Last Name"
-                          name="lastName"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          required
-                          value={values.lastName}
-                          variant="outlined"
-                        />
+                        <JooTextField label="Last Name" name="lastName" />
                       </Grid>
 
                       <Grid
@@ -269,17 +204,7 @@ function UserEditForm({
                         md={6}
                         xs={12}
                       >
-                        <TextField
-                          error={Boolean(touched.phone && errors.phone)}
-                          fullWidth
-                          helperText={touched.phone && errors.phone}
-                          label="Phone Number"
-                          name="phone"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={values.phone}
-                          variant="outlined"
-                        />
+                        <JooTextField label="Phone Number" name="phone" />
                       </Grid>
 
                       <Grid
@@ -287,25 +212,7 @@ function UserEditForm({
                         md={6}
                         xs={12}
                       >
-                        <TextField
-                          fullWidth
-                          label="Status"
-                          name="status"
-                          onChange={handleChange}
-                          select
-                          SelectProps={{ native: true }}
-                          value={values.status}
-                          variant="outlined"
-                        >
-                          {StatusTypes.map((status) => (
-                            <option
-                              key={status.id}
-                              value={status.id}
-                            >
-                              {status.name}
-                            </option>
-                          ))}
-                        </TextField>
+                        <JooTextField label="Status" name="status" options={StatusTypes} />
                       </Grid>
 
                       <Grid
@@ -501,11 +408,10 @@ function UserEditForm({
                   </FormHelperText>
                 </Box>
               )}
-
             </Box>
 
           </Grid>
-        </form>
+        </Form>
       )
       }
     </Formik >
