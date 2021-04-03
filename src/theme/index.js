@@ -54,7 +54,7 @@ const themeConfigs = [
         paper: colors.common.white
       },
       primary: {
-        main: colors.lightBlue[800]
+        main: colors.lightBlue[900]
       },
       secondary: {
         main: '#2699DC' //'#5850EC'

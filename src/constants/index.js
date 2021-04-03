@@ -66,3 +66,41 @@ export const StatusTypes = [
     name: 'Suspended'
   }
 ];
+
+export const SectionStatus = [
+  {
+    id: 'Active',
+    name: 'Active'
+  },
+  {
+    id: 'Inactive',
+    name: 'Inactive'
+  },
+  {
+    id: 'Cancelled',
+    name: 'Cancelled'
+  }
+];
+
+export const PhotoSizes = [
+  {
+    id: 'df',
+    name: 'Default'
+  },
+  {
+    id: 'sm',
+    name: 'Small'
+  },
+  {
+    id: 'md',
+    name: 'Medium'
+  },
+  {
+    id: 'lg',
+    name: 'Large'
+  },
+  {
+    id: 'xl',
+    name: 'Extra Large'
+  }
+];

@@ -11,7 +11,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router';
-import wait from 'src/utils/wait';
+import Toolbar from '@material-ui/core/Toolbar';
 import {
   Box,
   Button,
@@ -19,12 +19,14 @@ import {
   CardContent,
   Checkbox,
   Divider,
+  IconButton,
   FormControlLabel,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Grid,
+  SvgIcon,
   Switch,
   Table,
   TableBody,
@@ -35,14 +37,21 @@ import {
   TextField,
   Typography,
   makeStyles,
-  FormHelperText, CardHeader
+  FormHelperText
 } from '@material-ui/core';
+import {
+  Edit as EditIcon,
+  Trash as TrashIcon
+} from 'react-feather';
 import { updateSection, createSection } from 'src/store/actions/sectionActions';
-// import { SectionRoles, StatusTypes } from 'src/constants';
+import { SectionStatus, PhotoSizes } from 'src/constants';
 
 
 const useStyles = makeStyles(() => ({
-  root: {}
+  root: {},
+  configCell: {
+    width: "180px"
+  }
 }));
 
 function SectionEditForm({
@@ -64,10 +73,8 @@ function SectionEditForm({
   // const [selectedModules, setSelectedModules] = useState(section.modules);
 
   // const selectedSomeSections = selectedSections.length > 0 && selectedSections.length < sectionsOption.length;
-  // const selectedAllSections = selectedSections.length === sectionsOption.length;
 
   // const selectedSomeModules = selectedModules.length > 0 && selectedModules.length < modulesOption.length;
-  // const selectedAllModules = selectedModules.length === modulesOption.length;
 
   const saveButtonText = (!section._id) ? "Create Section" : "Update Section";
 
@@ -87,42 +94,44 @@ function SectionEditForm({
   //   }
   // };
 
-  // const handleSelectAllSections = (event) => {
-  //   setSelectedSections(event.target.checked
-  //     ? sectionsOption.map((section) => section.id)
-  //     : []);
-  // };
+  const onSubSectionDelete = (SubSectionId) => {
+    console.log(SubSectionId);
+  }
 
-  // const handleSelectAllModules = (event) => {
-  //   setSelectedModules(event.target.checked
-  //     ? modulesOption.map((module) => module.id)
-  //     : []);
-  // };
 
   return (
     <Formik
       initialValues={{
-        _id: section._id || null,
+        name: section.name || '',
+        id: section.id || '',
         email: section.email || '',
-        role: section.role || 'Author',
-        firstName: section.firstName || '',
-        lastName: section.lastName || '',
-        phone: section.phone || '',
-        status: section.status || 'Pending',
-        verified: section.verified || true,
-        locked: section.locked || false,
-        sections: section.sections || [],
-        modules: section.modules || []
+        status: section.status || 'Inactive',
+        desc: section.desc || '',
+        subsections: section.subsections || [],
+        covers: section.covers || [],
+        front_include_headlines: section.config.front_include_headlines || true,
+        front_include_most_viewed: section.config.front_include_most_viewed || true,
+        split_paragraphs: section.config.split_paragraphs || true,
+        summary_max_characters: section.config.summary_max_characters || 300,
+        photo_default_size: section.config.photo_default_size || 'df'
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-        firstName: Yup.string().max(255).required('First Name is required'),
-        lastName: Yup.string().max(255).required('Last Name is required'),
-        phone: Yup.string().max(15),
-        verified: Yup.bool(),
-        locked: Yup.bool(),
-        sections: Yup.array(),
-        modules: Yup.array()
+        name: Yup.string()
+          .max(255, 'Maximum 255 characters')
+          .required('Section Name is required'),
+        id: Yup.string()
+          .max(128, 'Maximum 128 characters')
+          .required('Section Id is required'),
+        email: Yup.string()
+          .email('Must be a valid email')
+          .max(255, 'Maximum 255 characters')
+          .required('Section Email is required'),
+        desc: Yup.string()
+          .max(500, 'Maximum 500 characters for Section Description'),
+        summary_max_characters: Yup.number()
+          .typeError('Must be a numeric value.')
+          .integer('Must be a integer value.')
+          .required('Must enter a numeric value.')
       })}
       onSubmit={async (values, {
         resetForm,
@@ -130,14 +139,18 @@ function SectionEditForm({
         setStatus,
         setSubmitting
       }) => {
+        console.log(values);
         try {
+          console.log(values);
+
           setSubmitting(false);
+
           // values = { ...values, sections: selectedSections, modules: selectedModules };
-          if (!section._id) {
-            await dispatch(createSection(values));
-          } else {
-            await dispatch(updateSection(values));
-          }
+          // if (!section._id) {
+          //   await dispatch(createSection(values));
+          // } else {
+          //   await dispatch(updateSection(values));
+          // }
           enqueueSnackbar('Section updated', {
             variant: 'success'
           });
@@ -188,97 +201,15 @@ function SectionEditForm({
                         xs={12}
                       >
                         <TextField
-                          error={Boolean(touched.email && errors.email)}
+                          error={Boolean(touched.name && errors.name)}
                           fullWidth
-                          helperText={touched.email && errors.email}
-                          label="Email Address"
-                          name="email"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          required
-                          value={values.email}
-                          variant="outlined"
-                        />
-                      </Grid>
-                      {/* 
-                      <Grid
-                        item
-                        md={6}
-                        xs={12}
-                      >
-                        <TextField
-                          fullWidth
-                          label="Role"
-                          name="role"
-                          onChange={handleChange}
-                          select
-                          SelectProps={{ native: true }}
-                          value={values.role}
-                          variant="outlined"
-                        >
-                          {SectionRoles.map((role) => (
-                            <option
-                              key={role.id}
-                              value={role.id}
-                            >
-                              {role.name}
-                            </option>
-                          ))}
-                        </TextField>
-                      </Grid>
-
-                      <Grid
-                        item
-                        md={6}
-                        xs={12}
-                      >
-                        <TextField
-                          error={Boolean(touched.firstName && errors.firstName)}
-                          fullWidth
-                          helperText={touched.firstName && errors.firstName}
+                          helperText={touched.name && errors.name}
                           label="Section Name"
                           name="name"
                           onBlur={handleBlur}
                           onChange={handleChange}
                           required
                           value={values.name}
-                          variant="outlined"
-                        />
-                      </Grid> */}
-
-                      {/* <Grid
-                        item
-                        md={6}
-                        xs={12}
-                      >
-                        <TextField
-                          error={Boolean(touched.lastName && errors.lastName)}
-                          fullWidth
-                          helperText={touched.lastName && errors.lastName}
-                          label="Last Name"
-                          name="lastName"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          required
-                          value={values.lastName}
-                          variant="outlined"
-                        />
-                      </Grid>
-
-                      <Grid
-                        item
-                        md={6}
-                        xs={12}
-                      >
-                        <TextField
-                          error={Boolean(touched.phone && errors.phone)}
-                          fullWidth
-                          helperText={touched.phone && errors.phone}
-                          label="Phone Number"
-                          name="phone"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={values.phone}
                           variant="outlined"
                         />
                       </Grid>
@@ -292,13 +223,14 @@ function SectionEditForm({
                           fullWidth
                           label="Status"
                           name="status"
+                          onBlur={handleBlur}
                           onChange={handleChange}
                           select
                           SelectProps={{ native: true }}
                           value={values.status}
                           variant="outlined"
                         >
-                          {StatusTypes.map((status) => (
+                          {SectionStatus.map((status) => (
                             <option
                               key={status.id}
                               value={status.id}
@@ -314,26 +246,17 @@ function SectionEditForm({
                         md={6}
                         xs={12}
                       >
-                        <Typography
-                          variant="h5"
-                          color="textPrimary"
-                        >
-                          Email Verified
-                          </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                        >
-                          Disabling this will automatically send the section a verification
-                          email
-                          </Typography>
-                        <Switch
-                          checked={values.verified}
-                          color="secondary"
-                          edge="start"
-                          name="verified"
+                        <TextField
+                          error={Boolean(touched.id && errors.id)}
+                          fullWidth
+                          helperText={touched.id && errors.id}
+                          label="Section Id"
+                          name="id"
+                          onBlur={handleBlur}
                           onChange={handleChange}
-                          value={values.verified}
+                          required
+                          value={values.id}
+                          variant="outlined"
                         />
                       </Grid>
 
@@ -342,27 +265,40 @@ function SectionEditForm({
                         md={6}
                         xs={12}
                       >
-                        <Typography
-                          variant="h5"
-                          color="textPrimary"
-                        >
-                          Locked
-                          </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                        >
-                          Locked account can not login into the system.
-                          </Typography>
-                        <Switch
-                          checked={values.locked}
-                          color="secondary"
-                          edge="start"
-                          name="locked"
+                        <TextField
+                          error={Boolean(touched.email && errors.email)}
+                          fullWidth
+                          helperText={touched.email && errors.email}
+                          label="Section Email"
+                          name="email"
+                          onBlur={handleBlur}
                           onChange={handleChange}
-                          value={values.verified}
+                          required
+                          value={values.email}
+                          variant="outlined"
                         />
-                      </Grid> */}
+                      </Grid>
+
+                      <Grid
+                        item
+                        md={12}
+                        xs={12}
+                      >
+                        <TextField
+                          error={Boolean(touched.desc && errors.desc)}
+                          fullWidth
+                          multiline
+                          rows={2}
+                          helperText={touched.desc && errors.desc}
+                          label="Section Description"
+                          name="desc"
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          required
+                          value={values.desc}
+                          variant="outlined"
+                        />
+                      </Grid>
 
                     </Grid>
 
@@ -370,7 +306,7 @@ function SectionEditForm({
                 </Card>
               </Box>
             </Grid>
-            {/* 
+
             <Grid
               item
               xs={12}
@@ -378,47 +314,90 @@ function SectionEditForm({
             >
               <Box mt={3}>
                 <Card>
-                  <Table>
+                  <Toolbar
+                    style={{ paddingLeft: 16 }}
+                    variant="dense"
+                  >
+                    <Typography
+                      variant="h4"
+                    >Sub-Sections</Typography>
+                  </Toolbar>
+                  <Table
+                    size="small"
+                  >
                     <TableHead>
                       <TableRow>
-                        <TableCell padding="checkbox">
-                          <Checkbox
-                            checked={selectedAllSections}
-                            indeterminate={selectedSomeSections}
-                            onChange={handleSelectAllSections}
-                          />
+                        <TableCell>
+                          Name
                         </TableCell>
                         <TableCell>
-                          Access to this Sections
-                          </TableCell>
+                          Id
+                        </TableCell>
+                        <TableCell align="right">
+                          Actions
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {sectionsOption.map((section, i) => {
-                        const isSectionSelected = selectedSections.includes(section.id);
-                        return (
-                          <TableRow
-                            hover
-                            key={section.id}
+                      {values.subsections.map((subsection) => (
+                        <TableRow
+                          hover
+                          key={subsection.id}
+                          style={{ height: 33 }}
+                        >
+                          <TableCell>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                            >
+                              {subsection.name}
+                            </Typography>
+                          </TableCell>
+
+                          <TableCell>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                            >
+                              {subsection.id}
+                            </Typography>
+                          </TableCell>
+
+                          <TableCell
+                            align="right"
                           >
-                            <TableCell padding="checkbox">
-                              <Checkbox
-                                checked={isSectionSelected}
-                                onChange={(event) => handleSelectSection(event, section.id)}
-                                value={isSectionSelected}
-                              />
-                            </TableCell>
-                            <TableCell>
-                              <Typography
-                                variant="body2"
-                                color="textSecondary"
-                              >
-                                {section.name}
-                              </Typography>
-                            </TableCell>
-                          </TableRow>
-                        )
-                      })}
+                            <IconButton>
+                              <SvgIcon fontSize="small">
+                                <EditIcon />
+                              </SvgIcon>
+                            </IconButton>
+                            <IconButton
+                              onClick={() => onSubSectionDelete(subsection.id)}
+                            >
+                              <SvgIcon fontSize="small">
+                                <TrashIcon />
+                              </SvgIcon>
+                            </IconButton>
+                          </TableCell>
+
+                        </TableRow>
+                      ))}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     </TableBody>
                   </Table>
 
@@ -433,54 +412,138 @@ function SectionEditForm({
             >
               <Box mt={3}>
                 <Card>
-                  <Table>
-                    <TableHead>
+                  <Table
+                    size="small"
+                  >
+                    <TableBody>
                       <TableRow>
-                        <TableCell padding="checkbox">
+
+                        <TableCell>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                          >
+                            Include <b>Section Headlines</b> in Front page
+                        </Typography>
+                        </TableCell>
+                        <TableCell padding="default" align="right" className={classes.configCell}>
                           <Checkbox
-                            checked={selectedAllModules}
-                            indeterminate={selectedSomeModules}
-                            onChange={handleSelectAllModules}
+                            checked={values.front_include_headlines}
+                            name="front_include_headlines"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
                           />
                         </TableCell>
-                        <TableCell>
-                          Access to this Modules
-                          </TableCell>
                       </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {modulesOption.map((module, i) => {
-                        const isModuleSelected = selectedModules.includes(module.id);
-                        return (
-                          <TableRow
-                            hover
-                            key={module.id}
+
+                      <TableRow>
+
+                        <TableCell>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
                           >
-                            <TableCell padding="checkbox">
-                              <Checkbox
-                                checked={isModuleSelected}
-                                onChange={(event) => handleSelectModule(event, module.id)}
-                                value={isModuleSelected}
-                              />
-                            </TableCell>
-                            <TableCell>
-                              <Typography
-                                variant="body2"
-                                color="textSecondary"
+                            Include section <b>Top News</b> in Front page
+                        </Typography>
+                        </TableCell>
+                        <TableCell padding="default" align="right" className={classes.configCell}>
+                          <Checkbox
+                            checked={values.front_include_most_viewed}
+                            name="front_include_most_viewed"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                          />
+                        </TableCell>
+                      </TableRow>
+
+                      <TableRow>
+
+                        <TableCell>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                          >
+                            <b>Split Paragraphs</b> before saving
+                        </Typography>
+                        </TableCell>
+                        <TableCell padding="default" align="right" className={classes.configCell}>
+                          <Checkbox
+                            checked={values.split_paragraphs}
+                            name="split_paragraphs"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                          />
+                        </TableCell>
+                      </TableRow>
+
+                      <TableRow>
+                        <TableCell>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                          >
+                            <b>Summary</b> maximum <b>characters</b>
+                          </Typography>
+                        </TableCell>
+                        <TableCell padding="default" align="right" className={classes.configCell}>
+                          <TextField
+                            error={Boolean(touched.summary_max_characters && errors.summary_max_characters)}
+                            fullWidth
+                            helperText={touched.summary_max_characters && errors.summary_max_characters}
+                            label=""
+                            name="summary_max_characters"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            required
+                            value={values.summary_max_characters}
+                            margin="dense"
+                            variant="outlined"
+                          />
+                        </TableCell>
+                      </TableRow>
+
+                      <TableRow>
+                        <TableCell>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                          >
+                            <b>Photo</b> default <b>size</b>
+                          </Typography>
+                        </TableCell>
+                        <TableCell padding="default" align="right" className={classes.configCell}>
+                          <TextField
+                            fullWidth
+                            name="photo_default_size"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            select
+                            SelectProps={{ native: true }}
+                            value={values.photo_default_size}
+                            margin="dense"
+                            variant="outlined"
+                          >
+                            {PhotoSizes.map((size) => (
+                              <option
+                                key={size.id}
+                                value={size.id}
                               >
-                                {module.name}
-                              </Typography>
-                            </TableCell>
-                          </TableRow>
-                        )
-                      })}
+                                {size.name}
+                              </option>
+                            ))}
+                          </TextField>
+                        </TableCell>
+                      </TableRow>
+
                     </TableBody>
                   </Table>
+
                 </Card>
               </Box>
             </Grid>
 
-            <Divider /> */}
+            <Divider />
+
             <Box
               p={2}
               display="flex"
