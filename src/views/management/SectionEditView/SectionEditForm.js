@@ -51,7 +51,17 @@ import { SectionStatus, PhotoSizes } from 'src/constants';
 const useStyles = makeStyles(() => ({
   root: {},
   configCell: {
-    width: "180px"
+    width: '180px'
+  },
+  hidden: {
+    display: 'none'
+  },
+  subsec: {
+    width: '43%',
+    cursor: 'pointer'
+  },
+  denseInput: {
+    margin: '2px 0'
   }
 }));
 
@@ -67,6 +77,9 @@ function SectionEditForm({
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [toggle, setToggle] = useState({});
+  const [isActive, setActive] = useState("false");
+
   // const sectionsOption = sections.map(({ id, name }) => ({ id, name, selected: section.sections.includes(id) }));
   // const modulesOption = modules.map(({ id, name }) => ({ id, name, selected: section.modules.includes(id) }));
 
@@ -78,6 +91,7 @@ function SectionEditForm({
   // const selectedSomeModules = selectedModules.length > 0 && selectedModules.length < modulesOption.length;
 
   const saveButtonText = (!section._id) ? "Create Section" : "Update Section";
+
 
   // const handleSelectSection = (event, sectionId) => {
   //   if (!selectedSections.includes(sectionId)) {
@@ -95,8 +109,21 @@ function SectionEditForm({
   //   }
   // };
 
+
   const onSubSectionDelete = (SubSectionId) => {
     console.log(SubSectionId);
+  }
+
+  const toggleEditField = (index, soi, turnOn) => {
+    let tmp = toggle;
+    for (const key in tmp) {
+      tmp[key] = false;
+    }
+    if (index >= 0) {
+      tmp[`${soi}${index}`] = turnOn;
+    }
+    setToggle(tmp);
+    setActive(!isActive);
   }
 
 
@@ -275,38 +302,60 @@ function SectionEditForm({
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {values.subsections.map((subsection) => (
+                      {values.subsections.map((subsection, index) => (
                         <TableRow
                           hover
                           key={subsection.id}
                           style={{ height: 33 }}
                         >
-                          <TableCell>
-                            <Typography
-                              variant="body2"
-                              color="textSecondary"
-                            >
+                          <TableCell
+                            className={classes.subsec}
+                          >
+                            <div
+                              className={toggle[`s${index}`] ? classes.hidden : null}
+                              onClick={() => toggleEditField(index, 's', true)}>
+
                               {subsection.name}
-                            </Typography>
+                            </div>
+                            <div
+                              className={!toggle[`s${index}`] ? classes.hidden : null}
+                            >
+                              <JooTextField
+                                className={classes.denseInput}
+                                label=""
+                                name={`subsections.${index}.name`}
+                                margin="dense"
+                                onBlur={() => toggleEditField(index, 's', false)}
+                                required />
+                            </div>
+
                           </TableCell>
 
-                          <TableCell>
-                            <Typography
-                              variant="body2"
-                              color="textSecondary"
-                            >
+                          <TableCell
+                            className={classes.subsec}
+                          >
+                            <div
+                              className={toggle[`i${index}`] ? classes.hidden : null}
+                              onClick={() => toggleEditField(index, 'i', true)}>
                               {subsection.id}
-                            </Typography>
+                            </div>
+                            <div
+                              className={!toggle[`i${index}`] ? classes.hidden : null}
+                            >
+                              <JooTextField
+                                className={classes.denseInput}
+                                label=""
+                                name={`subsections.${index}.id`}
+                                margin="dense"
+                                variant="dense"
+                                onBlur={() => toggleEditField(index, 'i', false)}
+                                required />
+                            </div>
                           </TableCell>
 
                           <TableCell
                             align="right"
                           >
-                            <IconButton>
-                              <SvgIcon fontSize="small">
-                                <EditIcon />
-                              </SvgIcon>
-                            </IconButton>
                             <IconButton
                               onClick={() => onSubSectionDelete(subsection.id)}
                             >
@@ -318,21 +367,6 @@ function SectionEditForm({
 
                         </TableRow>
                       ))}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     </TableBody>
                   </Table>
@@ -348,6 +382,14 @@ function SectionEditForm({
             >
               <Box mt={3}>
                 <Card>
+                  <Toolbar
+                    style={{ paddingLeft: 16 }}
+                    variant="dense"
+                  >
+                    <Typography
+                      variant="h4"
+                    >Configuration</Typography>
+                  </Toolbar>
                   <Table
                     size="small"
                   >
@@ -422,7 +464,13 @@ function SectionEditForm({
                           </Typography>
                         </TableCell>
                         <TableCell padding="default" align="right" className={classes.configCell}>
-                          <JooTextField label="" name="summary_max_characters" required />
+                          <JooTextField
+                            label=""
+                            name="summary_max_characters"
+                            margin="dense"
+                            className={classes.denseInput}
+                            required
+                          />
                         </TableCell>
                       </TableRow>
 
@@ -436,7 +484,13 @@ function SectionEditForm({
                           </Typography>
                         </TableCell>
                         <TableCell padding="default" align="right" className={classes.configCell}>
-                          <JooTextField label="" name="photo_default_size" options={PhotoSizes} />
+                          <JooTextField
+                            label=""
+                            name="photo_default_size"
+                            margin="dense"
+                            options={PhotoSizes}
+                            className={classes.denseInput}
+                          />
                         </TableCell>
                       </TableRow>
 
@@ -473,12 +527,12 @@ function SectionEditForm({
 
             </Box>
 
-            <Divider />
+            {/* <Divider />
             <Box >
-              <div>{JSON.stringify(values, null, 2)}</div>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
               <Divider />
               <div>{JSON.stringify(errors, null, 2)}</div>
-            </Box>
+            </Box> */}
 
           </Grid>
         </form>
