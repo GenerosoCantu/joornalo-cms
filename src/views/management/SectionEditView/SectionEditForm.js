@@ -312,7 +312,9 @@ function SectionEditForm({
                             className={classes.subsec}
                           >
                             <div
+                              tabindex="0"
                               className={toggle[`s${index}`] ? classes.hidden : null}
+                              onKeyPress={() => toggleEditField(index, 's', true)}
                               onClick={() => toggleEditField(index, 's', true)}>
 
                               {subsection.name}
@@ -326,6 +328,7 @@ function SectionEditForm({
                                 name={`subsections.${index}.name`}
                                 margin="dense"
                                 onBlur={() => toggleEditField(index, 's', false)}
+                                inputRef={input => input && input.focus()}
                                 required />
                             </div>
 
@@ -335,7 +338,9 @@ function SectionEditForm({
                             className={classes.subsec}
                           >
                             <div
+                              tabindex="0"
                               className={toggle[`i${index}`] ? classes.hidden : null}
+                              onKeyPress={() => toggleEditField(index, 'i', true)}
                               onClick={() => toggleEditField(index, 'i', true)}>
                               {subsection.id}
                             </div>
@@ -347,8 +352,8 @@ function SectionEditForm({
                                 label=""
                                 name={`subsections.${index}.id`}
                                 margin="dense"
-                                variant="dense"
                                 onBlur={() => toggleEditField(index, 'i', false)}
+                                inputRef={input => input && input.focus()}
                                 required />
                             </div>
                           </TableCell>
@@ -358,6 +363,7 @@ function SectionEditForm({
                           >
                             <IconButton
                               onClick={() => onSubSectionDelete(subsection.id)}
+                              tabindex="-1"
                             >
                               <SvgIcon fontSize="small">
                                 <TrashIcon />

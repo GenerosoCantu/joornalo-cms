@@ -53,8 +53,8 @@ class AuthService {
   loginInWithToken = () => new Promise((resolve, reject) => {
     axios.get('http://localhost:4000/users/profile')
       .then((response) => {
-        if (response.data.user) {
-          resolve(response.data.user);
+        if (response.data) {
+          resolve(response.data);
         } else {
           reject(response.data.error);
         }

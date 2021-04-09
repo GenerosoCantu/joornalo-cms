@@ -7,6 +7,10 @@ const JooTextField = ({
   required,
   rows,
   options,
+  margin,
+  onBlur,
+  className,
+  inputRef,
   ...props
 }) => {
   const [field, meta] = useField(props);
@@ -21,6 +25,10 @@ const JooTextField = ({
       {...field}
       helperText={errorText}
       error={!!errorText}
+      margin={margin}
+      onBlur={onBlur}
+      className={className}
+      inputRef={inputRef}
       variant="outlined"
       fullWidth
       select={options ? true : false}
