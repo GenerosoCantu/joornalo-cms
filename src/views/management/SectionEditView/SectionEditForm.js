@@ -8,11 +8,15 @@ import {
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import * as Yup from 'yup';
-import { Formik } from 'formik';
+import { Formik, FieldArray } from 'formik';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router';
 import Toolbar from '@material-ui/core/Toolbar';
 import JooTextField from 'src/components/JooTextField';
+import ConfirmationDialog from 'src/components/ConfirmationDialog'
+import {
+  PlusCircle as PlusCircleIcon
+} from 'react-feather';
 import {
   Box,
   Button,
@@ -46,9 +50,10 @@ import {
 } from 'react-feather';
 import { updateSection, createSection } from 'src/store/actions/sectionActions';
 import { SectionStatus, PhotoSizes } from 'src/constants';
+import { CompareArrowsOutlined } from '@material-ui/icons';
 
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {},
   configCell: {
     width: '180px'
@@ -61,15 +66,31 @@ const useStyles = makeStyles(() => ({
     cursor: 'pointer'
   },
   denseInput: {
-    margin: '2px 0'
+    margin: '2px 0',
+  },
+  cssOutlinedInput: {
+    '&$cssFocused $notchedOutline': {
+      borderColor: `${theme.palette.primary.main} !important`,
+    },
+    '&:hover:not($disabled):not($cssFocused):not($error) $notchedOutline': {
+      borderColor: `black!important`,
+    }
+  },
+  cssHover: {
+    '&:hover': {
+      borderColor: "red !important"
+    }
+  },
+  cssFocused: {},
+  notchedOutline: {
+    borderWidth: '1px',
+    borderColor: 'white !important',
   }
 }));
 
 function SectionEditForm({
   className,
   section,
-  sections,
-  modules,
   ...rest
 }) {
   const classes = useStyles();
@@ -77,8 +98,10 @@ function SectionEditForm({
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [toggle, setToggle] = useState({});
-  const [isActive, setActive] = useState("false");
+  // const [toggle, setToggle] = useState({});
+  // const [isActive, setActive] = useState("false");
+  const [confirmDialog, setConfirmDialog] = useState(false);
+  const [activeSubSection, setActiveSubSection] = useState({});
 
   // const sectionsOption = sections.map(({ id, name }) => ({ id, name, selected: section.sections.includes(id) }));
   // const modulesOption = modules.map(({ id, name }) => ({ id, name, selected: section.modules.includes(id) }));
@@ -110,21 +133,36 @@ function SectionEditForm({
   // };
 
 
-  const onSubSectionDelete = (SubSectionId) => {
-    console.log(SubSectionId);
+  const onSubSectionDelete = (subsection) => {
+    console.log(subsection);
+    setConfirmDialog(true);
+    setActiveSubSection(subsection);
+    console.log(confirmDialog);
   }
 
-  const toggleEditField = (index, soi, turnOn) => {
-    let tmp = toggle;
-    for (const key in tmp) {
-      tmp[key] = false;
-    }
-    if (index >= 0) {
-      tmp[`${soi}${index}`] = turnOn;
-    }
-    setToggle(tmp);
-    setActive(!isActive);
+  const handleOnClickContinue = () => {
+    console.log('handleOnClickContinue--------------------', activeSubSection);
+    setConfirmDialog(false);
+
+    console.log(section);
+
   }
+
+  const handleOnClickCancel = () => {
+    setConfirmDialog(false);
+  }
+
+  // const toggleEditField = (index, soi, turnOn) => {
+  //   let tmp = toggle;
+  //   for (const key in tmp) {
+  //     tmp[key] = false;
+  //   }
+  //   if (index >= 0) {
+  //     tmp[`${soi}${index}`] = turnOn;
+  //   }
+  //   setToggle(tmp);
+  //   setActive(!isActive);
+  // }
 
 
   return (
@@ -201,6 +239,7 @@ function SectionEditForm({
         touched,
         values
       }) => (
+
         <form
           className={clsx(classes.root, className)}
           onSubmit={handleSubmit}
@@ -276,108 +315,128 @@ function SectionEditForm({
               sm={6}
             >
               <Box mt={3}>
-                <Card>
-                  <Toolbar
-                    style={{ paddingLeft: 16 }}
-                    variant="dense"
-                  >
-                    <Typography
-                      variant="h4"
-                    >Sub-Sections</Typography>
-                  </Toolbar>
-                  <Table
-                    size="small"
-                  >
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>
-                          Name
-                        </TableCell>
-                        <TableCell>
-                          Id
-                        </TableCell>
-                        <TableCell align="right">
-                          Actions
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {values.subsections.map((subsection, index) => (
-                        <TableRow
-                          hover
-                          key={subsection.id}
-                          style={{ height: 33 }}
+
+                <FieldArray name="subsections">
+                  {arrayHelpers => (
+                    <Card>
+                      <Toolbar
+                        style={{ paddingLeft: 16, paddingRight: 16, flexGrow: 1 }}
+                        variant="dense"
+                      >
+                        <Typography
+                          variant="h4"
+                          style={{ flex: 1 }}
+                        >Sub-Sections</Typography>
+
+                        <IconButton
+                          onClick={() => arrayHelpers.push({
+                            "id": "",
+                            "name": ""
+                          })}
+                          color="primary"
+                          aria-label="Add Sub-Sections"
                         >
-                          <TableCell
-                            className={classes.subsec}
-                          >
-                            <div
-                              tabindex="0"
-                              className={toggle[`s${index}`] ? classes.hidden : null}
-                              onKeyPress={() => toggleEditField(index, 's', true)}
-                              onClick={() => toggleEditField(index, 's', true)}>
+                          <PlusCircleIcon />
+                        </IconButton>
 
-                              {subsection.name}
-                            </div>
-                            <div
-                              className={!toggle[`s${index}`] ? classes.hidden : null}
+                      </Toolbar>
+
+                      <Table
+                        size="small"
+                      >
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>
+                              Name
+                            </TableCell>
+                            <TableCell>
+                              Id
+                            </TableCell>
+                            <TableCell align="right">
+                              Actions
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {values.subsections.map((subsection, index) => (
+                            <TableRow
+                              hover
+                              key={index}
+                              style={{ height: 33 }}
                             >
-                              <JooTextField
-                                className={classes.denseInput}
-                                label=""
-                                name={`subsections.${index}.name`}
-                                margin="dense"
-                                onBlur={() => toggleEditField(index, 's', false)}
-                                inputRef={input => input && input.focus()}
-                                required />
-                            </div>
+                              <TableCell
+                                className={classes.subsec}
+                              >
+                                <JooTextField
+                                  label=""
+                                  name={`subsections.${index}.name`}
+                                  margin="dense"
+                                  inputRef={(input) => {
+                                    if (input && input.value === '') {
+                                      input.focus();
+                                    }
+                                  }}
+                                  InputProps={{
+                                    classes: {
+                                      root: classes.cssOutlinedInput,
+                                      focused: classes.cssFocused,
+                                      notchedOutline: classes.notchedOutline
+                                    },
+                                    inputMode: "numeric"
+                                  }}
+                                  required />
 
-                          </TableCell>
+                              </TableCell>
 
-                          <TableCell
-                            className={classes.subsec}
-                          >
-                            <div
-                              tabindex="0"
-                              className={toggle[`i${index}`] ? classes.hidden : null}
-                              onKeyPress={() => toggleEditField(index, 'i', true)}
-                              onClick={() => toggleEditField(index, 'i', true)}>
-                              {subsection.id}
-                            </div>
-                            <div
-                              className={!toggle[`i${index}`] ? classes.hidden : null}
-                            >
-                              <JooTextField
-                                className={classes.denseInput}
-                                label=""
-                                name={`subsections.${index}.id`}
-                                margin="dense"
-                                onBlur={() => toggleEditField(index, 'i', false)}
-                                inputRef={input => input && input.focus()}
-                                required />
-                            </div>
-                          </TableCell>
+                              <TableCell
+                                className={classes.subsec}
+                              >
 
-                          <TableCell
-                            align="right"
-                          >
-                            <IconButton
-                              onClick={() => onSubSectionDelete(subsection.id)}
-                              tabindex="-1"
-                            >
-                              <SvgIcon fontSize="small">
-                                <TrashIcon />
-                              </SvgIcon>
-                            </IconButton>
-                          </TableCell>
+                                <JooTextField
+                                  className={classes.denseInput}
+                                  label=""
+                                  name={`subsections.${index}.id`}
+                                  margin="dense"
+                                  InputProps={{
+                                    classes: {
+                                      root: classes.cssOutlinedInput,
+                                      focused: classes.cssFocused,
+                                      notchedOutline: classes.notchedOutline,
+                                    },
+                                    inputMode: "numeric"
+                                  }}
+                                  required />
+                              </TableCell>
 
-                        </TableRow>
-                      ))}
+                              <TableCell
+                                align="right"
+                              >
+                                <IconButton
+                                  // onClick={() => onSubSectionDelete(subsection)}
+                                  onClick={() => arrayHelpers.remove(index)}
+                                  tabIndex="-1"
+                                >
+                                  <SvgIcon fontSize="small">
+                                    <TrashIcon />
+                                  </SvgIcon>
+                                </IconButton>
+                              </TableCell>
 
-                    </TableBody>
-                  </Table>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
 
-                </Card>
+                      <ConfirmationDialog
+                        subsecion={activeSubSection}
+                        open={confirmDialog}
+                        onClickCancel={handleOnClickCancel}
+                        onClickContinue={handleOnClickContinue}
+                      />
+
+                    </Card>
+                  )}
+                </FieldArray>
               </Box>
             </Grid>
 
@@ -408,7 +467,7 @@ function SectionEditForm({
                             color="textSecondary"
                           >
                             Include <b>Section Headlines</b> in Front page
-                        </Typography>
+                              </Typography>
                         </TableCell>
                         <TableCell padding="default" align="right" className={classes.configCell}>
                           <Checkbox
@@ -428,7 +487,7 @@ function SectionEditForm({
                             color="textSecondary"
                           >
                             Include section <b>Top News</b> in Front page
-                        </Typography>
+                              </Typography>
                         </TableCell>
                         <TableCell padding="default" align="right" className={classes.configCell}>
                           <Checkbox
@@ -448,7 +507,7 @@ function SectionEditForm({
                             color="textSecondary"
                           >
                             <b>Split Paragraphs</b> before saving
-                        </Typography>
+                              </Typography>
                         </TableCell>
                         <TableCell padding="default" align="right" className={classes.configCell}>
                           <Checkbox

@@ -11,6 +11,8 @@ const JooTextField = ({
   onBlur,
   className,
   inputRef,
+  autoFocus,
+  InputProps,
   ...props
 }) => {
   const [field, meta] = useField(props);
@@ -29,6 +31,8 @@ const JooTextField = ({
       onBlur={onBlur}
       className={className}
       inputRef={inputRef}
+      autoFocus={autoFocus}
+      InputProps={InputProps}
       variant="outlined"
       fullWidth
       select={options ? true : false}
