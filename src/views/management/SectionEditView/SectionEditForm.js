@@ -11,7 +11,6 @@ import * as Yup from 'yup';
 import { Formik, FieldArray } from 'formik';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router';
-import Toolbar from '@material-ui/core/Toolbar';
 import JooTextField from 'src/components/JooTextField';
 import ConfirmationDialog from 'src/components/ConfirmationDialog'
 import {
@@ -25,6 +24,7 @@ import {
   Checkbox,
   Divider,
   IconButton,
+  Fab,
   FormControlLabel,
   List,
   ListItem,
@@ -40,10 +40,13 @@ import {
   TablePagination,
   TableRow,
   TextField,
+  Toolbar,
+  Tooltip,
   Typography,
   makeStyles,
   FormHelperText
 } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import {
   Edit as EditIcon,
   Trash as TrashIcon
@@ -68,24 +71,27 @@ const useStyles = makeStyles((theme) => ({
   denseInput: {
     margin: '2px 0',
   },
-  cssOutlinedInput: {
-    '&$cssFocused $notchedOutline': {
-      borderColor: `${theme.palette.primary.main} !important`,
-    },
-    '&:hover:not($disabled):not($cssFocused):not($error) $notchedOutline': {
-      borderColor: `black!important`,
-    }
-  },
-  cssHover: {
-    '&:hover': {
-      borderColor: "red !important"
-    }
-  },
-  cssFocused: {},
-  notchedOutline: {
-    borderWidth: '1px',
-    borderColor: 'white !important',
-  }
+  // cssOutlinedInput: {
+  //   borderWidth: '1px',
+  //   '&$cssFocused:not($error)': {
+  //     borderColor: `${theme.palette.primary.main} !important`,
+  //   }
+  // },
+  // cssHover: {
+  //   '&:hover': {
+  //     borderColor: "red !important"
+  //   }
+  // },
+  // cssFocused: {},
+  // notchedOutline: {
+  //   borderWidth: '1px',
+  //   '&not($error)': {
+  //     borderColor: 'white !important'
+  //   },
+  //   '&$error': {
+  //     borderColor: 'red !important'
+  //   }
+  // }
 }));
 
 function SectionEditForm({
@@ -197,7 +203,17 @@ function SectionEditForm({
         summary_max_characters: Yup.number()
           .typeError('Must be a numeric value.')
           .integer('Must be a integer value.')
-          .required('Must enter a numeric value.')
+          .required('Must enter a numeric value.'),
+        subsections: Yup.array().of(
+          Yup.object().shape({
+            name: Yup.string()
+              .required("Sub-Section Name required"),
+            id: Yup.string()
+              .required("Sub-Section Id required")
+          })
+        )
+
+        // Validate Sub-Section Names not repeated
       })}
       onSubmit={async (values, {
         resetForm,
@@ -267,7 +283,7 @@ function SectionEditForm({
                         md={6}
                         xs={12}
                       >
-                        <JooTextField label="Section Name" name="name" required />
+                        <JooTextField label="Section Name" name="name" />
                       </Grid>
 
                       <Grid
@@ -283,7 +299,7 @@ function SectionEditForm({
                         md={6}
                         xs={12}
                       >
-                        <JooTextField label="Section Id" name="id" required />
+                        <JooTextField label="Section Id" name="id" />
                       </Grid>
 
                       <Grid
@@ -320,7 +336,7 @@ function SectionEditForm({
                   {arrayHelpers => (
                     <Card>
                       <Toolbar
-                        style={{ paddingLeft: 16, paddingRight: 16, flexGrow: 1 }}
+                        style={{ paddingLeft: 16, paddingRight: 20, paddingTop: 5, flexGrow: 1 }}
                         variant="dense"
                       >
                         <Typography
@@ -328,7 +344,20 @@ function SectionEditForm({
                           style={{ flex: 1 }}
                         >Sub-Sections</Typography>
 
-                        <IconButton
+                        <Tooltip title="Add Sub-Section" aria-label="Add Sub-Section">
+                          <Fab
+                            onClick={() => arrayHelpers.push({
+                              "id": "",
+                              "name": ""
+                            })}
+                            size="small"
+                            color="primary"
+                            aria-label="add">
+                            <AddIcon />
+                          </Fab>
+                        </Tooltip>
+
+                        {/* <IconButton
                           onClick={() => arrayHelpers.push({
                             "id": "",
                             "name": ""
@@ -337,7 +366,7 @@ function SectionEditForm({
                           aria-label="Add Sub-Sections"
                         >
                           <PlusCircleIcon />
-                        </IconButton>
+                        </IconButton> */}
 
                       </Toolbar>
 
@@ -368,6 +397,7 @@ function SectionEditForm({
                                 className={classes.subsec}
                               >
                                 <JooTextField
+                                  className={classes.denseInput}
                                   label=""
                                   name={`subsections.${index}.name`}
                                   margin="dense"
@@ -376,50 +406,50 @@ function SectionEditForm({
                                       input.focus();
                                     }
                                   }}
-                                  InputProps={{
-                                    classes: {
-                                      root: classes.cssOutlinedInput,
-                                      focused: classes.cssFocused,
-                                      notchedOutline: classes.notchedOutline
-                                    },
-                                    inputMode: "numeric"
-                                  }}
-                                  required />
-
+                                // InputProps={{
+                                //   classes: {
+                                //     root: classes.cssOutlinedInput,
+                                //     focused: classes.cssFocused,
+                                //     notchedOutline: classes.notchedOutline
+                                //   },
+                                //   inputMode: "numeric"
+                                // }}
+                                />
                               </TableCell>
 
                               <TableCell
                                 className={classes.subsec}
                               >
-
                                 <JooTextField
                                   className={classes.denseInput}
                                   label=""
                                   name={`subsections.${index}.id`}
                                   margin="dense"
-                                  InputProps={{
-                                    classes: {
-                                      root: classes.cssOutlinedInput,
-                                      focused: classes.cssFocused,
-                                      notchedOutline: classes.notchedOutline,
-                                    },
-                                    inputMode: "numeric"
-                                  }}
-                                  required />
+                                // InputProps={{
+                                //   classes: {
+                                //     root: classes.cssOutlinedInput,
+                                //     focused: classes.cssFocused,
+                                //     notchedOutline: classes.notchedOutline,
+                                //   },
+                                //   inputMode: "numeric"
+                                // }}
+                                />
                               </TableCell>
 
                               <TableCell
                                 align="right"
                               >
-                                <IconButton
-                                  // onClick={() => onSubSectionDelete(subsection)}
-                                  onClick={() => arrayHelpers.remove(index)}
-                                  tabIndex="-1"
-                                >
-                                  <SvgIcon fontSize="small">
-                                    <TrashIcon />
-                                  </SvgIcon>
-                                </IconButton>
+                                <Tooltip title="Delete Sub-Section" aria-label="Delete Sub-Section">
+                                  <IconButton
+                                    // onClick={() => onSubSectionDelete(subsection)}
+                                    onClick={() => arrayHelpers.remove(index)}
+                                    tabIndex="-1"
+                                  >
+                                    <SvgIcon fontSize="small">
+                                      <TrashIcon />
+                                    </SvgIcon>
+                                  </IconButton>
+                                </Tooltip>
                               </TableCell>
 
                             </TableRow>
