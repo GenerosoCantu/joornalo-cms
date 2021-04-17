@@ -327,8 +327,8 @@ function SectionEditForm({
 
             <Grid
               item
-              xs={12}
-              sm={6}
+              sm={12}
+              md={6}
             >
               <Box mt={3}>
 
@@ -472,8 +472,8 @@ function SectionEditForm({
 
             <Grid
               item
-              xs={12}
-              sm={6}
+              sm={12}
+              md={6}
             >
               <Box mt={3}>
                 <Card>
