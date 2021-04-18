@@ -7,6 +7,7 @@ import errorReducer from './errorReducer';
 import userReducer from './userReducer';
 import sectionReducer from './sectionReducer';
 import moduleReducer from './moduleReducer';
+import coverReducer from './coverReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   error: errorReducer,
   user: userReducer,
   section: sectionReducer,
-  module: moduleReducer
+  module: moduleReducer,
+  cover: coverReducer
 
 });
 
