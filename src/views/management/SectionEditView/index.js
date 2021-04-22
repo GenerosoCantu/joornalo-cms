@@ -40,7 +40,7 @@ function SectionEditView({ match }) {
   const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();
   const { section } = useSelector((state) => { return state.section; });
-  // const { covers } = useSelector((state) => { return state.cover; });
+  const { covers } = useSelector((state) => { return state.cover; });
 
   const pageTitle = (sectionid !== 'create') ? "Edit Section" : "Create Section";
 
@@ -61,7 +61,6 @@ function SectionEditView({ match }) {
   useEffect(() => {
     if (sectionid !== 'create') dispatch(getSection(sectionid))
     else dispatch(createSection());
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++");
     dispatch(getCovers());
   }, [isMountedRef]);
 
@@ -75,7 +74,7 @@ function SectionEditView({ match }) {
         <Header breadcrumbs={breadcrumbs} headerTitle={pageTitle} />
         <Error />
         {(section || sectionid === 'create') && (
-          <SectionEditForm section={section} />
+          <SectionEditForm section={section} covers={covers} />
         )}
       </Container>
     </Page>

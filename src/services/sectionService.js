@@ -11,7 +11,7 @@ class SectionService {
   }
 
   updateSection = (section) => {
-    return apiService.makeRequest('patch', `http://localhost:4000/sections/${section._id}`, 'sct-u', section);
+    return apiService.makeRequest('patch', `http://localhost:4000/sections/${section.id}`, 'sct-u', section);
   }
 
   createSection = (section) => {

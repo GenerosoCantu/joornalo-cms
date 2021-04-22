@@ -97,6 +97,7 @@ const useStyles = makeStyles((theme) => ({
 function SectionEditForm({
   className,
   section,
+  covers,
   ...rest
 }) {
   const classes = useStyles();
@@ -110,10 +111,10 @@ function SectionEditForm({
   const [activeSubSection, setActiveSubSection] = useState({});
 
   // const sectionsOption = sections.map(({ id, name }) => ({ id, name, selected: section.sections.includes(id) }));
-  // const modulesOption = modules.map(({ id, name }) => ({ id, name, selected: section.modules.includes(id) }));
+  const coversOption = covers.map(({ id, name }) => ({ id, name, selected: section.covers.includes(id) }));
 
   // const [selectedSections, setSelectedSections] = useState(section.sections);
-  // const [selectedModules, setSelectedModules] = useState(section.modules);
+  const [selectedCovers, setSelectedCovers] = useState(section.covers);
 
   // const selectedSomeSections = selectedSections.length > 0 && selectedSections.length < sectionsOption.length;
 
@@ -130,13 +131,13 @@ function SectionEditForm({
   //   }
   // };
 
-  // const handleSelectModule = (event, moduleId) => {
-  //   if (!selectedModules.includes(moduleId)) {
-  //     setSelectedModules((section) => [...section, moduleId]);
-  //   } else {
-  //     setSelectedModules((prevSelected) => prevSelected.filter((id) => id !== moduleId));
-  //   }
-  // };
+  const handleSelectCover = (event, coverId) => {
+    if (!selectedCovers.includes(coverId)) {
+      setSelectedCovers((section) => [...section, coverId]);
+    } else {
+      setSelectedCovers((prevSelected) => prevSelected.filter((id) => id !== coverId));
+    }
+  };
 
 
   const onSubSectionDelete = (subsection) => {
@@ -174,8 +175,9 @@ function SectionEditForm({
   return (
     <Formik
       initialValues={{
-        name: section.name || '',
+        _id: section._id || '',
         id: section.id || '',
+        name: section.name || '',
         email: section.email || '',
         status: section.status || 'Inactive',
         desc: section.desc || '',
@@ -227,12 +229,22 @@ function SectionEditForm({
 
           setSubmitting(false);
 
-          // values = { ...values, sections: selectedSections, modules: selectedModules };
-          // if (!section._id) {
-          //   await dispatch(createSection(values));
-          // } else {
-          //   await dispatch(updateSection(values));
-          // }
+          values = {
+            ...values,
+            covers: selectedCovers,
+            config: {
+              front_include_headlines: values.front_include_headlines,
+              front_include_most_viewed: values.front_include_most_viewed,
+              split_paragraphs: values.split_paragraphs,
+              summary_max_characters: values.summary_max_characters,
+              photo_default_size: values.photo_default_size
+            }
+          };
+          if (!section._id) {
+            // await dispatch(createSection(values));
+          } else {
+            await dispatch(updateSection(values));
+          }
           enqueueSnackbar('Section updated', {
             variant: 'success'
           });
@@ -596,6 +608,57 @@ function SectionEditForm({
               </Box>
             </Grid>
 
+
+
+            <Grid
+              item
+              xs={12}
+              sm={6}
+            >
+              <Box mt={3}>
+                <Card>
+                  <Toolbar
+                    style={{ paddingLeft: 16 }}
+                    variant="dense"
+                  >
+                    <Typography
+                      variant="h4"
+                    >Covers</Typography>
+                  </Toolbar>
+                  <Table>
+                    <TableBody>
+                      {coversOption.map((cover, i) => {
+                        const isCoverSelected = selectedCovers.includes(cover.id);
+                        return (
+                          <TableRow
+                            hover
+                            key={cover.id}
+                          >
+                            <TableCell padding="checkbox">
+                              <Checkbox
+                                checked={isCoverSelected}
+                                onChange={(event) => handleSelectCover(event, cover.id)}
+                                value={isCoverSelected}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Typography
+                                variant="body2"
+                                color="textSecondary"
+                              >
+                                {cover.name}
+                              </Typography>
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })}
+                    </TableBody>
+                  </Table>
+                </Card>
+              </Box>
+            </Grid>
+
+
             <Divider />
 
             <Box
@@ -622,8 +685,8 @@ function SectionEditForm({
 
             </Box>
 
-            {/* <Divider />
-            <Box >
+            <Divider />
+            {/* <Box >
               <pre>{JSON.stringify(values, null, 2)}</pre>
               <Divider />
               <div>{JSON.stringify(errors, null, 2)}</div>

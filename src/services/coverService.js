@@ -11,7 +11,7 @@ class CoverService {
   }
 
   updateCover = (cover) => {
-    return apiService.makeRequest('patch', `http://localhost:4000/covers/${cover._id}`, 'sct-u', cover);
+    return apiService.makeRequest('patch', `http://localhost:4000/covers/${cover.id}`, 'sct-u', cover);
   }
 
   createCover = (cover) => {
