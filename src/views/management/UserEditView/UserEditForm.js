@@ -386,7 +386,12 @@ function UserEditForm({
               </Box>
             </Grid>
 
-            <Divider />
+          </Grid>
+
+          <Grid
+            item
+            sm={12}
+          >
             <Box
               p={2}
               display="flex"
