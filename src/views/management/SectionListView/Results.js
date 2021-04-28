@@ -93,7 +93,6 @@ function Results({
   const classes = useStyles();
   const { t, i18n } = useTranslation(['translation', 'sections']);
 
-  // const [selectedSections, setSelectedSections] = useState([]);
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [query, setQuery] = useState('');
@@ -107,14 +106,6 @@ function Results({
   const handleStatusChange = (event) => {
     event.persist();
     setStatus(event.target.value);
-  };
-
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
   };
 
   const filteredSections = applyFilters(sections, query, status);

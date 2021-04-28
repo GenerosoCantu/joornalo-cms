@@ -1,4 +1,5 @@
 import apiService from 'src/services/apiService';
+import { v4 as uuidv4 } from 'uuid';
 
 class SectionService {
 
@@ -15,7 +16,8 @@ class SectionService {
   }
 
   createSection = (section) => {
-    return apiService.makeRequest('post', `http://localhost:4000/sections/`, 'sct-c', section);
+    const newSection = { ...section, _id: uuidv4() };
+    return apiService.makeRequest('post', `http://localhost:4000/sections/`, 'sct-c', newSection);
   }
 
   deleteSection = (sectionid) => {

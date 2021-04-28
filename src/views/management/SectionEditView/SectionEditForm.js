@@ -105,31 +105,12 @@ function SectionEditForm({
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // const [toggle, setToggle] = useState({});
-  // const [isActive, setActive] = useState("false");
   const [confirmDialog, setConfirmDialog] = useState(false);
   const [activeSubSection, setActiveSubSection] = useState({});
-
-  // const sectionsOption = sections.map(({ id, name }) => ({ id, name, selected: section.sections.includes(id) }));
   const coversOption = covers.map(({ id, name }) => ({ id, name, selected: section.covers.includes(id) }));
-
-  // const [selectedSections, setSelectedSections] = useState(section.sections);
   const [selectedCovers, setSelectedCovers] = useState(section.covers);
 
-  // const selectedSomeSections = selectedSections.length > 0 && selectedSections.length < sectionsOption.length;
-
-  // const selectedSomeModules = selectedModules.length > 0 && selectedModules.length < modulesOption.length;
-
   const saveButtonText = (!section._id) ? "Create Section" : "Update Section";
-
-
-  // const handleSelectSection = (event, sectionId) => {
-  //   if (!selectedSections.includes(sectionId)) {
-  //     setSelectedSections((module) => [...module, sectionId]);
-  //   } else {
-  //     setSelectedSections((prevSelected) => prevSelected.filter((id) => id !== sectionId));
-  //   }
-  // };
 
   const handleSelectCover = (event, coverId) => {
     if (!selectedCovers.includes(coverId)) {
@@ -139,7 +120,6 @@ function SectionEditForm({
     }
   };
 
-
   const onSubSectionDelete = (subsection) => {
     console.log(subsection);
     setConfirmDialog(true);
@@ -148,11 +128,7 @@ function SectionEditForm({
   }
 
   const handleOnClickContinue = () => {
-    console.log('handleOnClickContinue--------------------', activeSubSection);
     setConfirmDialog(false);
-
-    console.log(section);
-
   }
 
   const handleOnClickCancel = () => {
@@ -171,11 +147,10 @@ function SectionEditForm({
   //   setActive(!isActive);
   // }
 
-
   return (
     <Formik
       initialValues={{
-        _id: section._id || '',
+        _id: section._id || null,
         id: section.id || '',
         name: section.name || '',
         email: section.email || '',
@@ -223,12 +198,8 @@ function SectionEditForm({
         setStatus,
         setSubmitting
       }) => {
-        console.log(values);
         try {
-          console.log(values);
-
           setSubmitting(false);
-
           values = {
             ...values,
             covers: selectedCovers,
@@ -241,7 +212,7 @@ function SectionEditForm({
             }
           };
           if (!section._id) {
-            // await dispatch(createSection(values));
+            await dispatch(createSection(values));
           } else {
             await dispatch(updateSection(values));
           }
@@ -267,7 +238,6 @@ function SectionEditForm({
         touched,
         values
       }) => (
-
         <form
           className={clsx(classes.root, className)}
           onSubmit={handleSubmit}
@@ -335,6 +305,188 @@ function SectionEditForm({
                   </CardContent>
                 </Card>
               </Box>
+            </Grid>
+
+            <Grid
+              item
+              sm={12}
+              md={6}
+            >
+
+              <Grid
+                item
+                sm={12}
+                md={12}
+              >
+                <Box mt={3}>
+                  <Card>
+                    <Toolbar
+                      style={{ paddingLeft: 16 }}
+                      variant="dense"
+                    >
+                      <Typography
+                        variant="h4"
+                      >Configuration</Typography>
+                    </Toolbar>
+                    <Table
+                      size="small"
+                    >
+                      <TableBody>
+                        <TableRow>
+
+                          <TableCell>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                            >
+                              Include <b>Section Headlines</b> in Front page
+                              </Typography>
+                          </TableCell>
+                          <TableCell padding="default" align="right" className={classes.configCell}>
+                            <Checkbox
+                              checked={values.front_include_headlines}
+                              name="front_include_headlines"
+                              onBlur={handleBlur}
+                              onChange={handleChange}
+                            />
+                          </TableCell>
+                        </TableRow>
+
+                        <TableRow>
+
+                          <TableCell>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                            >
+                              Include section <b>Top News</b> in Front page
+                              </Typography>
+                          </TableCell>
+                          <TableCell padding="default" align="right" className={classes.configCell}>
+                            <Checkbox
+                              checked={values.front_include_most_viewed}
+                              name="front_include_most_viewed"
+                              onBlur={handleBlur}
+                              onChange={handleChange}
+                            />
+                          </TableCell>
+                        </TableRow>
+
+                        <TableRow>
+
+                          <TableCell>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                            >
+                              <b>Split Paragraphs</b> before saving
+                              </Typography>
+                          </TableCell>
+                          <TableCell padding="default" align="right" className={classes.configCell}>
+                            <Checkbox
+                              checked={values.split_paragraphs}
+                              name="split_paragraphs"
+                              onBlur={handleBlur}
+                              onChange={handleChange}
+                            />
+                          </TableCell>
+                        </TableRow>
+
+                        <TableRow>
+                          <TableCell>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                            >
+                              <b>Summary</b> maximum <b>characters</b>
+                            </Typography>
+                          </TableCell>
+                          <TableCell padding="default" align="right" className={classes.configCell}>
+                            <JooTextField
+                              label=""
+                              name="summary_max_characters"
+                              margin="dense"
+                              className={classes.denseInput}
+                              required
+                            />
+                          </TableCell>
+                        </TableRow>
+
+                        <TableRow>
+                          <TableCell>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                            >
+                              <b>Photo</b> default <b>size</b>
+                            </Typography>
+                          </TableCell>
+                          <TableCell padding="default" align="right" className={classes.configCell}>
+                            <JooTextField
+                              label=""
+                              name="photo_default_size"
+                              margin="dense"
+                              options={PhotoSizes}
+                              className={classes.denseInput}
+                            />
+                          </TableCell>
+                        </TableRow>
+
+                      </TableBody>
+                    </Table>
+
+                  </Card>
+                </Box>
+              </Grid>
+
+              <Grid
+                item
+                xs={12}
+                sm={12}
+              >
+                <Box mt={3}>
+                  <Card>
+                    <Toolbar
+                      style={{ paddingLeft: 16 }}
+                      variant="dense"
+                    >
+                      <Typography
+                        variant="h4"
+                      >Covers</Typography>
+                    </Toolbar>
+                    <Table>
+                      <TableBody>
+                        {coversOption.map((cover, i) => {
+                          const isCoverSelected = selectedCovers.includes(cover.id);
+                          return (
+                            <TableRow
+                              hover
+                              key={cover.id}
+                            >
+                              <TableCell padding="checkbox">
+                                <Checkbox
+                                  checked={isCoverSelected}
+                                  onChange={(event) => handleSelectCover(event, cover.id)}
+                                  value={isCoverSelected}
+                                />
+                              </TableCell>
+                              <TableCell>
+                                <Typography
+                                  variant="body2"
+                                  color="textSecondary"
+                                >
+                                  {cover.name}
+                                </Typography>
+                              </TableCell>
+                            </TableRow>
+                          )
+                        })}
+                      </TableBody>
+                    </Table>
+                  </Card>
+                </Box>
+              </Grid>
+
             </Grid>
 
             <Grid
@@ -485,212 +637,31 @@ function SectionEditForm({
             <Grid
               item
               sm={12}
-              md={6}
             >
-              <Box mt={3}>
-                <Card>
-                  <Toolbar
-                    style={{ paddingLeft: 16 }}
-                    variant="dense"
-                  >
-                    <Typography
-                      variant="h4"
-                    >Configuration</Typography>
-                  </Toolbar>
-                  <Table
-                    size="small"
-                  >
-                    <TableBody>
-                      <TableRow>
-
-                        <TableCell>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                          >
-                            Include <b>Section Headlines</b> in Front page
-                              </Typography>
-                        </TableCell>
-                        <TableCell padding="default" align="right" className={classes.configCell}>
-                          <Checkbox
-                            checked={values.front_include_headlines}
-                            name="front_include_headlines"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                          />
-                        </TableCell>
-                      </TableRow>
-
-                      <TableRow>
-
-                        <TableCell>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                          >
-                            Include section <b>Top News</b> in Front page
-                              </Typography>
-                        </TableCell>
-                        <TableCell padding="default" align="right" className={classes.configCell}>
-                          <Checkbox
-                            checked={values.front_include_most_viewed}
-                            name="front_include_most_viewed"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                          />
-                        </TableCell>
-                      </TableRow>
-
-                      <TableRow>
-
-                        <TableCell>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                          >
-                            <b>Split Paragraphs</b> before saving
-                              </Typography>
-                        </TableCell>
-                        <TableCell padding="default" align="right" className={classes.configCell}>
-                          <Checkbox
-                            checked={values.split_paragraphs}
-                            name="split_paragraphs"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                          />
-                        </TableCell>
-                      </TableRow>
-
-                      <TableRow>
-                        <TableCell>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                          >
-                            <b>Summary</b> maximum <b>characters</b>
-                          </Typography>
-                        </TableCell>
-                        <TableCell padding="default" align="right" className={classes.configCell}>
-                          <JooTextField
-                            label=""
-                            name="summary_max_characters"
-                            margin="dense"
-                            className={classes.denseInput}
-                            required
-                          />
-                        </TableCell>
-                      </TableRow>
-
-                      <TableRow>
-                        <TableCell>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                          >
-                            <b>Photo</b> default <b>size</b>
-                          </Typography>
-                        </TableCell>
-                        <TableCell padding="default" align="right" className={classes.configCell}>
-                          <JooTextField
-                            label=""
-                            name="photo_default_size"
-                            margin="dense"
-                            options={PhotoSizes}
-                            className={classes.denseInput}
-                          />
-                        </TableCell>
-                      </TableRow>
-
-                    </TableBody>
-                  </Table>
-
-                </Card>
-              </Box>
-            </Grid>
-
-
-
-            <Grid
-              item
-              xs={12}
-              sm={6}
-            >
-              <Box mt={3}>
-                <Card>
-                  <Toolbar
-                    style={{ paddingLeft: 16 }}
-                    variant="dense"
-                  >
-                    <Typography
-                      variant="h4"
-                    >Covers</Typography>
-                  </Toolbar>
-                  <Table>
-                    <TableBody>
-                      {coversOption.map((cover, i) => {
-                        const isCoverSelected = selectedCovers.includes(cover.id);
-                        return (
-                          <TableRow
-                            hover
-                            key={cover.id}
-                          >
-                            <TableCell padding="checkbox">
-                              <Checkbox
-                                checked={isCoverSelected}
-                                onChange={(event) => handleSelectCover(event, cover.id)}
-                                value={isCoverSelected}
-                              />
-                            </TableCell>
-                            <TableCell>
-                              <Typography
-                                variant="body2"
-                                color="textSecondary"
-                              >
-                                {cover.name}
-                              </Typography>
-                            </TableCell>
-                          </TableRow>
-                        )
-                      })}
-                    </TableBody>
-                  </Table>
-                </Card>
-              </Box>
-            </Grid>
-
-
-            <Divider />
-
-            <Box
-              p={2}
-              display="flex"
-              justifyContent="flex-end"
-            >
-              <Button
-                variant="contained"
-                color="secondary"
-                type="submit"
-                disabled={isSubmitting}
+              <Box
+                p={2}
+                display="flex"
+                justifyContent="flex-end"
               >
-                {saveButtonText}
-              </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  {saveButtonText}
+                </Button>
 
-              {errors.submit && (
-                <Box mt={3}>
-                  <FormHelperText error>
-                    {errors.submit}
-                  </FormHelperText>
-                </Box>
-              )}
+                {errors.submit && (
+                  <Box mt={3}>
+                    <FormHelperText error>
+                      {errors.submit}
+                    </FormHelperText>
+                  </Box>
+                )}
 
-            </Box>
-
-            <Divider />
-            {/* <Box >
-              <pre>{JSON.stringify(values, null, 2)}</pre>
-              <Divider />
-              <div>{JSON.stringify(errors, null, 2)}</div>
-            </Box> */}
+              </Box>
+            </Grid>
 
           </Grid>
         </form>

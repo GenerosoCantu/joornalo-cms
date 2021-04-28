@@ -18,7 +18,7 @@ import Page from 'src/components/Page';
 import SectionEditForm from './SectionEditForm';
 import Header from '../../../components/Header';
 import Error from '../../../components/Error';
-import { getSection, createSection } from 'src/store/actions/sectionActions';
+import { getSection, newSection } from 'src/store/actions/sectionActions';
 import { getCovers } from 'src/store/actions/coverActions';
 
 
@@ -60,7 +60,7 @@ function SectionEditView({ match }) {
 
   useEffect(() => {
     if (sectionid !== 'create') dispatch(getSection(sectionid))
-    else dispatch(createSection());
+    else dispatch(newSection());
     dispatch(getCovers());
   }, [isMountedRef]);
 
@@ -73,7 +73,7 @@ function SectionEditView({ match }) {
       <Container maxWidth="lg">
         <Header breadcrumbs={breadcrumbs} headerTitle={pageTitle} />
         <Error />
-        {(section || sectionid === 'create') && (
+        {(section || sectionid === 'create') && covers.length > 0 && (
           <SectionEditForm section={section} covers={covers} />
         )}
       </Container>

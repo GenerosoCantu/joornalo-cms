@@ -10,13 +10,14 @@ export const GET_SECTION_REQUEST = '@section/get-section-request';
 // export const SET_SECTION_ERROR = '@error/set-error';
 // export const CLEAR_SECTION_ERROR = '@error/set-error';
 
-export function getSections(force = false) {
+export function getSections() {
+  // export function getSections(force = false) {
   return async (dispatch, getState) => {
     const state = getState()
 
-    if (!force && state.section?.sections?.length > 0) {
-      return;
-    }
+    // if (!force && state.section?.sections?.length > 0) {
+    //   return;
+    // }
 
     try {
       const sections = await sectionService.getSections();
@@ -54,16 +55,16 @@ export function getSection(sectionid) {
 }
 
 
-export function createSection() {
+export function newSection() {
   return async (dispatch) => {
     try {
       dispatch({ type: GET_SECTION_REQUEST });
-      const user = {
+      const section = {
         _id: null,
         name: '',
         email: '',
         desc: '',
-        status: 'Pending',
+        status: 'Inactive',
         oder: 0,
         config: {
           front_headlines: true,
@@ -80,7 +81,7 @@ export function createSection() {
       dispatch({
         type: GET_SECTION,
         payload: {
-          user
+          section
         }
       });
       dispatch(clearError());
@@ -98,6 +99,24 @@ export function updateSection(section) {
 
       dispatch({
         type: UPDATE_SECTION,
+        payload: {
+          section: request
+        }
+      });
+      dispatch(clearError());
+    } catch (error) {
+      dispatch(setError(error));
+      throw error;
+    }
+  };
+}
+
+export function createSection(section) {
+  return async (dispatch) => {
+    try {
+      const request = await sectionService.createSection(section);
+      dispatch({
+        type: CREATE_SECTION,
         payload: {
           section: request
         }

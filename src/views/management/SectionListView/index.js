@@ -25,7 +25,7 @@ import Page from 'src/components/Page';
 import Header from '../../../components/Header';
 import Error from '../../../components/Error';
 import Results from './Results';
-import { getSections, createSection } from 'src/store/actions/sectionActions';
+import { getSections, newSection } from 'src/store/actions/sectionActions';
 import SectionDeleteModal from './SectionDeleteModal';
 
 
@@ -72,7 +72,7 @@ function SectionListView() {
 
   useEffect(() => {
     dispatch(getSections());
-    dispatch(createSection());
+    dispatch(newSection());
   }, [dispatch]);
 
   if (!sections) {
