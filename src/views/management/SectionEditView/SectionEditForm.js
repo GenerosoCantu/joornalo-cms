@@ -135,6 +135,56 @@ function SectionEditForm({
     setConfirmDialog(false);
   }
 
+  Yup.addMethod(Yup.array, 'uniqueProperties', function (propertyNames) {
+    return this.test('uniquepp', '', function (list) {
+      const errors = [];
+      propertyNames.map(([propertyName, message]) => {
+        list.forEach((item, index) => {
+          const propertyValue = item[propertyName];
+          if (propertyValue && list.filter(item => item[propertyName] == propertyValue).length > 1) {
+            errors.push(
+              this.createError({
+                path: `${this.path}[${index}].${propertyName}`,
+                message,
+              })
+            );
+          }
+        });
+      });
+
+      if (errors.length > 0) {
+        throw new Yup.ValidationError(errors);
+      }
+
+      return true;
+    });
+  });
+
+
+  // Yup.addMethod(Yup.array, 'uniqueProperty', function (propertyName, message) {
+  //   return this.test('uniquep', '', function (list) {
+  //     const errors = [];
+  //     list.forEach((item, index) => {
+  //       const propertyValue = item[propertyName];
+  //       if (propertyValue && list.filter(item => item[propertyName] == propertyValue).length > 1) {
+  //         errors.push(
+  //           this.createError({
+  //             path: `${this.path}[${index}].${propertyName}`,
+  //             message,
+  //           })
+  //         );
+  //       }
+  //     });
+
+  //     if (errors.length > 0) {
+  //       throw new Yup.ValidationError(errors);
+  //     }
+
+  //     return true;
+  //   });
+  // });
+
+
   // const toggleEditField = (index, soi, turnOn) => {
   //   let tmp = toggle;
   //   for (const key in tmp) {
@@ -181,16 +231,20 @@ function SectionEditForm({
           .typeError('Must be a numeric value.')
           .integer('Must be a integer value.')
           .required('Must enter a numeric value.'),
-        subsections: Yup.array().of(
-          Yup.object().shape({
-            name: Yup.string()
-              .required("Sub-Section Name required"),
-            id: Yup.string()
-              .required("Sub-Section Id required")
-          })
-        )
+        subsections: Yup.array()
+          .of(
+            Yup.object().shape({
+              name: Yup.string()
+                .required("Sub-Section Name required"),
+              id: Yup.string()
+                .required("Sub-Section Id required")
+            })
+          )
+          .uniqueProperties([
+            ['id', 'Id must be unique'],
+            ['name', 'Name must be unique']
+          ])
 
-        // Validate Sub-Section Names not repeated
       })}
       onSubmit={async (values, {
         resetForm,
@@ -340,7 +394,7 @@ function SectionEditForm({
                               color="textSecondary"
                             >
                               Include <b>Section Headlines</b> in Front page
-                              </Typography>
+                            </Typography>
                           </TableCell>
                           <TableCell padding="default" align="right" className={classes.configCell}>
                             <Checkbox
@@ -360,7 +414,7 @@ function SectionEditForm({
                               color="textSecondary"
                             >
                               Include section <b>Top News</b> in Front page
-                              </Typography>
+                            </Typography>
                           </TableCell>
                           <TableCell padding="default" align="right" className={classes.configCell}>
                             <Checkbox
@@ -380,7 +434,7 @@ function SectionEditForm({
                               color="textSecondary"
                             >
                               <b>Split Paragraphs</b> before saving
-                              </Typography>
+                            </Typography>
                           </TableCell>
                           <TableCell padding="default" align="right" className={classes.configCell}>
                             <Checkbox
