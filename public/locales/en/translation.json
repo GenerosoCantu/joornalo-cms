@@ -15,5 +15,11 @@
   "Email": "Email",
   "Role": "Role",
   "Status": "Status",
-  "Actions": "Actions"
+  "Actions": "Actions",
+  "News": "News",
+  "Date": "Date",
+  "Title": "Title",
+  "Section": "Section",
+  "Today": "Today",
+  "Clear": "Clear"
 }

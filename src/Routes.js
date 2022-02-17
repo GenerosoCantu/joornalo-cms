@@ -68,6 +68,11 @@ const routesConfig = [
         path: '/app/management/sections/:sectionid',
         component: lazy(() => import('src/views/management/SectionEditView'))
       },
+      {
+        exact: true,
+        path: '/app/news',
+        component: lazy(() => import('src/views/news/NewsListView'))
+      },
 
 
       {

@@ -67,6 +67,21 @@ export const StatusTypes = [
   }
 ];
 
+export const NewsStatus = [
+  {
+    id: 'Active',
+    name: 'Active'
+  },
+  {
+    id: 'Pending',
+    name: 'Pending'
+  },
+  {
+    id: 'Cancelled',
+    name: 'Cancelled'
+  }
+];
+
 export const SectionStatus = [
   {
     id: 'Active',

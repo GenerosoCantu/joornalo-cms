@@ -121,10 +121,8 @@ function SectionEditForm({
   };
 
   const onSubSectionDelete = (subsection) => {
-    console.log(subsection);
     setConfirmDialog(true);
     setActiveSubSection(subsection);
-    console.log(confirmDialog);
   }
 
   const handleOnClickContinue = () => {

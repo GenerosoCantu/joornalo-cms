@@ -162,7 +162,7 @@ const navConfig = [
       {
         title: 'News Stories',
         icon: EditIcon,
-        href: '/app/kanban1'
+        href: '/app/news'
       },
       {
         title: 'Featured News',
