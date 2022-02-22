@@ -6,7 +6,7 @@ import notificationsReducer from './notificationsReducer';
 import errorReducer from './errorReducer';
 import userReducer from './userReducer';
 import sectionReducer from './sectionReducer';
-import newsReducer from './newsReducer';
+import storyReducer from './storyReducer';
 import moduleReducer from './moduleReducer';
 import coverReducer from './coverReducer';
 
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   error: errorReducer,
   user: userReducer,
   section: sectionReducer,
-  news: newsReducer,
+  story: storyReducer,
   module: moduleReducer,
   cover: coverReducer
 

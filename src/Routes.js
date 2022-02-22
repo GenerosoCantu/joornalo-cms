@@ -10,6 +10,7 @@ import {
   Route
 } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
+import DesignLayout from 'src/layouts/DesignLayout';
 import MainLayout from 'src/layouts/MainLayout';
 import HomeView from 'src/views/pages/HomeView';
 import LoadingScreen from 'src/components/LoadingScreen';
@@ -33,6 +34,18 @@ const routesConfig = [
     path: '/login',
     component: lazy(() => import('src/views/auth/LoginView'))
   },
+  // {
+  //   path: '/app',
+  //   guard: AuthGuard,
+  //   layout: DesignLayout,
+  //   routes: [
+  //     {
+  //       exact: true,
+  //       path: '/app/stories/:storyId',
+  //       component: lazy(() => import('src/views/stories/StoryEditView'))
+  //     }
+  //   ]
+  // },
   {
     path: '/app',
     guard: AuthGuard,
@@ -70,8 +83,13 @@ const routesConfig = [
       },
       {
         exact: true,
-        path: '/app/news',
-        component: lazy(() => import('src/views/news/NewsListView'))
+        path: '/app/stories',
+        component: lazy(() => import('src/views/stories/StoryListView'))
+      },
+      {
+        exact: true,
+        path: '/app/stories/:storyId',
+        component: lazy(() => import('src/views/stories/StoryEditView'))
       },
 
 

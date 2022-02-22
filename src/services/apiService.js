@@ -11,6 +11,8 @@ class ApiService {
       data
     }
 
+    // Convert to async await and get rid of .then
+
     axios(config)
       .then((response) => {
         if (response.data) {

@@ -30,7 +30,7 @@ import {
   Search as SearchIcon,
   Trash as TrashIcon
 } from 'react-feather';
-import { NewsStatus } from 'src/constants';
+import { StoryStatus } from 'src/constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -61,24 +61,24 @@ const useStyles = makeStyles((theme) => ({
 
 function Results({
   className,
-  news,
+  stories,
   metadata,
   sections,
-  onNewsDelete,
+  onStoryDelete,
   newQuery,
   ...rest
 }) {
   const classes = useStyles();
-  const { t, i18n } = useTranslation(['translation', 'news']);
+  const { t, i18n } = useTranslation(['translation', 'stories']);
 
   const sortOptions = [
     {
       value: 'date|-1',
-      label: t('news:date-newest-first')
+      label: t('stories:date-newest-first')
     },
     {
       value: 'date|1',
-      label: t('news:date-oldest-first')
+      label: t('stories:date-oldest-first')
     }
   ];
 
@@ -211,7 +211,7 @@ function Results({
           >
             {t('All')}
           </option>
-          {NewsStatus.map((option) => (
+          {StoryStatus.map((option) => (
             <option
               key={option.id}
               value={option.id}
@@ -266,35 +266,35 @@ function Results({
               </TableRow>
             </TableHead>
             <TableBody>
-              {news.map((news) => {
+              {stories.map((story) => {
                 return (
                   <TableRow
                     hover
-                    key={news._id}
+                    key={story._id}
                   >
                     <TableCell>
-                      {moment(news.date).format('DD/MMM/YY')}
+                      {moment(story.date).format('DD/MMM/YY')}
                     </TableCell>
                     <TableCell>
-                      {news.title}
+                      {story.title}
                     </TableCell>
                     <TableCell>
-                      {news.section}
+                      {story.section}
                     </TableCell>
                     <TableCell>
-                      {news.status}
+                      {story.status}
                     </TableCell>
                     <TableCell align="right">
                       <IconButton
                         component={RouterLink}
-                        to={`/app/management/news/${news._id}`}
+                        to={`/app/stories/${story._id}`}
                       >
                         <SvgIcon fontSize="small">
                           <EditIcon />
                         </SvgIcon>
                       </IconButton>
                       <IconButton
-                        onClick={() => onNewsDelete(news)}
+                        onClick={() => onStoryDelete(story)}
                       >
                         <SvgIcon fontSize="small">
                           <TrashIcon />
@@ -325,16 +325,16 @@ function Results({
 
 Results.propTypes = {
   className: PropTypes.string,
-  news: PropTypes.array,
+  stories: PropTypes.array,
   metadata: PropTypes.object,
-  onNewsDelete: PropTypes.func,
+  onStoryDelete: PropTypes.func,
   newQuery: PropTypes.func
 };
 
 Results.defaultProps = {
-  news: [],
+  stories: [],
   metadata: {},
-  onNewsDelete: () => { },
+  onStoryDelete: () => { },
   newQuery: () => { }
 };
 

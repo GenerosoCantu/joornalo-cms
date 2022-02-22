@@ -25,10 +25,10 @@ import Page from 'src/components/Page';
 import Header from '../../../components/Header';
 import Error from '../../../components/Error';
 import Results from './Results';
-import { getNews, newNews } from 'src/store/actions/newsActions';
+import { getStories, newStory } from 'src/store/actions/storyActions';
 import { getSections } from 'src/store/actions/sectionActions';
 
-// import NewsDeleteModal from './NewsDeleteModal';
+// import StoryDeleteModal from './StoryDeleteModal';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -50,15 +50,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function NewsListView() {
-  const { t, i18n } = useTranslation(['translation', 'news']);
+function StoryListView() {
+  const { t, i18n } = useTranslation(['translation', 'stories']);
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { news, metadata } = useSelector((state) => state.news);
+  const { stories, metadata } = useSelector((state) => state.story);
   const { sections } = useSelector((state) => state.section);
 
   const [modal, setModal] = useState({
-    news: null,
+    stories: null,
     open: false
   });
 
@@ -68,15 +68,15 @@ function NewsListView() {
       link: "/app"
     },
     {
-      label: t('News')
+      label: t('Stories')
     }
   ];
 
   const history = useHistory();
-  const handleNewNews = () => history.push('/app/management/news/create');
+  const handleNewStory = () => history.push('/app/management/stories/create');
 
   useEffect(() => {
-    dispatch(getNews({
+    dispatch(getStories({
       page: 0,
       limit: 10,
       section: "All",
@@ -87,13 +87,13 @@ function NewsListView() {
     dispatch(getSections());
   }, [dispatch]);
 
-  if (!news) {
+  if (!stories) {
     return null;
   }
 
   const resetModal = () => {
     setModal({
-      news: null,
+      stories: null,
       open: false
     });
   };
@@ -102,26 +102,26 @@ function NewsListView() {
     resetModal();
   };
 
-  const handleNewsDelete = () => {
-    dispatch(getNews());
+  const handleStoryDelete = () => {
+    dispatch(getStories());
     resetModal();
   };
 
-  const handleNewsDeleteClick = (news) => {
+  const handleStoryDeleteClick = (story) => {
     setModal({
       open: true,
-      news
+      story
     });
   };
 
-  const updateSearch = (newsQuery) => {
-    dispatch(getNews(newsQuery));
+  const updateSearch = (storyQuery) => {
+    dispatch(getStories(storyQuery));
   }
 
   return (
     <Page
       className={classes.root}
-      title={t('news:news-list')}
+      title={t('stories:story-list')}
     >
       <Container maxWidth={false}>
         <Grid
@@ -130,7 +130,7 @@ function NewsListView() {
           justify="space-between"
         >
           <Grid item>
-            <Header breadcrumbs={breadcrumbs} headerTitle={t('news:News')} />
+            <Header breadcrumbs={breadcrumbs} headerTitle={t('stories:Stories')} />
           </Grid>
 
           <Grid item>
@@ -138,7 +138,7 @@ function NewsListView() {
               color="secondary"
               variant="contained"
               className={classes.action}
-              onClick={handleNewNews}
+              onClick={handleNewStory}
             >
               <SvgIcon
                 fontSize="small"
@@ -146,22 +146,22 @@ function NewsListView() {
               >
                 <PlusCircleIcon />
               </SvgIcon>
-              {t('news:new-news')}
+              {t('stories:new-story')}
             </Button>
           </Grid>
         </Grid>
 
         <Error />
-        {news && (
+        {stories && (
           <Box mt={3}>
-            <Results news={news} metadata={metadata} sections={sections} onNewsDelete={handleNewsDeleteClick} newQuery={updateSearch} />
+            <Results stories={stories} metadata={metadata} sections={sections} onStoryDelete={handleStoryDeleteClick} newQuery={updateSearch} />
           </Box>
         )}
         {/* 
-        <NewsDeleteModal
-          news={modal.news}
+        <StoryDeleteModal
+          story={modal.story}
           onCancel={handleModalClose}
-          onDelete={handleNewsDelete}
+          onDelete={handleStoryDelete}
           open={modal.open}
         /> */}
       </Container>
@@ -169,4 +169,4 @@ function NewsListView() {
   );
 }
 
-export default NewsListView;
+export default StoryListView;

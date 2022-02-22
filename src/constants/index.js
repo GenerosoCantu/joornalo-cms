@@ -67,7 +67,7 @@ export const StatusTypes = [
   }
 ];
 
-export const NewsStatus = [
+export const StoryStatus = [
   {
     id: 'Active',
     name: 'Active'

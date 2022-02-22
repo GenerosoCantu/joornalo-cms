@@ -6,11 +6,11 @@ const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID;
 function GoogleAnalytics() {
   return (
     <Helmet>
-      <script
+      {/* <script
         async
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-      />
-      <script>
+      /> */}
+      {/* <script>
         {`
           window.dataLayer = window.dataLayer || [];
 
@@ -21,7 +21,7 @@ function GoogleAnalytics() {
           gtag('js', new Date());
           gtag('config', '${GA_MEASUREMENT_ID}');
         `}
-      </script>
+      </script> */}
     </Helmet>
   );
 }

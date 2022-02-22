@@ -1,7 +1,7 @@
 {
-  "News": "News",
-  "news-list": "News List",
-  "new-news": "Create News",
+  "Stories": "Stories",
+  "story-list": "Story List",
+  "new-story": "Create Story",
   "date-newest-first": "Newest first",
   "date-oldest-first": "Oldest first",
   "title-ascending": "Title (asc)",
