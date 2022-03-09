@@ -67,19 +67,23 @@ import { CompareArrowsOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  configCell: {
-    width: '180px'
-  },
-  hidden: {
-    display: 'none'
-  },
-  subsec: {
-    width: '43%',
-    cursor: 'pointer'
-  },
-  denseInput: {
-    margin: '2px 0',
-  },
+  // configCell: {
+  //   width: '180px'
+  // },
+  // hidden: {
+  //   display: 'none'
+  // },
+  // subsec: {
+  //   width: '43%',
+  //   cursor: 'pointer'
+  // },
+  // denseInput: {
+  //   margin: '2px 0',
+  // },
+  editorMain: {
+    padding: '0 14px'
+  }
+
   // cssOutlinedInput: {
   //   borderWidth: '1px',
   //   '&$cssFocused:not($error)': {
@@ -277,19 +281,20 @@ function StoryEditForm({
           onSubmit={handleSubmit}
           {...rest}
         >
+
+
           <Grid
             container
             spacing={3}
           >
             <Grid
               item
-              xs={12}
-              lg={12}
+              xs={9}
+              lg={9}
             >
               <Box mt={3}>
                 <Card>
                   <CardContent>
-
                     <Grid
                       container
                       spacing={3}
@@ -377,6 +382,7 @@ function StoryEditForm({
                         >
                           <Editor
                             editorState={editorState}
+                            editorClassName={classes.editorMain}
                             onEditorStateChange={state => handleTextChange(state, setFieldValue)}
                           />
                         </Paper>
@@ -398,8 +404,22 @@ function StoryEditForm({
                   </CardContent>
                 </Card>
               </Box>
-
             </Grid>
+
+            <Grid
+              item
+              xs={3}
+              lg={3}
+            >
+              <Box mt={3}>
+                <Card>
+                  <CardContent>
+                    ok 2
+                  </CardContent>
+                </Card>
+              </Box>
+            </Grid>
+
 
             <Grid
               item
@@ -431,6 +451,7 @@ function StoryEditForm({
             </Grid>
 
           </Grid>
+
         </form>
       )
       }
