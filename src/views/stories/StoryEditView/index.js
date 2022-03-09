@@ -19,6 +19,7 @@ import StoryEditForm from './StoryEditForm';
 import Header from '../../../components/Header';
 import Error from '../../../components/Error';
 import { getStory, newStory } from 'src/store/actions/storyActions';
+import { getSections } from 'src/store/actions/sectionActions';
 // import { getCovers } from 'src/store/actions/coverActions';
 
 
@@ -40,7 +41,10 @@ function StoryEditView({ match }) {
   const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();
   const { story } = useSelector((state) => { return state.story; });
+  const { sections } = useSelector((state) => state.section);
   // const { covers } = useSelector((state) => { return state.cover; });
+
+  const [sectionOptions, setSectionOptions] = useState([]);
 
   const pageTitle = (storyId !== 'create') ? "Edit Story" : "Create Story";
 
@@ -61,8 +65,30 @@ function StoryEditView({ match }) {
   useEffect(() => {
     if (storyId !== 'create') dispatch(getStory(storyId))
     else dispatch(newStory());
+    dispatch(getSections());
     // dispatch(getCovers());
   }, [isMountedRef]);
+
+  useEffect(() => {
+    console.log(sections)
+    if (sections) {
+      setSectionOptions(
+        sections.map((section) => {
+          if (section.status === 'Active') {
+            return { id: section.id, name: section.name, subsections: section.subsections }
+          }
+        })
+      )
+      // setSectionOptions([
+      //   ...[{ id: '', name: '' }],
+      //   ...sections.map((section) => {
+      //     if (section.status === 'Active') {
+      //       return { id: section.id, name: section.name }
+      //     }
+      //   })
+      // ])
+    }
+  }, [sections]);
 
   useEffect(() => {
     console.log(story)
@@ -79,8 +105,8 @@ function StoryEditView({ match }) {
       <Container maxWidth={false}>
         <Header breadcrumbs={breadcrumbs} headerTitle={pageTitle} />
         <Error />
-        {(story || storyId === 'create') && (
-          <StoryEditForm story={story} />
+        {(story || storyId === 'create') && sectionOptions && (
+          <StoryEditForm story={story} sectionOptions={sectionOptions} />
         )}
       </Container>
     </Page>

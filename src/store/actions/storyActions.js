@@ -97,12 +97,12 @@ export function newStory() {
 export function updateStory(story) {
   return async (dispatch) => {
     try {
-      const story = await storyService.updateStory(story);
+      const request = await storyService.updateStory(story);
 
       dispatch({
         type: UPDATE_STORY,
         payload: {
-          story
+          story: request
         }
       });
       dispatch(clearError());
@@ -116,11 +116,11 @@ export function updateStory(story) {
 export function createStory(story) {
   return async (dispatch) => {
     try {
-      const story = await storyService.createStory(story);
+      const request = await storyService.createStory(story);
       dispatch({
         type: CREATE_STORY,
         payload: {
-          story
+          story: request
         }
       });
       dispatch(clearError());

@@ -1,5 +1,6 @@
 import React, {
-  useState
+  useState,
+  useEffect
 } from 'react';
 import {
   useDispatch,
@@ -14,6 +15,11 @@ import { Formik, FieldArray } from 'formik';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router';
 import JooTextField from 'src/components/JooTextField';
+import { EditorState, convertToRaw, convertFromHTML, ContentState } from 'draft-js'
+// https://jpuri.github.io/react-draft-wysiwyg/#/demo
+import { Editor } from 'react-draft-wysiwyg';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 import ConfirmationDialog from 'src/components/ConfirmationDialog'
 import {
   PlusCircle as PlusCircleIcon
@@ -33,6 +39,7 @@ import {
   ListItemIcon,
   ListItemText,
   Grid,
+  Paper,
   SvgIcon,
   Switch,
   Table,
@@ -99,6 +106,7 @@ const useStyles = makeStyles((theme) => ({
 function StoryEditForm({
   className,
   story,
+  sectionOptions,
   // covers,
   ...rest
 }) {
@@ -108,15 +116,48 @@ function StoryEditForm({
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [subsectionOptions, setSubsectionOptions] = useState([]);
+  // const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(story.text))))
+  const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(story.text))))
+
   // const [confirmDialog, setConfirmDialog] = useState(false);
   // const [activeSubStory, setActiveSubStory] = useState({});
   // const coversOption = covers.map(({ id, name }) => ({ id, name, selected: stories.covers.includes(id) }));
   // const [selectedCovers, setSelectedCovers] = useState(stories.covers);
 
-  console.log('stories----------------------------')
-  console.log(story)
-
   const saveButtonText = (!story._id) ? "Create Story" : "Update Story";
+
+  const subsectionOptionsUpdate = (sectionId,) => {
+    const selectedSection = sectionOptions.find((section) => {
+      if (section.id == sectionId) {
+        return section
+      }
+    })
+    if (selectedSection) {
+      setSubsectionOptions([
+        ...[{ id: '', name: '' }],
+        ...selectedSection.subsections
+      ])
+    }
+  };
+
+  const handleSectionChange = (event, setFieldValue) => {
+    console.log(event.target.value)
+    event.persist();
+    subsectionOptionsUpdate(event.target.value, setFieldValue)
+    setFieldValue('subsection', '');
+  };
+
+  const handleTextChange = (state, setFieldValue) => {
+    console.log(state)
+    setEditorState(state)
+    setFieldValue('text', draftToHtml(convertToRaw(editorState.getCurrentContent())));
+  };
+
+  useEffect(() => {
+    console.log(story)
+    subsectionOptionsUpdate(story.section)
+  }, [story]);
 
   // const handleSelectCover = (event, coverId) => {
   //   if (!selectedCovers.includes(coverId)) {
@@ -158,6 +199,8 @@ function StoryEditForm({
         title: story.title || '',
         desc: story.desc || '',
         text: story.text || '',
+        section: story.section || '',
+        subsection: story.subsection || ''
         // covers: story.covers || [],
         // front_include_headlines: story.config.front_include_headlines || true,
         // front_include_most_viewed: story.config.front_include_most_viewed || true,
@@ -172,10 +215,8 @@ function StoryEditForm({
         // id: Yup.string()
         //   .max(128, 'Maximum 128 characters')
         //   .required('Story Id is required'),
-        // email: Yup.string()
-        //   .email('Must be a valid email')
-        //   .max(255, 'Maximum 255 characters')
-        //   .required('Story Email is required'),
+        section: Yup.string()
+          .required('Section is required'),
         desc: Yup.string()
           .max(500, 'Maximum 500 characters for Story Description'),
         // summary_max_characters: Yup.number()
@@ -205,6 +246,7 @@ function StoryEditForm({
           if (!story._id) {
             await dispatch(createStory(values));
           } else {
+            console.log(values)
             await dispatch(updateStory(values));
           }
           enqueueSnackbar('Story updated', {
@@ -226,6 +268,7 @@ function StoryEditForm({
         handleChange,
         handleSubmit,
         isSubmitting,
+        setFieldValue,
         touched,
         values
       }) => (
@@ -285,6 +328,22 @@ function StoryEditForm({
 
                       <Grid
                         item
+                        md={6}
+                        xs={12}
+                      >
+                        <JooTextField label="Section" name="section" options={sectionOptions} onBlur={ev => handleSectionChange(ev, setFieldValue)} />
+                      </Grid>
+
+                      <Grid
+                        item
+                        md={6}
+                        xs={12}
+                      >
+                        <JooTextField label="Subsection" name="subsection" options={subsectionOptions} />
+                      </Grid>
+
+                      <Grid
+                        item
                         md={12}
                         xs={12}
                       >
@@ -307,20 +366,39 @@ function StoryEditForm({
                         <JooTextField label="Story Description" name="desc" rows="2" />
                       </Grid>
 
-
                       <Grid
                         item
                         md={12}
                         xs={12}
                       >
-                        <JooTextField label="Story Description" name="text" rows="10" />
+                        <Paper
+                          component={Box}
+                          mt={3}
+                        >
+                          <Editor
+                            editorState={editorState}
+                            onEditorStateChange={state => handleTextChange(state, setFieldValue)}
+                          />
+                        </Paper>
                       </Grid>
+                      {/* 
+                      <Grid
+                        item
+                        md={12}
+                        xs={12}
+                      >
+                        <textarea
+                          name="text"
+                          value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
+                        />
+                      </Grid> */}
 
                     </Grid>
 
                   </CardContent>
                 </Card>
               </Box>
+
             </Grid>
 
             <Grid
@@ -362,7 +440,8 @@ function StoryEditForm({
 
 StoryEditForm.propTypes = {
   className: PropTypes.string,
-  story: PropTypes.object.isRequired
+  story: PropTypes.object.isRequired,
+  sectionOptions: PropTypes.array.isRequired
 };
 
 export default StoryEditForm;

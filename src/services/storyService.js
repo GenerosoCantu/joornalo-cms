@@ -20,17 +20,17 @@ class StoryService {
     return apiService.makeRequest('get', `http://localhost:4000/stories/${params}`, 'sct-gs');
   }
 
-  updateNew = (story) => {
-    return apiService.makeRequest('patch', `http://localhost:4000/stories/${story.id}`, 'sct-u', story);
+  updateStory = (story) => {
+    return apiService.makeRequest('patch', `http://localhost:4000/stories/${story._id}`, 'sct-u', story);
   }
 
-  createNew = (story) => {
+  createStory = (story) => {
     const newStory = { ...story, _id: uuidv4() };
     return apiService.makeRequest('post', `http://localhost:4000/stories/`, 'sct-c', newStory);
   }
 
-  deleteNew = (storyid) => {
-    return apiService.makeRequest('delete', `http://localhost:4000/stories/${storyid}`, 'sct-d');
+  deleteStory = (storyId) => {
+    return apiService.makeRequest('delete', `http://localhost:4000/stories/${storyId}`, 'sct-d');
   }
 
 }
