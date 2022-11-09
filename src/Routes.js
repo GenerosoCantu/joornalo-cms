@@ -91,6 +91,17 @@ const routesConfig = [
         path: '/app/stories/:storyId',
         component: lazy(() => import('src/views/stories/StoryEditView'))
       },
+      ,
+      {
+        exact: true,
+        path: '/app/fronts',
+        component: lazy(() => import('src/views/fronts/FrontListView'))
+      },
+      {
+        exact: true,
+        path: '/app/fronts/:frontId',
+        component: lazy(() => import('src/views/fronts/FrontEditView'))
+      },
 
 
       {

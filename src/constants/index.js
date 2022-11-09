@@ -67,7 +67,7 @@ export const StatusTypes = [
   }
 ];
 
-export const StoryStatus = [
+export const Status = [
   {
     id: 'Active',
     name: 'Active'
@@ -82,20 +82,20 @@ export const StoryStatus = [
   }
 ];
 
-export const SectionStatus = [
-  {
-    id: 'Active',
-    name: 'Active'
-  },
-  {
-    id: 'Inactive',
-    name: 'Inactive'
-  },
-  {
-    id: 'Cancelled',
-    name: 'Cancelled'
-  }
-];
+// export const SectionStatus = [
+//   {
+//     id: 'Active',
+//     name: 'Active'
+//   },
+//   {
+//     id: 'Inactive',
+//     name: 'Inactive'
+//   },
+//   {
+//     id: 'Cancelled',
+//     name: 'Cancelled'
+//   }
+// ];
 
 export const PhotoSizes = [
   {

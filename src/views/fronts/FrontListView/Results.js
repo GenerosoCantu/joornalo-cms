@@ -61,24 +61,24 @@ const useStyles = makeStyles((theme) => ({
 
 function Results({
   className,
-  stories,
+  fronts,
   metadata,
   sections,
-  onStoryDelete,
+  onFrontDelete,
   newQuery,
   ...rest
 }) {
   const classes = useStyles();
-  const { t, i18n } = useTranslation(['translation', 'stories']);
+  const { t, i18n } = useTranslation(['translation', 'fronts']);
 
   const sortOptions = [
     {
       value: 'date|-1',
-      label: t('stories:date-newest-first')
+      label: t('fronts:date-newest-first')
     },
     {
       value: 'date|1',
-      label: t('stories:date-oldest-first')
+      label: t('fronts:date-oldest-first')
     }
   ];
 
@@ -252,9 +252,6 @@ function Results({
                   {t('translation:Date')}
                 </TableCell>
                 <TableCell>
-                  {t('translation:Title')}
-                </TableCell>
-                <TableCell>
                   {t('translation:Section')}
                 </TableCell>
                 <TableCell>
@@ -266,35 +263,32 @@ function Results({
               </TableRow>
             </TableHead>
             <TableBody>
-              {stories.map((story) => {
+              {fronts.map((front) => {
                 return (
                   <TableRow
                     hover
-                    key={story._id}
+                    key={front._id}
                   >
                     <TableCell>
-                      {moment(story.date).format('DD/MMM/YY')}
+                      {moment(front.date).format('DD/MMM/YY')}
                     </TableCell>
                     <TableCell>
-                      {story.title}
+                      {front.section}
                     </TableCell>
                     <TableCell>
-                      {story.section}
-                    </TableCell>
-                    <TableCell>
-                      {story.status}
+                      {front.status}
                     </TableCell>
                     <TableCell align="right">
                       <IconButton
                         component={RouterLink}
-                        to={`/app/stories/${story._id}`}
+                        to={`/app/fronts/${front._id}`}
                       >
                         <SvgIcon fontSize="small">
                           <EditIcon />
                         </SvgIcon>
                       </IconButton>
                       <IconButton
-                        onClick={() => onStoryDelete(story)}
+                        onClick={() => onFrontDelete(front)}
                       >
                         <SvgIcon fontSize="small">
                           <TrashIcon />
@@ -325,16 +319,16 @@ function Results({
 
 Results.propTypes = {
   className: PropTypes.string,
-  stories: PropTypes.array,
+  fronts: PropTypes.array,
   metadata: PropTypes.object,
-  onStoryDelete: PropTypes.func,
+  onFrontDelete: PropTypes.func,
   newQuery: PropTypes.func
 };
 
 Results.defaultProps = {
-  stories: [],
+  fronts: [],
   metadata: {},
-  onStoryDelete: () => { },
+  onFrontDelete: () => { },
   newQuery: () => { }
 };
 

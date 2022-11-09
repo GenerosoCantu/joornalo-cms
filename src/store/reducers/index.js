@@ -7,6 +7,7 @@ import errorReducer from './errorReducer';
 import userReducer from './userReducer';
 import sectionReducer from './sectionReducer';
 import storyReducer from './storyReducer';
+import frontReducer from './frontReducer';
 import moduleReducer from './moduleReducer';
 import coverReducer from './coverReducer';
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   section: sectionReducer,
   story: storyReducer,
+  front: frontReducer,
   module: moduleReducer,
   cover: coverReducer
 

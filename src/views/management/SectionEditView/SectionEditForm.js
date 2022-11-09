@@ -52,7 +52,7 @@ import {
   Trash as TrashIcon
 } from 'react-feather';
 import { updateSection, createSection } from 'src/store/actions/sectionActions';
-import { SectionStatus, PhotoSizes } from 'src/constants';
+import { Status, PhotoSizes } from 'src/constants';
 import { CompareArrowsOutlined } from '@material-ui/icons';
 
 
@@ -325,7 +325,7 @@ function SectionEditForm({
                         md={6}
                         xs={12}
                       >
-                        <JooTextField label="Status" name="status" options={SectionStatus} />
+                        <JooTextField label="Status" name="status" options={Status} />
                       </Grid>
 
                       <Grid
