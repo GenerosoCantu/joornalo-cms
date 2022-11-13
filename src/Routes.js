@@ -64,22 +64,22 @@ const routesConfig = [
       {
         exact: true,
         path: '/app/management/users',
-        component: lazy(() => import('src/views/management/UserListView'))
+        component: lazy(() => import('src/views/management/Users/UserListView'))
       },
       {
         exact: true,
         path: '/app/management/users/:userid',
-        component: lazy(() => import('src/views/management/UserEditView'))
+        component: lazy(() => import('src/views/management/Users/UserEditView'))
       },
       {
         exact: true,
         path: '/app/management/sections',
-        component: lazy(() => import('src/views/management/SectionListView'))
+        component: lazy(() => import('src/views/management/Sections/SectionListView'))
       },
       {
         exact: true,
         path: '/app/management/sections/:sectionid',
-        component: lazy(() => import('src/views/management/SectionEditView'))
+        component: lazy(() => import('src/views/management/Sections/SectionEditView'))
       },
       {
         exact: true,

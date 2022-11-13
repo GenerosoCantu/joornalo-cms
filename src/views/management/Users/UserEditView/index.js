@@ -16,8 +16,8 @@ import {
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Page from 'src/components/Page';
 import UserEditForm from './UserEditForm';
-import Header from '../../../components/Header';
-import Error from '../../../components/Error';
+import Header from '../../../../components/Header';
+import Error from '../../../../components/Error';
 import { getUser, newUser } from 'src/store/actions/userActions';
 import { getSections } from 'src/store/actions/sectionActions';
 import { getModules } from 'src/store/actions/moduleActions';

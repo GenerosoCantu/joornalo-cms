@@ -16,8 +16,8 @@ import {
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Page from 'src/components/Page';
 import SectionEditForm from './SectionEditForm';
-import Header from '../../../components/Header';
-import Error from '../../../components/Error';
+import Header from '../../../../components/Header';
+import Error from '../../../../components/Error';
 import { getSection, newSection } from 'src/store/actions/sectionActions';
 import { getCovers } from 'src/store/actions/coverActions';
 

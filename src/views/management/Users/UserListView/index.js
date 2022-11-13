@@ -22,11 +22,11 @@ import {
   PlusCircle as PlusCircleIcon
 } from 'react-feather';
 import Page from 'src/components/Page';
-import Header from '../../../components/Header';
-import Error from '../../../components/Error';
+import Header from '../../../../components/Header';
+import Error from '../../../../components/Error';
 import Results from './Results';
-import { getSections, newSection } from 'src/store/actions/sectionActions';
-import SectionDeleteModal from './SectionDeleteModal';
+import { getUsers, newUser } from 'src/store/actions/userActions';
+import UserDeleteModal from './UserDeleteModal';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -47,13 +47,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function SectionListView() {
-  const { t, i18n } = useTranslation(['translation', 'sections']);
+function UserListView() {
+  const { t, i18n } = useTranslation(['translation', 'users']);
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { sections } = useSelector((state) => state.section);
+  const { users } = useSelector((state) => state.user);
   const [modal, setModal] = useState({
-    section: null,
+    user: null,
     open: false
   });
 
@@ -63,25 +63,25 @@ function SectionListView() {
       link: "/app"
     },
     {
-      label: t('Sections')
+      label: t('Users')
     }
   ];
 
   const history = useHistory();
-  const handleCreateSection = () => history.push('/app/management/sections/create');
+  const handleNewUser = () => history.push('/app/management/users/create');
 
   useEffect(() => {
-    dispatch(getSections());
-    dispatch(newSection());
+    dispatch(getUsers());
+    dispatch(newUser());
   }, [dispatch]);
 
-  if (!sections) {
+  if (!users) {
     return null;
   }
 
   const resetModal = () => {
     setModal({
-      section: null,
+      user: null,
       open: false
     });
   };
@@ -90,22 +90,22 @@ function SectionListView() {
     resetModal();
   };
 
-  const handleSectionDelete = () => {
-    dispatch(getSections());
+  const handleUserDelete = () => {
+    dispatch(getUsers());
     resetModal();
   };
 
-  const handleSectionDeleteClick = (section) => {
+  const handleUserDeleteClick = (user) => {
     setModal({
       open: true,
-      section
+      user
     });
   };
 
   return (
     <Page
       className={classes.root}
-      title={t('sections:section-list')}
+      title={t('users:user-list')}
     >
       <Container maxWidth={false}>
         <Grid
@@ -114,7 +114,7 @@ function SectionListView() {
           justify="space-between"
         >
           <Grid item>
-            <Header breadcrumbs={breadcrumbs} headerTitle={t('sections:all-sections')} />
+            <Header breadcrumbs={breadcrumbs} headerTitle={t('users:all-users')} />
           </Grid>
 
           <Grid item>
@@ -122,7 +122,7 @@ function SectionListView() {
               color="secondary"
               variant="contained"
               className={classes.action}
-              onClick={handleCreateSection}
+              onClick={handleNewUser}
             >
               <SvgIcon
                 fontSize="small"
@@ -130,22 +130,22 @@ function SectionListView() {
               >
                 <PlusCircleIcon />
               </SvgIcon>
-              {t('sections:new-section')}
+              {t('users:new-user')}
             </Button>
           </Grid>
         </Grid>
 
         <Error />
-        {sections && (
+        {users && (
           <Box mt={3}>
-            <Results sections={sections} onSectionDelete={handleSectionDeleteClick} />
+            <Results users={users} onUserDelete={handleUserDeleteClick} />
           </Box>
         )}
 
-        <SectionDeleteModal
-          section={modal.section}
+        <UserDeleteModal
+          user={modal.user}
           onCancel={handleModalClose}
-          onDelete={handleSectionDelete}
+          onDelete={handleUserDelete}
           open={modal.open}
         />
       </Container>
@@ -153,4 +153,4 @@ function SectionListView() {
   );
 }
 
-export default SectionListView;
+export default UserListView;
