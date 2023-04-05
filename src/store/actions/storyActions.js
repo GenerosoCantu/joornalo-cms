@@ -1,4 +1,5 @@
 import storyService from 'src/services/storyService';
+import uploadService from 'src/services/uploadService';
 import { setError, clearError } from 'src/store/actions/errorActions';
 
 export const GET_STORIES = '@story/get-stories';
@@ -7,6 +8,8 @@ export const CREATE_STORY = '@story/create-story';
 export const UPDATE_STORY = '@story/update-story';
 export const DELETE_STORY = '@story/delete-story';
 export const GET_STORY_REQUEST = '@story/get-story-request';
+export const UPLOAD_IMAGE = '@story/upload-image';
+export const UPLOAD_IMAGE_REQUEST = '@story/upload-image-request';
 // export const SET_STORY_ERROR = '@error/set-error';
 // export const CLEAR_STORY_ERROR = '@error/set-error';
 
@@ -55,7 +58,6 @@ export function getStory(storyId) {
     }
   };
 }
-
 
 export function newStory() {
   return async (dispatch) => {
@@ -140,6 +142,25 @@ export function deleteStory(storyId) {
         type: DELETE_STORY,
         payload: {
           story
+        }
+      });
+      dispatch(clearError());
+    } catch (error) {
+      dispatch(setError(error));
+      throw error;
+    }
+  };
+}
+
+export function uploadImage(file) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: UPLOAD_IMAGE_REQUEST });
+      const image = await uploadService.uploadImage(file);
+      dispatch({
+        type: UPLOAD_IMAGE,
+        payload: {
+          file
         }
       });
       dispatch(clearError());

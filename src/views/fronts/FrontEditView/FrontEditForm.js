@@ -15,13 +15,13 @@ import { Formik, FieldArray } from 'formik';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router';
 import JooTextField from 'src/components/JooTextField';
-import { EditorState, convertToRaw, convertFromHTML, ContentState } from 'draft-js'
+// import { EditorState, convertToRaw, convertFromHTML, ContentState } from 'draft-js'
 // https://jpuri.github.io/react-draft-wysiwyg/#/demo
-import { Editor } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
-import ConfirmationDialog from 'src/components/ConfirmationDialog'
-import FilesDropzone from './FilesDropzone';
+// import { Editor } from 'react-draft-wysiwyg';
+// import draftToHtml from 'draftjs-to-html';
+// import htmlToDraft from 'html-to-draftjs';
+// import ConfirmationDialog from 'src/components/ConfirmationDialog'
+// import FilesDropzone from './FilesDropzone';
 import {
   PlusCircle as PlusCircleIcon
 } from 'react-feather';
@@ -62,7 +62,7 @@ import {
   Edit as EditIcon,
   Trash as TrashIcon
 } from 'react-feather';
-import { updateStory, createStory } from 'src/store/actions/storyActions';
+import { updateFront, createFront } from 'src/store/actions/frontActions';
 import { Status, PhotoSizes } from 'src/constants';
 import { CompareArrowsOutlined } from '@material-ui/icons';
 
@@ -109,65 +109,43 @@ const useStyles = makeStyles((theme) => ({
   // }
 }));
 
-function StoryEditForm({
+function FrontEditForm({
   className,
-  story,
+  front,
   sectionOptions,
   // covers,
   ...rest
 }) {
   const classes = useStyles();
-  const { t, i18n } = useTranslation(['translation', 'stories']);
+  const { t, i18n } = useTranslation(['translation', 'fronts']);
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [subsectionOptions, setSubsectionOptions] = useState([]);
-  // const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(story.text))))
-  const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(story.text))))
+  // const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(front.text))))
+  // const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(front.text))))
 
   // const [confirmDialog, setConfirmDialog] = useState(false);
-  // const [activeSubStory, setActiveSubStory] = useState({});
-  // const coversOption = covers.map(({ id, name }) => ({ id, name, selected: stories.covers.includes(id) }));
-  // const [selectedCovers, setSelectedCovers] = useState(stories.covers);
+  // const [activeSubFront, setActiveSubFront] = useState({});
+  // const coversOption = covers.map(({ id, name }) => ({ id, name, selected: fronts.covers.includes(id) }));
+  // const [selectedCovers, setSelectedCovers] = useState(fronts.covers);
 
-  const saveButtonText = (!story._id) ? "Create Story" : "Update Story";
-
-  const subsectionOptionsUpdate = (sectionId,) => {
-    const selectedSection = sectionOptions.find((section) => {
-      if (section.id == sectionId) {
-        return section
-      }
-    })
-    if (selectedSection) {
-      setSubsectionOptions([
-        ...[{ id: '', name: '' }],
-        ...selectedSection.subsections
-      ])
-    }
-  };
+  const saveButtonText = (!front._id) ? "Create Front" : "Update Front";
 
   const handleSectionChange = (event, setFieldValue) => {
     console.log(event.target.value)
     event.persist();
-    subsectionOptionsUpdate(event.target.value, setFieldValue)
-    setFieldValue('subsection', '');
   };
 
-  const handleTextChange = (state, setFieldValue) => {
-    console.log(state)
-    setEditorState(state)
-    setFieldValue('text', draftToHtml(convertToRaw(editorState.getCurrentContent())));
-  };
-
-  useEffect(() => {
-    console.log(story)
-    subsectionOptionsUpdate(story.section)
-  }, [story]);
+  // const handleTextChange = (state, setFieldValue) => {
+  //   console.log(state)
+  //   setEditorState(state)
+  //   setFieldValue('text', draftToHtml(convertToRaw(editorState.getCurrentContent())));
+  // };
 
   // const handleSelectCover = (event, coverId) => {
   //   if (!selectedCovers.includes(coverId)) {
-  //     setSelectedCovers((stories) => [...stories, coverId]);
+  //     setSelectedCovers((fronts) => [...fronts, coverId]);
   //   } else {
   //     setSelectedCovers((prevSelected) => prevSelected.filter((id) => id !== coverId));
   //   }
@@ -198,33 +176,14 @@ function StoryEditForm({
   return (
     <Formik
       initialValues={{
-        _id: story._id || null,
-        // id: story.id || '',
-        date: story.date || '',
-        status: story.status || 'Inactive',
-        title: story.title || '',
-        desc: story.desc || '',
-        text: story.text || '',
-        section: story.section || '',
-        subsection: story.subsection || ''
-        // covers: story.covers || [],
-        // front_include_headlines: story.config.front_include_headlines || true,
-        // front_include_most_viewed: story.config.front_include_most_viewed || true,
-        // split_paragraphs: story.config.split_paragraphs || true,
-        // summary_max_characters: story.config.summary_max_characters || 300,
-        // photo_default_size: story.config.photo_default_size || 'df'
+        _id: front._id || null,
+        date: front.date || '',
+        status: front.status || 'Inactive',
+        section: front.section || '',
       }}
       validationSchema={Yup.object().shape({
-        title: Yup.string()
-          .max(255, 'Maximum 255 characters')
-          .required('Story Title is required'),
-        // id: Yup.string()
-        //   .max(128, 'Maximum 128 characters')
-        //   .required('Story Id is required'),
         section: Yup.string()
           .required('Section is required'),
-        desc: Yup.string()
-          .max(500, 'Maximum 500 characters for Story Description'),
         // summary_max_characters: Yup.number()
         //   .typeError('Must be a numeric value.')
         //   .integer('Must be a integer value.')
@@ -249,18 +208,18 @@ function StoryEditForm({
             //     photo_default_size: values.photo_default_size
             // }
           };
-          if (!story._id) {
-            await dispatch(createStory(values));
+          if (!front._id) {
+            await dispatch(createFront(values));
           } else {
             console.log(values)
-            await dispatch(updateStory(values));
+            await dispatch(updateFront(values));
           }
-          enqueueSnackbar('Story updated', {
+          enqueueSnackbar('Front updated', {
             variant: 'success'
           });
           setStatus({ success: true });
           resetForm();
-          history.push('/app/stories');
+          history.push('/app/fronts');
         } catch (error) {
           setStatus({ success: false });
           setErrors({ submit: error.message });
@@ -341,54 +300,39 @@ function StoryEditForm({
                         <JooTextField label="Section" name="section" options={sectionOptions} onBlur={ev => handleSectionChange(ev, setFieldValue)} />
                       </Grid>
 
-                      <Grid
-                        item
-                        md={6}
-                        xs={12}
-                      >
-                        <JooTextField label="Subsection" name="subsection" options={subsectionOptions} />
-                      </Grid>
-
-                      <Grid
+                      {/* <Grid
                         item
                         md={12}
                         xs={12}
                       >
                         <JooTextField label="Title" name="title" />
-                      </Grid>
+                      </Grid> */}
 
                       {/* <Grid
                         item
                         md={6}
                         xs={12}
                       >
-                        <JooTextField label="Story Id" name="id" />
+                        <JooTextField label="Front Id" name="id" />
                       </Grid> */}
 
-                      <Grid
-                        item
-                        md={12}
-                        xs={12}
-                      >
-                        <JooTextField label="Story Description" name="desc" rows="2" />
-                      </Grid>
 
-                      <Grid
-                        item
-                        md={12}
-                        xs={12}
-                      >
-                        <Paper
-                          component={Box}
-                          mt={3}
+                      {/* <Grid
+                          item
+                          md={12}
+                          xs={12}
                         >
-                          <Editor
-                            editorState={editorState}
-                            editorClassName={classes.editorMain}
-                            onEditorStateChange={state => handleTextChange(state, setFieldValue)}
-                          />
-                        </Paper>
-                      </Grid>
+                          <Paper
+                            component={Box}
+                            mt={3}
+                          >
+                            <Editor
+                              editorState={editorState}
+                              editorClassName={classes.editorMain}
+                              onEditorStateChange={state => handleTextChange(state, setFieldValue)}
+                            />
+                          </Paper>
+                        </Grid> */}
                       {/* 
                       <Grid
                         item
@@ -408,7 +352,7 @@ function StoryEditForm({
               </Box>
             </Grid>
 
-            <Grid
+            {/* <Grid
               item
               xs={3}
               lg={3}
@@ -422,7 +366,7 @@ function StoryEditForm({
                   </CardContent>
                 </Card>
               </Box>
-            </Grid>
+            </Grid> */}
 
 
             <Grid
@@ -463,10 +407,10 @@ function StoryEditForm({
   );
 }
 
-StoryEditForm.propTypes = {
+FrontEditForm.propTypes = {
   className: PropTypes.string,
-  story: PropTypes.object.isRequired,
+  front: PropTypes.object.isRequired,
   sectionOptions: PropTypes.array.isRequired
 };
 
-export default StoryEditForm;
+export default FrontEditForm;

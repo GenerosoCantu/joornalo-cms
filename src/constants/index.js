@@ -67,7 +67,7 @@ export const StatusTypes = [
   }
 ];
 
-export const StoryStatus = [
+export const Status = [
   {
     id: 'Active',
     name: 'Active'
@@ -81,6 +81,21 @@ export const StoryStatus = [
     name: 'Cancelled'
   }
 ];
+
+// export const StoryStatus = [
+//   {
+//     id: 'Active',
+//     name: 'Active'
+//   },
+//   {
+//     id: 'Pending',
+//     name: 'Pending'
+//   },
+//   {
+//     id: 'Cancelled',
+//     name: 'Cancelled'
+//   }
+// ];
 
 export const SectionStatus = [
   {

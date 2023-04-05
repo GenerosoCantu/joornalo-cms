@@ -172,7 +172,7 @@ const navConfig = [
       {
         title: 'Front Sections',
         icon: LayoutIcon,
-        href: '/app/kanban3'
+        href: '/app/fronts'
       },
       {
         title: 'Publish',

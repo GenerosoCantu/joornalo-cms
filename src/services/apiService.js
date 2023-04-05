@@ -2,13 +2,14 @@ import axios from 'src/utils/axios';
 
 class ApiService {
 
-  makeRequest = (method, url, errorCode, data) => new Promise((resolve, reject) => {
+  makeRequest = (method, url, errorCode, data, headers) => new Promise((resolve, reject) => {
 
     // https://kapeli.com/cheat_sheets/Axios.docset/Contents/Resources/Documents/index
     const config = {
       method,
       url,
-      data
+      data,
+      headers
     }
 
     // Convert to async await and get rid of .then

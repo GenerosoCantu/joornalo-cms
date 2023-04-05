@@ -15,13 +15,8 @@ import { Formik, FieldArray } from 'formik';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router';
 import JooTextField from 'src/components/JooTextField';
-import { EditorState, convertToRaw, convertFromHTML, ContentState } from 'draft-js'
-// https://jpuri.github.io/react-draft-wysiwyg/#/demo
-import { Editor } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
+import DraftEditor from 'src/components/DraftEditor';
 import ConfirmationDialog from 'src/components/ConfirmationDialog'
-import FilesDropzone from './FilesDropzone';
 import {
   PlusCircle as PlusCircleIcon
 } from 'react-feather';
@@ -30,7 +25,6 @@ import {
   Button,
   Card,
   CardContent,
-  CardHeader,
   Checkbox,
   Divider,
   IconButton,
@@ -69,23 +63,19 @@ import { CompareArrowsOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  // configCell: {
-  //   width: '180px'
-  // },
-  // hidden: {
-  //   display: 'none'
-  // },
-  // subsec: {
-  //   width: '43%',
-  //   cursor: 'pointer'
-  // },
-  // denseInput: {
-  //   margin: '2px 0',
-  // },
-  editorMain: {
-    padding: '0 14px'
-  }
-
+  configCell: {
+    width: '180px'
+  },
+  hidden: {
+    display: 'none'
+  },
+  subsec: {
+    width: '43%',
+    cursor: 'pointer'
+  },
+  denseInput: {
+    margin: '2px 0',
+  },
   // cssOutlinedInput: {
   //   borderWidth: '1px',
   //   '&$cssFocused:not($error)': {
@@ -123,8 +113,6 @@ function StoryEditForm({
   const history = useHistory();
 
   const [subsectionOptions, setSubsectionOptions] = useState([]);
-  // const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(story.text))))
-  const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(story.text))))
 
   // const [confirmDialog, setConfirmDialog] = useState(false);
   // const [activeSubStory, setActiveSubStory] = useState({});
@@ -152,12 +140,6 @@ function StoryEditForm({
     event.persist();
     subsectionOptionsUpdate(event.target.value, setFieldValue)
     setFieldValue('subsection', '');
-  };
-
-  const handleTextChange = (state, setFieldValue) => {
-    console.log(state)
-    setEditorState(state)
-    setFieldValue('text', draftToHtml(convertToRaw(editorState.getCurrentContent())));
   };
 
   useEffect(() => {
@@ -206,7 +188,7 @@ function StoryEditForm({
         desc: story.desc || '',
         text: story.text || '',
         section: story.section || '',
-        subsection: story.subsection || ''
+        subsection: story.subsection || 'north-america'
         // covers: story.covers || [],
         // front_include_headlines: story.config.front_include_headlines || true,
         // front_include_most_viewed: story.config.front_include_most_viewed || true,
@@ -283,20 +265,19 @@ function StoryEditForm({
           onSubmit={handleSubmit}
           {...rest}
         >
-
-
           <Grid
             container
             spacing={3}
           >
             <Grid
               item
-              xs={9}
-              lg={9}
+              xs={12}
+              lg={12}
             >
               <Box mt={3}>
                 <Card>
                   <CardContent>
+
                     <Grid
                       container
                       spacing={3}
@@ -373,6 +354,15 @@ function StoryEditForm({
                         <JooTextField label="Story Description" name="desc" rows="2" />
                       </Grid>
 
+
+                      <Grid
+                        item
+                        md={12}
+                        xs={12}
+                      >
+                        <JooTextField label="Story Description" name="text" rows="10" />
+                      </Grid>
+
                       <Grid
                         item
                         md={12}
@@ -382,24 +372,9 @@ function StoryEditForm({
                           component={Box}
                           mt={3}
                         >
-                          <Editor
-                            editorState={editorState}
-                            editorClassName={classes.editorMain}
-                            onEditorStateChange={state => handleTextChange(state, setFieldValue)}
-                          />
+                          <DraftEditor />
                         </Paper>
                       </Grid>
-                      {/* 
-                      <Grid
-                        item
-                        md={12}
-                        xs={12}
-                      >
-                        <textarea
-                          name="text"
-                          value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
-                        />
-                      </Grid> */}
 
                     </Grid>
 
@@ -407,23 +382,6 @@ function StoryEditForm({
                 </Card>
               </Box>
             </Grid>
-
-            <Grid
-              item
-              xs={3}
-              lg={3}
-            >
-              <Box mt={3}>
-                <Card>
-                  <CardHeader title="Upload Images" />
-                  <Divider />
-                  <CardContent>
-                    <FilesDropzone />
-                  </CardContent>
-                </Card>
-              </Box>
-            </Grid>
-
 
             <Grid
               item
@@ -455,7 +413,6 @@ function StoryEditForm({
             </Grid>
 
           </Grid>
-
         </form>
       )
       }
