@@ -75,15 +75,15 @@ const useStyles = makeStyles((theme) => ({
     height: 0
   },
   cropArea: {
-    width: 240,
+    width: 500,
   },
   cropContainer: {
     position: 'relative',
-    width: 240,
-    maxHeight: 240,
+    width: 500,
+    maxHeight: 500,
     background: '#333',
     [theme.breakpoints.up('sm')]: {
-      height: 240,
+      height: 500,
     },
 
   },
@@ -170,6 +170,13 @@ function FilesDropzone({ className, ...rest }) {
 
   }
 
+  function convertCanvasToImage() {
+    let canvas = document.getElementById("canvas");
+    let image = new Image();
+    image.src = canvas.toDataURL();
+    return image;
+  }
+
   const showCroppedImage = async () => {
     try {
       // Upload image
@@ -189,19 +196,25 @@ function FilesDropzone({ className, ...rest }) {
       // console.log('imageSrc', imageSrc)
 
 
-      const croppedImage = await getCroppedImg(
+      const croppedBlob = await getCroppedImg(
         currentImage.imageSrc,
         croppedAreaPixels
       )
+      console.log('croppedImage>>>>>', croppedBlob)
+
+      const croppedImage = new File([croppedBlob], 'image.jpeg', {
+        type: croppedBlob.type,
+      });
+
       if (croppedImage) {
 
-        // await dispatch(uploadImage({ file: croppedImage }));
-        await dispatch(uploadImage({ file: croppedImage }));
+        const response = await dispatch(uploadImage(croppedImage));
 
         console.log('done', croppedImage)
+        console.log('response', response)
         setCroppedImage(croppedImage)
 
-
+        // http://localhost:5000/tmp/file-1681600075607.jpeg
 
         // setLoadedImages(oldArray => [...oldArray, { name: file.name, imageSrc: imageDataUrl, croppedImage: null }]);
 
@@ -214,7 +227,8 @@ function FilesDropzone({ className, ...rest }) {
         setTimeout(() => {
           setLoadedImages(oldArray => [
             ...oldArray.slice(0, currentImageIndex),
-            { ...currentImage, croppedImage },
+            { ...currentImage, imageSrc: response['src'] },
+            // { ...currentImage, croppedImage },
             ...oldArray.slice(currentImageIndex + 1)]
           )
         }, 1000)
@@ -270,7 +284,7 @@ function FilesDropzone({ className, ...rest }) {
       console.log(file)
 
 
-      await dispatch(uploadImage(file));
+      // await dispatch(uploadImage(file));
 
 
 
@@ -299,6 +313,11 @@ function FilesDropzone({ className, ...rest }) {
     }
   }
 
+
+  useEffect(() => {
+    console.log('loadedImages====>', loadedImages)
+  }, [loadedImages])
+
   return (
     <div
       className={clsx(classes.root, className)}
@@ -321,38 +340,35 @@ function FilesDropzone({ className, ...rest }) {
           />
         </div>
       </div>
-      {files.length > 0 && (
+      {loadedImages.length > 0 && (
         <>
           <PerfectScrollbar options={{ suppressScroll: false }}>
             <List className={classes.list}>
-              {files.map((file, i) => (
-                <>
-                  <ListItem
-                    divider={i < files.length - 1}
-                    key={i}
-                  >
-                    <ListItemIcon>
-                      <ImageIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={file.name}
-                      primaryTypographyProps={{ variant: 'h5' }}
-                      secondary={bytesToSize(file.size)}
-                    />
-                    <Tooltip title="More options">
-                      <IconButton edge="end">
-                        <MoreIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </ListItem>
+              {loadedImages.map((file, i) => (
+                <ListItem
+                  divider={i < loadedImages.length - 1}
+                  key={i}
+                >
+                  <ListItemIcon>
+                    <ImageIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={file.name}
+                    primaryTypographyProps={{ variant: 'h5' }}
+                    secondary={bytesToSize(file.size)}
+                  />
+                  <Tooltip title="More options">
+                    <IconButton edge="end">
+                      <MoreIcon />
+                    </IconButton>
+                  </Tooltip>
                   <img
                     onClick={displayCropArea}
-                    src={croppedImage}
+                    src={file.imageSrc}
                     alt="Cropped"
                     className={classes.img}
                   />
-
-                </>
+                </ListItem>
               ))}
             </List>
           </PerfectScrollbar>
@@ -363,7 +379,7 @@ function FilesDropzone({ className, ...rest }) {
       <Dialog
         maxWidth="sm"
         fullWidth
-        open={imageSrc && showCropArea}
+        open={!!(imageSrc && showCropArea)}
         {...rest}
       >
         {imageSrc && (

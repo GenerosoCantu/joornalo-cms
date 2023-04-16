@@ -164,6 +164,7 @@ export function uploadImage(file) {
         }
       });
       dispatch(clearError());
+      return image
     } catch (error) {
       dispatch(setError(error));
       throw error;
