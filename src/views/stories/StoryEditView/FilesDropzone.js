@@ -134,134 +134,62 @@ function FilesDropzone({ className, ...rest }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [files, setFiles] = useState([]);
   const [loadedImages, setLoadedImages] = useState([]);
-
-
   const [currentImg, setCurrentImg] = useState(null)
   const [imageSrc, setImageSrc] = useState(null)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
-  const [croppedImage, setCroppedImage] = useState(null)
   const [showCropArea, setShowCropArea] = useState(false);
-  const [imageFirstLoad, setImageFirstLoad] = useState(false);
-  const [calculateArea, setCalculateArea] = useState(true);
-
-  useEffect(() => {
-    if (!imageFirstLoad) {
-      // console.log('-----croppedAreaPixels----', croppedAreaPixels)
-      setImageFirstLoad(true)
-      // showCroppedImage()
-    }
-  }, [croppedAreaPixels]);
-
-  const displayCropArea = () => {
-    setShowCropArea(true)
-    setCalculateArea(true)
-  }
+  const [remoteFilename, setRemoteFilename] = useState(false);
 
   const onCropComplete = (croppedArea, croppedAreaPixelsX) => {
-    // console.log('croppedAreaPixelsX==> 3 ', croppedAreaPixelsX)
-    console.log('loadedImages::::(3)', loadedImages)
     setCroppedAreaPixels(croppedAreaPixelsX)
-
-
-
   }
 
-  function convertCanvasToImage() {
-    let canvas = document.getElementById("canvas");
-    let image = new Image();
-    image.src = canvas.toDataURL();
-    return image;
-  }
-
-  const showCroppedImage = async () => {
+  const uploadCroppedImage = async () => {
     try {
-      // Upload image
-
-
-
-
-      console.log('currentImg', currentImg)
-      console.log('loadedImages::::(4)', loadedImages)
-      console.log('loadedImages.name', loadedImages.name)
-
-
       const currentImage = loadedImages.find(o => o.name === currentImg)
       const currentImageIndex = loadedImages.findIndex(o => o.name === currentImg)
-      console.log('currentImageIndex', currentImageIndex)
-      console.log('currentImage', currentImage)
-      // console.log('imageSrc', imageSrc)
-
 
       const croppedBlob = await getCroppedImg(
         currentImage.imageSrc,
         croppedAreaPixels
       )
-      console.log('croppedImage>>>>>', croppedBlob)
 
-      const croppedImage = new File([croppedBlob], 'image.jpeg', {
-        type: croppedBlob.type,
+      const croppedImage = new File([croppedBlob], remoteFilename ? remoteFilename : 'tmpImage.jpeg', {
+        type: croppedBlob.type
       });
 
       if (croppedImage) {
 
         const response = await dispatch(uploadImage(croppedImage));
 
-        console.log('done', croppedImage)
-        console.log('response', response)
-        setCroppedImage(croppedImage)
-
-        // http://localhost:5000/tmp/file-1681600075607.jpeg
-
-        // setLoadedImages(oldArray => [...oldArray, { name: file.name, imageSrc: imageDataUrl, croppedImage: null }]);
-
-        // setLoadedImages(oldArray => oldArray.map((item, i) => {
-        //   console.log('item.name === currentImage.name', item.name, currentImage.name)
-        //   return item.name === currentImage.name ? { ...item, croppedImage: croppedImage } : item
-        // }
-        // ));
-
         setTimeout(() => {
           setLoadedImages(oldArray => [
             ...oldArray.slice(0, currentImageIndex),
-            { ...currentImage, imageSrc: response['src'] },
-            // { ...currentImage, croppedImage },
+            { ...currentImage, croppedImage: response['src'], filename: response['filename'] },
             ...oldArray.slice(currentImageIndex + 1)]
           )
         }, 1000)
 
+        setShowCropArea(false)
 
-
-        setShowCropArea(false) //false
-        // setTimeout(() => {
-        setCalculateArea(false)
-        // }, "1000")
       }
     } catch (e) {
-      console.log('showCroppedImage ERROR')
-      // console.error(e)
+      console.log('uploadCroppedImage ERROR: ', e)
     }
   }
 
   const handleDrop = useCallback((acceptedFiles) => {
-    console.log('acceptedFiles----->', acceptedFiles)
-    // Cancel if name already exists
-    setFiles((prevFiles) => [...prevFiles].concat(acceptedFiles));
-    onFileChange(acceptedFiles)
-
+    // Cancel if name already exists ???
+    newImage(acceptedFiles)
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: handleDrop
+    onDrop: handleDrop,
+    preventDropOnDocument: true
   });
-
-  // const handleRemoveAll = () => {
-  //   setFiles([]);
-  // };
-
 
   function readFile(file) {
     return new Promise((resolve) => {
@@ -271,52 +199,25 @@ function FilesDropzone({ className, ...rest }) {
     })
   }
 
-  const onFileChange = async (files) => {
-
+  const newImage = async (files) => {
     if (files && files.length > 0) {
-      setCroppedImage(null)
-      setCalculateArea(true)
-      setShowCropArea(true) // false
-      setImageFirstLoad(false)
       const file = files[files.length - 1]
 
-      console.log('file====>', file)
-      console.log(file)
-
-
-      // await dispatch(uploadImage(file));
-
-
-
-
-
       let imageDataUrl = await readFile(file)
-      console.log('setLoadedImages ++++++++++++++++++++++++++++++++++')
-      setLoadedImages(oldArray => [...oldArray, { name: file.name, imageSrc: imageDataUrl, croppedImage: null }]);
+      setLoadedImages(oldArray => [...oldArray, { name: file.name, imageSrc: imageDataUrl, croppedImage: null, filename: null }]);
 
-      setCurrentImg(file.name)
-      // setLoadedImages([{ name: file.name }])
-      console.log('imageDataUrl::::', imageDataUrl)
-      console.log('file::::', file)
-      console.log('file.name::::', file.name)
-      console.log('loadedImages::::(1) ', loadedImages)
-      // console.log('files::::', files)
-
-      // console.log('loadedImages[0].imageDataUrl::::', loadedImages[0].imageDataUrl)
-
-      setImageSrc(imageDataUrl)
-
-      setTimeout(() => {
-        setCalculateArea(false)
-        console.log('loadedImages::::(2)', loadedImages)
-      }, 1000)
+      editImage(file.name, imageDataUrl)
+      editImage({ name: file.name, imageSrc: imageDataUrl, filename: null })
     }
   }
 
-
-  useEffect(() => {
-    console.log('loadedImages====>', loadedImages)
-  }, [loadedImages])
+  const editImage = async (file) => {
+    // console.log('file:', file)
+    setCurrentImg(file.name)
+    setImageSrc(file.imageSrc)
+    setRemoteFilename(file.filename)
+    setShowCropArea(true)
+  }
 
   return (
     <div
@@ -330,7 +231,7 @@ function FilesDropzone({ className, ...rest }) {
         })}
         {...getRootProps()}
       >
-        {/* <input type="file" onChange={onFileChange} accept="image/*" /> */}
+        {/* <input type="file" onChange={newImage} accept="image/*" /> */}
         <input {...getInputProps()} />
         <div>
           <img
@@ -349,7 +250,7 @@ function FilesDropzone({ className, ...rest }) {
                   divider={i < loadedImages.length - 1}
                   key={i}
                 >
-                  <ListItemIcon>
+                  {/* <ListItemIcon>
                     <ImageIcon />
                   </ListItemIcon>
                   <ListItemText
@@ -361,13 +262,17 @@ function FilesDropzone({ className, ...rest }) {
                     <IconButton edge="end">
                       <MoreIcon />
                     </IconButton>
-                  </Tooltip>
-                  <img
-                    onClick={displayCropArea}
-                    src={file.imageSrc}
-                    alt="Cropped"
-                    className={classes.img}
-                  />
+                  </Tooltip> */}
+                  {file.croppedImage && (
+                    <img
+                      // onClick={displayCropArea}
+                      onClick={() => editImage(file)}
+                      file={file.name}
+                      src={file.croppedImage ? file.croppedImage : file.imageSrc}
+                      alt="Cropped"
+                      className={classes.img}
+                    />
+                  )}
                 </ListItem>
               ))}
             </List>
@@ -414,7 +319,7 @@ function FilesDropzone({ className, ...rest }) {
                 />
               </div>
               <Button
-                onClick={showCroppedImage}
+                onClick={uploadCroppedImage}
                 variant="contained"
                 color="primary"
                 classes={{ root: classes.cropButton }}
