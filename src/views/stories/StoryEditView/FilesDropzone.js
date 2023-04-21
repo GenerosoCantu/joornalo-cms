@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1)
   },
   list: {
-    maxHeight: 320
+    maxHeight: 800
   },
   actions: {
     marginTop: theme.spacing(2),
@@ -75,12 +75,12 @@ const useStyles = makeStyles((theme) => ({
     height: 0
   },
   cropArea: {
-    width: 500,
+    width: '100%'
   },
   cropContainer: {
     position: 'relative',
-    width: 500,
-    maxHeight: 500,
+    width: '100%',
+    maxHeight: 800,
     background: '#333',
     [theme.breakpoints.up('sm')]: {
       height: 500,
@@ -124,10 +124,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     width: '100%',
   },
-
-
-
-
 }));
 
 function FilesDropzone({ className, ...rest }) {
@@ -138,11 +134,11 @@ function FilesDropzone({ className, ...rest }) {
   const [currentImg, setCurrentImg] = useState(null)
   const [imageSrc, setImageSrc] = useState(null)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [aspect, setAspect] = useState(4 / 3)
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
   const [showCropArea, setShowCropArea] = useState(false);
   const [remoteFilename, setRemoteFilename] = useState(false);
-  const cropSize = { width: 600, height: 400 }
 
   const onCropComplete = (croppedArea, croppedAreaPixelsX) => {
     setCroppedAreaPixels(croppedAreaPixelsX)
@@ -158,7 +154,7 @@ function FilesDropzone({ className, ...rest }) {
         croppedAreaPixels
       )
 
-      const croppedImage = new File([croppedBlob], remoteFilename ? remoteFilename : 'tmpImage.jpeg', {
+      const croppedImage = new File([croppedBlob], remoteFilename ? remoteFilename : 'tmpImage.webp', {
         type: croppedBlob.type
       });
 
@@ -180,6 +176,10 @@ function FilesDropzone({ className, ...rest }) {
     } catch (e) {
       console.log('uploadCroppedImage ERROR: ', e)
     }
+  }
+
+  const cancelCroppedImage = () => {
+    setShowCropArea(false)
   }
 
   const handleDrop = useCallback((acceptedFiles) => {
@@ -213,7 +213,6 @@ function FilesDropzone({ className, ...rest }) {
   }
 
   const editImage = async (file) => {
-    // console.log('file:', file)
     setCurrentImg(file.name)
     setImageSrc(file.imageSrc)
     setRemoteFilename(file.filename)
@@ -266,7 +265,6 @@ function FilesDropzone({ className, ...rest }) {
                   </Tooltip> */}
                   {file.croppedImage && (
                     <img
-                      // onClick={displayCropArea}
                       onClick={() => editImage(file)}
                       file={file.name}
                       src={file.croppedImage ? file.croppedImage : file.imageSrc}
@@ -283,7 +281,7 @@ function FilesDropzone({ className, ...rest }) {
 
 
       <Dialog
-        maxWidth="sm"
+        maxWidth="md"
         fullWidth
         open={!!(imageSrc && showCropArea)}
         {...rest}
@@ -295,7 +293,8 @@ function FilesDropzone({ className, ...rest }) {
                 image={imageSrc}
                 crop={crop}
                 zoom={zoom}
-                aspect={4 / 3}
+                aspect={aspect}
+                // aspect={4 / 3}
                 onCropChange={setCrop}
                 onCropComplete={onCropComplete}
                 onZoomChange={setZoom}
@@ -320,12 +319,17 @@ function FilesDropzone({ className, ...rest }) {
                 />
               </div>
               <Button
+                onClick={cancelCroppedImage}
+              >
+                Cancel
+              </Button>
+              <Button
                 onClick={uploadCroppedImage}
                 variant="contained"
                 color="primary"
                 classes={{ root: classes.cropButton }}
               >
-                Show Result
+                Save Image
               </Button>
             </div>
           </div>
