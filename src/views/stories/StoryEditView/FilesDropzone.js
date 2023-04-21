@@ -30,6 +30,8 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux';
+import { AspectRatios } from '../../../constants';
+import JooTextField from '../../../components/JooTextField';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -106,6 +108,10 @@ const useStyles = makeStyles((theme) => ({
     flex: '1',
     alignItems: 'center',
   },
+  aspectRatioContainer: {
+    minWidth: 60,
+    paddingRight: 20
+  },
   sliderLabel: {
     [theme.breakpoints.down('xs')]: {
       minWidth: 65,
@@ -124,6 +130,9 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     width: '100%',
   },
+  denseInput: {
+    margin: '2px 0',
+  },
 }));
 
 function FilesDropzone({ className, ...rest }) {
@@ -134,7 +143,7 @@ function FilesDropzone({ className, ...rest }) {
   const [currentImg, setCurrentImg] = useState(null)
   const [imageSrc, setImageSrc] = useState(null)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
-  const [aspect, setAspect] = useState(4 / 3)
+  const [aspect, setAspect] = useState(16 / 9)
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
   const [showCropArea, setShowCropArea] = useState(false);
@@ -218,6 +227,13 @@ function FilesDropzone({ className, ...rest }) {
     setRemoteFilename(file.filename)
     setShowCropArea(true)
   }
+
+  const handleAspectChange = (event) => {
+    console.log(event)
+    console.log(event.target)
+    // event.persist();
+    setAspect(event.target.value);
+  };
 
   return (
     <div
@@ -316,6 +332,16 @@ function FilesDropzone({ className, ...rest }) {
                   aria-labelledby="Zoom"
                   classes={{ root: classes.slider }}
                   onChange={(e, zoom) => setZoom(zoom)}
+                />
+              </div>
+              <div className={classes.aspectRatioContainer}>
+                <JooTextField
+                  label=""
+                  name="aspect_ratio"
+                  margin="dense"
+                  options={AspectRatios}
+                  className={classes.denseInput}
+                  onChange={handleAspectChange}
                 />
               </div>
               <Button

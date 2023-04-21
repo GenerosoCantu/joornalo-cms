@@ -134,3 +134,27 @@ export const PhotoSizes = [
     name: 'Extra Large'
   }
 ];
+
+export const AspectRatios = [
+  {
+    id: 16 / 9,
+    name: '16:9'
+  },
+  {
+    id: 3 / 2,
+    name: '3:2'
+  },
+  {
+    id: 4 / 3,
+    name: '4:3'
+  },
+
+  {
+    id: 1,
+    name: '1:1'
+  },
+  {
+    id: 4 / 5,
+    name: '4:5'
+  }
+];
