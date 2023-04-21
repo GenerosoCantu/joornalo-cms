@@ -7,65 +7,6 @@ export const createImage = (url) =>
     image.src = url
   })
 
-/**
- * This function was adapted from the one in the ReadMe of https://github.com/DominicTobias/react-image-crop
- */
-export async function getCroppedImgOrig(
-  imageSrc,
-  pixelCrop
-) {
-  const image = await createImage(imageSrc)
-  const canvas = document.createElement('canvas')
-  const ctx = canvas.getContext('2d')
-
-  if (!ctx) {
-    return null
-  }
-
-  console.log('image:::', image.width, image.height)
-  canvas.width = image.width
-  canvas.height = image.height
-
-  console.log('canvas:::', canvas.width, canvas.height)
-
-  ctx.translate(image.width / 2, image.height / 2)
-  ctx.translate(-image.width / 2, -image.height / 2)
-
-  // draw rotated image
-  ctx.drawImage(image, 0, 0)
-
-  // croppedAreaPixels values are bounding box relative
-  // extract the cropped image using these values
-  const data = ctx.getImageData(
-    pixelCrop.x,
-    pixelCrop.y,
-    pixelCrop.width,
-    pixelCrop.height
-  )
-
-  // set canvas width to final desired crop size - this will clear existing context
-  canvas.width = pixelCrop.width
-  canvas.height = pixelCrop.height
-
-  // paste generated rotate image at the top left corner
-  ctx.putImageData(data, 0, 0)
-
-  // As Base64 string
-  // console.log('canvas.toDataURL=====>', canvas.toDataURL('image/jpeg'))
-  // return canvas.toDataURL('image/jpeg');
-
-  // As a blob
-  return new Promise((resolve, reject) => {
-    canvas.toBlob((file) => {
-      console.log('file=====>', file)
-      return resolve(URL.createObjectURL(file))
-    }, 'image/jpeg')
-  })
-}
-
-/**
- * This function was adapted from the one in the ReadMe of https://github.com/DominicTobias/react-image-crop
- */
 export async function getCroppedImg(
   imageSrc,
   pixelCrop
@@ -78,90 +19,27 @@ export async function getCroppedImg(
     return null
   }
 
-  console.log('image:::', image.width, image.height)
-  canvas.width = image.width
-  canvas.height = image.height
+  const imageWidth = 1280
+  canvas.width = imageWidth
+  canvas.height = pixelCrop.height / pixelCrop.width * imageWidth
 
-  console.log('canvas:::', canvas.width, canvas.height)
-
-  ctx.translate(image.width / 2, image.height / 2)
-  ctx.translate(-image.width / 2, -image.height / 2)
-
-  // draw rotated image
-  ctx.drawImage(image, 0, 0)
-
-  // croppedAreaPixels values are bounding box relative
-  // extract the cropped image using these values
-  const data = ctx.getImageData(
+  ctx.drawImage(
+    image,
     pixelCrop.x,
     pixelCrop.y,
     pixelCrop.width,
-    pixelCrop.height
+    pixelCrop.height,
+    0,
+    0,
+    canvas.width,
+    canvas.height
   )
 
-  // set canvas width to final desired crop size - this will clear existing context
-  canvas.width = pixelCrop.width
-  canvas.height = pixelCrop.height
-
-  // paste generated rotate image at the top left corner
-  ctx.putImageData(data, 0, 0)
-
-  // As Base64 string
-  // console.log('canvas.toDataURL=====>', canvas.toDataURL('image/jpeg'))
-  // return canvas.toDataURL('image/jpeg');
-
-  // As a blob
   return new Promise((resolve, reject) => {
     canvas.toBlob((file) => {
-      console.log('file=====>', file)
       file.name = 'image.jpeg';
       file.lastModified = new Date();
       return resolve(file)
-      // return resolve(URL.createObjectURL(file))
     }, 'image/jpeg')
   })
 }
-
-
-
-
-
-// const getBlobFromCanvas = (canvas, file) =>
-//   new Promise((resolve, reject) => {
-//     canvas.toBlob((blob) => {
-//       if (blob) {
-//         blob.name = file.name;
-//         blob.lastModified = file.lastModified;
-//         resolve(blob);
-//       } else {
-//         reject(new Error("Canvas is empty"));
-//       }
-//     }, file.type); //"image/jpeg");
-//   })
-
-// export async function getCroppedImg2(image, file, crop) {
-//   const canvas = document.createElement("canvas"),
-//     scaleX = image.naturalWidth / image.width,
-//     scaleY = image.naturalHeight / image.height,
-//     ctx = canvas.getContext("2d");
-
-//   canvas.width = crop.width;
-//   canvas.height = crop.height;
-
-//   ctx.drawImage(
-//     image,
-//     crop.x * scaleX,
-//     crop.y * scaleY,
-//     crop.width * scaleX,
-//     crop.height * scaleY,
-//     0,
-//     0,
-//     crop.width,
-//     crop.height
-//   );
-
-//   return Promise.all([
-//     getBlobFromCanvas(canvas, file),
-//     canvas.toDataURL("image/jpeg")
-//   ]);
-// }

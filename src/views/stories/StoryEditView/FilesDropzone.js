@@ -142,6 +142,7 @@ function FilesDropzone({ className, ...rest }) {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
   const [showCropArea, setShowCropArea] = useState(false);
   const [remoteFilename, setRemoteFilename] = useState(false);
+  const cropSize = { width: 600, height: 400 }
 
   const onCropComplete = (croppedArea, croppedAreaPixelsX) => {
     setCroppedAreaPixels(croppedAreaPixelsX)
@@ -171,7 +172,7 @@ function FilesDropzone({ className, ...rest }) {
             { ...currentImage, croppedImage: response['src'], filename: response['filename'] },
             ...oldArray.slice(currentImageIndex + 1)]
           )
-        }, 1000)
+        }, 0)
 
         setShowCropArea(false)
 
