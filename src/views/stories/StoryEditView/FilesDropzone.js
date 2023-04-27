@@ -28,7 +28,7 @@ import Cropper from 'react-easy-crop'
 import Slider from '@material-ui/core/Slider'
 import { getCroppedImg } from '../../../utils/canvas'
 import { CompareArrowsOutlined, TimerOutlined } from '@material-ui/icons';
-import { uploadImage } from 'src/store/actions/storyActions';
+import { uploadImage, deleteFile } from 'src/store/actions/storyActions';
 import {
   useDispatch,
   useSelector
@@ -183,10 +183,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function FilesDropzone({ className, onLoadedImages, initialImages, ...rest }) {
+function FilesDropzone({ className, onImageUpdate, initialImages, ...rest }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const [serverImages, setServerImages] = useState(initialImages);
   const [loadedImages, setLoadedImages] = useState([]);
   const [currentImg, setCurrentImg] = useState(null)
   const [imageSrc, setImageSrc] = useState(null)
@@ -279,9 +280,9 @@ function FilesDropzone({ className, onLoadedImages, initialImages, ...rest }) {
   const [deleteImage, setDeleteImage] = useState(null)
   const [isDeleteImageInitial, setIsDeleteImageInitial] = useState(null)
 
-  const onDeleteImage = (fileName, initialImages) => {
+  const onDeleteImage = (fileName, isInitialImage) => {
     setDeleteImage(fileName)
-    setIsDeleteImageInitial(initialImages)
+    setIsDeleteImageInitial(isInitialImage)
   }
 
   const cancelDeleteImage = () => {
@@ -290,9 +291,14 @@ function FilesDropzone({ className, onLoadedImages, initialImages, ...rest }) {
 
   const confirmDeleteImage = () => {
     if (isDeleteImageInitial) {
-
+      setServerImages(serverImages.filter((image) => image.filename !== deleteImage))
+      setDeleteImage(null)
     } else {
-
+      setLoadedImages(loadedImages.filter((image) => image.filename !== deleteImage))
+      // Delete image from server
+      console.log('====>', deleteImage)
+      dispatch(deleteFile(deleteImage));
+      setDeleteImage(null)
     }
   }
 
@@ -303,15 +309,13 @@ function FilesDropzone({ className, onLoadedImages, initialImages, ...rest }) {
   };
 
   useEffect(() => {
-    console.log(loadedImages)
-    onLoadedImages(loadedImages)
-  }, [loadedImages])
+    onImageUpdate(serverImages, loadedImages)
+  }, [serverImages, loadedImages])
 
-  useEffect(() => {
-    console.log('initialImages:::::', initialImages)
-  }, [initialImages])
-
-
+  // useEffect(() => {
+  //   console.log('initialImages:::::', initialImages)
+  //   console.log('serverImages:::::', serverImages)
+  // }, [initialImages])
 
   return (
     <div
@@ -335,11 +339,11 @@ function FilesDropzone({ className, onLoadedImages, initialImages, ...rest }) {
           />
         </div>
       </div>
-      {(initialImages.length > 0 || loadedImages.length > 0) && (
+      {(serverImages.length > 0 || loadedImages.length > 0) && (
         <>
           <PerfectScrollbar options={{ suppressScroll: false }}>
             <List className={classes.list}>
-              {initialImages.map((image, i) => (
+              {serverImages.map((image, i) => (
                 <ListItem
                   key={i + 100}
                 >
@@ -496,7 +500,7 @@ function FilesDropzone({ className, onLoadedImages, initialImages, ...rest }) {
 
 FilesDropzone.propTypes = {
   className: PropTypes.string,
-  onLoadedImages: PropTypes.func,
+  onImageUpdate: PropTypes.func,
   initialImages: PropTypes.array
 };
 

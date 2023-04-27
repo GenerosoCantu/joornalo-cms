@@ -149,30 +149,28 @@ function StoryEditForm({
   };
 
   const handleSectionChange = (event, setFieldValue) => {
-    console.log(event.target.value)
+    // console.log(event.target.value)
     event.persist();
     subsectionOptionsUpdate(event.target.value, setFieldValue)
     setFieldValue('subsection', '');
   };
 
   const handleTextChange = (state, setFieldValue) => {
-    console.log(state)
+    // console.log(state)
     setEditorState(state)
     setFieldValue('text', draftToHtml(convertToRaw(editorState.getCurrentContent())));
   };
 
   useEffect(() => {
-    console.log(story)
+    // console.log(story)
     subsectionOptionsUpdate(story.section)
   }, [story]);
 
-  const onLoadedImages = (loadedImages) => {
-    console.log('onLoadedImages:', loadedImages)
-    console.log('story.images:', story.images)
-    const images = [...story.images, ...loadedImages.filter(image => image.filename).map((image) => {
+  const onImageUpdate = (serverImages, loadedImages) => {
+    const images = [...serverImages, ...loadedImages.filter(image => image.filename).map((image) => {
       return { filename: image.filename, ratio: image.ratio, label: image.label }
     })]
-    console.log('images:', images)
+    // console.log('images:', images)
     setImages(images)
   }
 
@@ -431,7 +429,7 @@ function StoryEditForm({
                   <Divider />
                   <CardContent>
                     <FilesDropzone
-                      onLoadedImages={onLoadedImages}
+                      onImageUpdate={onImageUpdate}
                       initialImages={story.images}
                     />
                   </CardContent>

@@ -10,6 +10,8 @@ export const DELETE_STORY = '@story/delete-story';
 export const GET_STORY_REQUEST = '@story/get-story-request';
 export const UPLOAD_IMAGE = '@story/upload-image';
 export const UPLOAD_IMAGE_REQUEST = '@story/upload-image-request';
+export const DELETE_IMAGE_REQUEST = '@story/delete-image-request';
+export const DELETE_IMAGE = '@story/delete-image';
 // export const SET_STORY_ERROR = '@error/set-error';
 // export const CLEAR_STORY_ERROR = '@error/set-error';
 
@@ -165,6 +167,27 @@ export function uploadImage(file) {
       });
       dispatch(clearError());
       return image
+    } catch (error) {
+      dispatch(setError(error));
+      throw error;
+    }
+  };
+}
+
+export function deleteFile(file) {
+  return async (dispatch) => {
+    console.log('deleteFile:', file)
+    try {
+      dispatch({ type: DELETE_IMAGE_REQUEST });
+      const resp = await uploadService.deleteImage(file);
+      dispatch({
+        type: DELETE_IMAGE,
+        payload: {
+          file
+        }
+      });
+      dispatch(clearError());
+      return resp
     } catch (error) {
       dispatch(setError(error));
       throw error;
