@@ -125,6 +125,7 @@ function StoryEditForm({
   const [subsectionOptions, setSubsectionOptions] = useState([]);
   // const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(story.text))))
   const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(story.text))))
+  const [images, setImages] = useState([]);
 
   // const [confirmDialog, setConfirmDialog] = useState(false);
   // const [activeSubStory, setActiveSubStory] = useState({});
@@ -164,6 +165,16 @@ function StoryEditForm({
     console.log(story)
     subsectionOptionsUpdate(story.section)
   }, [story]);
+
+  const onLoadedImages = (loadedImages) => {
+    console.log('onLoadedImages:', loadedImages)
+    console.log('story.images:', story.images)
+    const images = [...story.images, ...loadedImages.filter(image => image.filename).map((image) => {
+      return { filename: image.filename, ratio: image.ratio, label: image.label }
+    })]
+    console.log('images:', images)
+    setImages(images)
+  }
 
   // const handleSelectCover = (event, coverId) => {
   //   if (!selectedCovers.includes(coverId)) {
@@ -240,6 +251,7 @@ function StoryEditForm({
           setSubmitting(false);
           values = {
             ...values,
+            images
             //   covers: selectedCovers,
             //   config: {
             //     front_include_headlines: values.front_include_headlines,
@@ -418,7 +430,10 @@ function StoryEditForm({
                   <CardHeader title="Upload Images" />
                   <Divider />
                   <CardContent>
-                    <FilesDropzone />
+                    <FilesDropzone
+                      onLoadedImages={onLoadedImages}
+                      initialImages={story.images}
+                    />
                   </CardContent>
                 </Card>
               </Box>

@@ -19,6 +19,9 @@ import {
   makeStyles
 } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import PageviewIcon from '@material-ui/icons/Pageview';
+import CropIcon from '@material-ui/icons/Crop';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import bytesToSize from 'src/utils/bytesToSize';
 import Cropper from 'react-easy-crop'
@@ -60,8 +63,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1)
   },
   list: {
+    padding: 0,
     maxHeight: 800
   },
+  listElement: {
+    display: 'grid'
+  },
+  listIcon: {
+    cursor: 'pointer'
+  },
+
   actions: {
     marginTop: theme.spacing(2),
     display: 'flex',
@@ -127,15 +138,52 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   img: {
-    maxWidth: '100%',
-    width: '100%',
+    width: '94%',
+    marginRight: '5px'
+  },
+  imgEditable: {
+    width: '94%',
+    marginRight: '5px',
+    cursor: 'pointer'
   },
   denseInput: {
     margin: '2px 0',
   },
+
+  deleteContainer: {
+    // position: 'relative',
+    width: '100%',
+    padding: '1rem 1rem 0 1rem',
+    maxHeight: 800,
+    textAlign: 'center',
+    [theme.breakpoints.up('sm')]: {
+      height: 500,
+    }
+  },
+  deleteImg: {
+    maxHeight: 484
+  },
+  deleteControls: {
+    padding: '1rem',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row-reverse',
+      alignItems: 'center',
+    },
+  },
+  deleteButton: {
+    color: theme.palette.common.white,
+    backgroundColor: theme.palette.error.main,
+    '&:hover': {
+      backgroundColor: theme.palette.error.dark
+    },
+    marginLeft: 16,
+  },
 }));
 
-function FilesDropzone({ className, ...rest }) {
+function FilesDropzone({ className, onLoadedImages, initialImages, ...rest }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -143,7 +191,7 @@ function FilesDropzone({ className, ...rest }) {
   const [currentImg, setCurrentImg] = useState(null)
   const [imageSrc, setImageSrc] = useState(null)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
-  const [aspect, setAspect] = useState(16 / 9)
+  const [aspect, setAspect] = useState({ id: 16 / 9, name: '16:9' })
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
   const [showCropArea, setShowCropArea] = useState(false);
@@ -174,7 +222,7 @@ function FilesDropzone({ className, ...rest }) {
         setTimeout(() => {
           setLoadedImages(oldArray => [
             ...oldArray.slice(0, currentImageIndex),
-            { ...currentImage, croppedImage: response['src'], filename: response['filename'] },
+            { ...currentImage, croppedImage: response['src'], filename: response['filename'], ratio: aspect.name, label: '' },
             ...oldArray.slice(currentImageIndex + 1)]
           )
         }, 0)
@@ -228,12 +276,42 @@ function FilesDropzone({ className, ...rest }) {
     setShowCropArea(true)
   }
 
+  const [deleteImage, setDeleteImage] = useState(null)
+  const [isDeleteImageInitial, setIsDeleteImageInitial] = useState(null)
+
+  const onDeleteImage = (fileName, initialImages) => {
+    setDeleteImage(fileName)
+    setIsDeleteImageInitial(initialImages)
+  }
+
+  const cancelDeleteImage = () => {
+    setDeleteImage(null)
+  }
+
+  const confirmDeleteImage = () => {
+    if (isDeleteImageInitial) {
+
+    } else {
+
+    }
+  }
+
   const handleAspectChange = (event) => {
-    console.log(event)
-    console.log(event.target)
     // event.persist();
-    setAspect(event.target.value);
+    const selRatio = AspectRatios.find(element => element.id === Number(event.target.value));
+    setAspect(selRatio);
   };
+
+  useEffect(() => {
+    console.log(loadedImages)
+    onLoadedImages(loadedImages)
+  }, [loadedImages])
+
+  useEffect(() => {
+    console.log('initialImages:::::', initialImages)
+  }, [initialImages])
+
+
 
   return (
     <div
@@ -257,36 +335,54 @@ function FilesDropzone({ className, ...rest }) {
           />
         </div>
       </div>
-      {loadedImages.length > 0 && (
+      {(initialImages.length > 0 || loadedImages.length > 0) && (
         <>
           <PerfectScrollbar options={{ suppressScroll: false }}>
             <List className={classes.list}>
+              {initialImages.map((image, i) => (
+                <ListItem
+                  key={i + 100}
+                >
+                  <img
+                    src={`http://localhost:5000/tmp/${image.filename}`}
+                    className={classes.img}
+                  />
+                  <ListItemIcon className={classes.listElement}>
+                    <PageviewIcon className={classes.listIcon} />
+                    <DeleteForeverIcon
+                      onClick={() => onDeleteImage(image.filename, true)}
+                      className={classes.listIcon}
+                    />
+                  </ListItemIcon>
+                </ListItem>
+              ))}
               {loadedImages.map((file, i) => (
                 <ListItem
                   divider={i < loadedImages.length - 1}
                   key={i}
                 >
-                  {/* <ListItemIcon>
-                    <ImageIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={file.name}
-                    primaryTypographyProps={{ variant: 'h5' }}
-                    secondary={bytesToSize(file.size)}
-                  />
-                  <Tooltip title="More options">
-                    <IconButton edge="end">
-                      <MoreIcon />
-                    </IconButton>
-                  </Tooltip> */}
                   {file.croppedImage && (
-                    <img
-                      onClick={() => editImage(file)}
-                      file={file.name}
-                      src={file.croppedImage ? file.croppedImage : file.imageSrc}
-                      alt="Cropped"
-                      className={classes.img}
-                    />
+                    <>
+                      <img
+                        onClick={() => editImage(file)}
+                        file={file.name}
+                        src={file.croppedImage ? file.croppedImage : file.imageSrc}
+                        alt="Cropped"
+                        className={classes.imgEditable}
+                      />
+
+                      <ListItemIcon className={classes.listElement}>
+                        <CropIcon
+                          onClick={() => editImage(file)}
+                          className={classes.listIcon}
+                        />
+                        <PageviewIcon className={classes.listIcon} />
+                        <DeleteForeverIcon
+                          onClick={() => onDeleteImage(file.filename, false)}
+                          className={classes.listIcon}
+                        />
+                      </ListItemIcon>
+                    </>
                   )}
                 </ListItem>
               ))}
@@ -294,6 +390,35 @@ function FilesDropzone({ className, ...rest }) {
           </PerfectScrollbar>
         </>
       )}
+
+      <Dialog
+        maxWidth="md"
+        fullWidth
+        open={!!(deleteImage)}
+        {...rest}
+      >
+        <div className={classes.deleteContainer}>
+          <img
+            src={`http://localhost:5000/tmp/${deleteImage}`}
+            className={classes.deleteImg}
+          />
+        </div>
+        <div className={classes.deleteControls}>
+          <Button
+            onClick={confirmDeleteImage}
+            variant="contained"
+            color="secondary"
+            classes={{ root: classes.deleteButton }}
+          >
+            Delete Image
+          </Button>
+          <Button
+            onClick={cancelDeleteImage}
+          >
+            Cancel
+          </Button>
+        </div>
+      </Dialog>
 
 
       <Dialog
@@ -309,8 +434,7 @@ function FilesDropzone({ className, ...rest }) {
                 image={imageSrc}
                 crop={crop}
                 zoom={zoom}
-                aspect={aspect}
-                // aspect={4 / 3}
+                aspect={aspect.id}
                 onCropChange={setCrop}
                 onCropComplete={onCropComplete}
                 onZoomChange={setZoom}
@@ -371,7 +495,9 @@ function FilesDropzone({ className, ...rest }) {
 }
 
 FilesDropzone.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  onLoadedImages: PropTypes.func,
+  initialImages: PropTypes.array
 };
 
 export default FilesDropzone;

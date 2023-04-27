@@ -19,8 +19,6 @@ const JooTextField = ({
   const [field, meta] = useField(props);
   const errorText = meta.error && meta.touched ? meta.error : "";
 
-  console.log('onChange:::', onChange)
-
   if (!onChange) {
     return (
       <TextField
