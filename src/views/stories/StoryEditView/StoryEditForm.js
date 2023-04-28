@@ -122,6 +122,7 @@ function StoryEditForm({
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [imagePath, setImagePath] = useState(null)
   const [subsectionOptions, setSubsectionOptions] = useState([]);
   // const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(story.text))))
   const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(story.text))))
@@ -164,6 +165,10 @@ function StoryEditForm({
   useEffect(() => {
     // console.log(story)
     subsectionOptionsUpdate(story.section)
+    if (story._id) {
+      const folders = story._id.split('');
+      setImagePath('story/' + folders[0] + '/' + folders[1] + '/')
+    }
   }, [story]);
 
   const onImageUpdate = (serverImages, loadedImages) => {
@@ -429,6 +434,7 @@ function StoryEditForm({
                   <Divider />
                   <CardContent>
                     <FilesDropzone
+                      imagePath={imagePath}
                       onImageUpdate={onImageUpdate}
                       initialImages={story.images}
                     />

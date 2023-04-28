@@ -183,7 +183,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function FilesDropzone({ className, onImageUpdate, initialImages, ...rest }) {
+function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...rest }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -278,15 +278,22 @@ function FilesDropzone({ className, onImageUpdate, initialImages, ...rest }) {
   }
 
   const [deleteImage, setDeleteImage] = useState(null)
+  const [viewImage, setViewImage] = useState(null)
   const [isDeleteImageInitial, setIsDeleteImageInitial] = useState(null)
+
+  const onViewImage = (fileName, isInitialImage) => {
+    setViewImage(fileName)
+    setIsDeleteImageInitial(isInitialImage)
+  }
 
   const onDeleteImage = (fileName, isInitialImage) => {
     setDeleteImage(fileName)
     setIsDeleteImageInitial(isInitialImage)
   }
 
-  const cancelDeleteImage = () => {
+  const cancelViewOrDeleteImage = () => {
     setDeleteImage(null)
+    setViewImage(null)
   }
 
   const confirmDeleteImage = () => {
@@ -348,11 +355,14 @@ function FilesDropzone({ className, onImageUpdate, initialImages, ...rest }) {
                   key={i + 100}
                 >
                   <img
-                    src={`http://localhost:5000/tmp/${image.filename}`}
+                    src={`http://localhost:5000/${imagePath}${image.filename}`}
                     className={classes.img}
                   />
                   <ListItemIcon className={classes.listElement}>
-                    <PageviewIcon className={classes.listIcon} />
+                    <PageviewIcon
+                      onClick={() => onViewImage(image.filename, true)}
+                      className={classes.listIcon}
+                    />
                     <DeleteForeverIcon
                       onClick={() => onDeleteImage(image.filename, true)}
                       className={classes.listIcon}
@@ -380,7 +390,10 @@ function FilesDropzone({ className, onImageUpdate, initialImages, ...rest }) {
                           onClick={() => editImage(file)}
                           className={classes.listIcon}
                         />
-                        <PageviewIcon className={classes.listIcon} />
+                        <PageviewIcon
+                          onClick={() => onViewImage(file.filename, false)}
+                          className={classes.listIcon}
+                        />
                         <DeleteForeverIcon
                           onClick={() => onDeleteImage(file.filename, false)}
                           className={classes.listIcon}
@@ -398,26 +411,31 @@ function FilesDropzone({ className, onImageUpdate, initialImages, ...rest }) {
       <Dialog
         maxWidth="md"
         fullWidth
-        open={!!(deleteImage)}
+        open={!!(deleteImage) || !!(viewImage)}
         {...rest}
       >
         <div className={classes.deleteContainer}>
           <img
-            src={`http://localhost:5000/tmp/${deleteImage}`}
+            src={`http://localhost:5000/${isDeleteImageInitial ? imagePath : 'tmp/'}${!!deleteImage ? deleteImage : viewImage}`}
             className={classes.deleteImg}
           />
+
+
+
         </div>
         <div className={classes.deleteControls}>
+          {!!deleteImage && (
+            <Button
+              onClick={confirmDeleteImage}
+              variant="contained"
+              color="secondary"
+              classes={{ root: classes.deleteButton }}
+            >
+              Delete Image
+            </Button>
+          )}
           <Button
-            onClick={confirmDeleteImage}
-            variant="contained"
-            color="secondary"
-            classes={{ root: classes.deleteButton }}
-          >
-            Delete Image
-          </Button>
-          <Button
-            onClick={cancelDeleteImage}
+            onClick={cancelViewOrDeleteImage}
           >
             Cancel
           </Button>
@@ -501,7 +519,8 @@ function FilesDropzone({ className, onImageUpdate, initialImages, ...rest }) {
 FilesDropzone.propTypes = {
   className: PropTypes.string,
   onImageUpdate: PropTypes.func,
-  initialImages: PropTypes.array
+  initialImages: PropTypes.array,
+  imagePath: PropTypes.string
 };
 
 export default FilesDropzone;
