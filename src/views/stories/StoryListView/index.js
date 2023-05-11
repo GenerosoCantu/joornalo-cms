@@ -27,8 +27,7 @@ import Error from '../../../components/Error';
 import Results from './Results';
 import { getStories, newStory } from 'src/store/actions/storyActions';
 import { getSections } from 'src/store/actions/sectionActions';
-
-// import StoryDeleteModal from './StoryDeleteModal';
+import StoryDeleteModal from '../StoryDeleteModal';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -62,6 +61,15 @@ function StoryListView() {
     open: false
   });
 
+  const [storyQuery, setStoryQuery] = useState(storyQuery ? storyQuery : {
+    page: 0,
+    limit: 10,
+    section: "All",
+    status: "All",
+    sort: "date|-1",
+    date: null
+  });
+
   const breadcrumbs = [
     {
       label: t('Dashboard'),
@@ -79,14 +87,7 @@ function StoryListView() {
   }
 
   useEffect(() => {
-    dispatch(getStories({
-      page: 0,
-      limit: 10,
-      section: "All",
-      status: "All",
-      sort: "date|-1",
-      date: null
-    }));
+    dispatch(getStories(storyQuery));
     dispatch(getSections());
   }, [dispatch]);
 
@@ -106,7 +107,8 @@ function StoryListView() {
   };
 
   const handleStoryDelete = () => {
-    dispatch(getStories());
+    console.log('handleStoryDelete.......')
+    dispatch(getStories(storyQuery));
     resetModal();
   };
 
@@ -117,8 +119,9 @@ function StoryListView() {
     });
   };
 
-  const updateSearch = (storyQuery) => {
-    dispatch(getStories(storyQuery));
+  const updateSearch = (newStoryQuery) => {
+    setStoryQuery(newStoryQuery)
+    dispatch(getStories(newStoryQuery));
   }
 
   return (
@@ -160,13 +163,13 @@ function StoryListView() {
             <Results stories={stories} metadata={metadata} sections={sections} onStoryDelete={handleStoryDeleteClick} newQuery={updateSearch} />
           </Box>
         )}
-        {/* 
+
         <StoryDeleteModal
           story={modal.story}
           onCancel={handleModalClose}
           onDelete={handleStoryDelete}
           open={modal.open}
-        /> */}
+        />
       </Container>
     </Page>
   );
