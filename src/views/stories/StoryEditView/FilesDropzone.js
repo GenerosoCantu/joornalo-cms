@@ -346,7 +346,7 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
           />
         </div>
       </div>
-      {(serverImages.length > 0 || loadedImages.length > 0) && (
+      {(serverImages?.length > 0 || loadedImages?.length > 0) && (
         <>
           <PerfectScrollbar options={{ suppressScroll: false }}>
             <List className={classes.list}>
@@ -359,20 +359,22 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
                     className={classes.img}
                   />
                   <ListItemIcon className={classes.listElement}>
-                    <PageviewIcon
-                      onClick={() => onViewImage(image.filename, true)}
-                      className={classes.listIcon}
-                    />
-                    <DeleteForeverIcon
-                      onClick={() => onDeleteImage(image.filename, true)}
-                      className={classes.listIcon}
-                    />
+                    <>
+                      <PageviewIcon
+                        onClick={() => onViewImage(image.filename, true)}
+                        className={classes.listIcon}
+                      />
+                      <DeleteForeverIcon
+                        onClick={() => onDeleteImage(image.filename, true)}
+                        className={classes.listIcon}
+                      />
+                    </>
                   </ListItemIcon>
                 </ListItem>
               ))}
               {loadedImages.map((file, i) => (
                 <ListItem
-                  divider={i < loadedImages.length - 1}
+                  divider={i < loadedImages?.length - 1}
                   key={i}
                 >
                   {file.croppedImage && (

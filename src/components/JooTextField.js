@@ -14,6 +14,7 @@ const JooTextField = ({
   autoFocus,
   InputProps,
   onChange,
+  displayEmpty,
   ...props
 }) => {
   const [field, meta] = useField(props);
@@ -38,8 +39,15 @@ const JooTextField = ({
         variant="outlined"
         fullWidth
         select={options ? true : false}
-        SelectProps={{ native: true }}
+        // SelectProps={{ native: true }}
+        SelectProps={{ native: true, displayEmpty: true }}
       >
+        {displayEmpty && (
+          <option
+            key='0'
+            value={null}
+          ></option>
+        )}
         {options &&
           options.map((option) => (
             <option
@@ -71,9 +79,16 @@ const JooTextField = ({
         variant="outlined"
         fullWidth
         select={options ? true : false}
-        SelectProps={{ native: true }}
+        // SelectProps={{ native: true }}
+        SelectProps={{ native: true, displayEmpty: true }}
         onChange={onChange}
       >
+        {displayEmpty && (
+          <option
+            key='0'
+            value={null}
+          ></option>
+        )}
         {options &&
           options.map((option) => (
             <option

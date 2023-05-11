@@ -67,10 +67,17 @@ export function newStory() {
       dispatch({ type: GET_STORY_REQUEST });
       const story = {
         _id: null,
-        name: '',
-        email: '',
+        date: new Date(),
+        status: 'Pending',
+        section: null,
+        subsection: null,
+        title: '',
         desc: '',
-        status: 'Inactive',
+        text: '',
+        images: [],
+        quotes: [],
+        embeded: []
+
         // oder: 0,
         // config: {
         //   front_headlines: true,

@@ -73,7 +73,10 @@ function StoryListView() {
   ];
 
   const history = useHistory();
-  const handleNewStory = () => history.push('/app/management/stories/create');
+  const handleNewStory = () => {
+    dispatch(newStory());
+    history.push('/app/stories/create');
+  }
 
   useEffect(() => {
     dispatch(getStories({

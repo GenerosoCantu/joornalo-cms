@@ -125,7 +125,7 @@ function StoryEditForm({
   const [imagePath, setImagePath] = useState(null)
   const [subsectionOptions, setSubsectionOptions] = useState([]);
   // const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(story.text))))
-  const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(story.text))))
+  const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(story ? story.text : ''))))
   const [images, setImages] = useState([]);
 
   // const [confirmDialog, setConfirmDialog] = useState(false);
@@ -133,9 +133,9 @@ function StoryEditForm({
   // const coversOption = covers.map(({ id, name }) => ({ id, name, selected: stories.covers.includes(id) }));
   // const [selectedCovers, setSelectedCovers] = useState(stories.covers);
 
-  const saveButtonText = (!story._id) ? "Create Story" : "Update Story";
+  const saveButtonText = (!story?._id) ? "Create Story" : "Update Story";
 
-  const subsectionOptionsUpdate = (sectionId,) => {
+  const subsectionOptionsUpdate = (sectionId) => {
     const selectedSection = sectionOptions.find((section) => {
       if (section.id == sectionId) {
         return section
@@ -145,6 +145,10 @@ function StoryEditForm({
       setSubsectionOptions([
         ...[{ id: '', name: '' }],
         ...selectedSection.subsections
+      ])
+    } else {
+      setSubsectionOptions([
+        ...[{ id: '', name: '' }]
       ])
     }
   };
@@ -157,26 +161,27 @@ function StoryEditForm({
   };
 
   const handleTextChange = (state, setFieldValue) => {
-    // console.log(state)
     setEditorState(state)
     setFieldValue('text', draftToHtml(convertToRaw(editorState.getCurrentContent())));
   };
 
   useEffect(() => {
     // console.log(story)
-    subsectionOptionsUpdate(story.section)
-    if (story._id) {
+    subsectionOptionsUpdate(story?.section)
+    if (story?._id) {
       const folders = story._id.split('');
-      setImagePath('story/' + folders[0] + '/' + folders[1] + '/')
+      setImagePath('story/' + folders[0] + '/' + folders[1] + '/' + folders[2] + '/' + story._id + '/')
     }
   }, [story]);
 
   const onImageUpdate = (serverImages, loadedImages) => {
-    const images = [...serverImages, ...loadedImages.filter(image => image.filename).map((image) => {
-      return { filename: image.filename, ratio: image.ratio, label: image.label }
-    })]
-    // console.log('images:', images)
-    setImages(images)
+    if (serverImages && loadedImages) {
+      const images = [...serverImages, ...loadedImages.filter(image => image.filename).map((image) => {
+        return { filename: image.filename, ratio: image.ratio, label: image.label }
+      })]
+      // console.log('images:', images)
+      setImages(images)
+    }
   }
 
   // const handleSelectCover = (event, coverId) => {
@@ -212,15 +217,14 @@ function StoryEditForm({
   return (
     <Formik
       initialValues={{
-        _id: story._id || null,
-        // id: story.id || '',
-        date: story.date || '',
-        status: story.status || 'Inactive',
-        title: story.title || '',
-        desc: story.desc || '',
-        text: story.text || '',
-        section: story.section || '',
-        subsection: story.subsection || ''
+        _id: story?._id || null,
+        date: story?.date || '',
+        status: story?.status || 'Pending',
+        title: story?.title || '',
+        desc: story?.desc || '',
+        text: story?.text || '',
+        section: story?.section || '',
+        subsection: story?.subsection || ''
         // covers: story.covers || [],
         // front_include_headlines: story.config.front_include_headlines || true,
         // front_include_most_viewed: story.config.front_include_most_viewed || true,
@@ -264,7 +268,7 @@ function StoryEditForm({
             //     photo_default_size: values.photo_default_size
             // }
           };
-          if (!story._id) {
+          if (!story?._id) {
             await dispatch(createStory(values));
           } else {
             console.log(values)
@@ -353,7 +357,7 @@ function StoryEditForm({
                         md={6}
                         xs={12}
                       >
-                        <JooTextField label="Section" name="section" options={sectionOptions} onBlur={ev => handleSectionChange(ev, setFieldValue)} />
+                        <JooTextField label="Section" name="section" options={sectionOptions} displayEmpty={true} onBlur={ev => handleSectionChange(ev, setFieldValue)} />
                       </Grid>
 
                       <Grid
@@ -436,7 +440,7 @@ function StoryEditForm({
                     <FilesDropzone
                       imagePath={imagePath}
                       onImageUpdate={onImageUpdate}
-                      initialImages={story.images}
+                      initialImages={story?.images}
                     />
                   </CardContent>
                 </Card>
@@ -484,7 +488,7 @@ function StoryEditForm({
 
 StoryEditForm.propTypes = {
   className: PropTypes.string,
-  story: PropTypes.object.isRequired,
+  story: PropTypes.object,
   sectionOptions: PropTypes.array.isRequired
 };
 
