@@ -87,7 +87,6 @@ function StoryListView() {
   }
 
   useEffect(() => {
-    dispatch(getStories(storyQuery));
     dispatch(getSections());
   }, [dispatch]);
 

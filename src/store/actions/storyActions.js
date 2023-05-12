@@ -12,6 +12,7 @@ export const UPLOAD_IMAGE = '@story/upload-image';
 export const UPLOAD_IMAGE_REQUEST = '@story/upload-image-request';
 export const DELETE_IMAGE_REQUEST = '@story/delete-image-request';
 export const DELETE_IMAGE = '@story/delete-image';
+export const SET_STORY_QUERY = '@story/set-story-query'
 // export const SET_STORY_ERROR = '@error/set-error';
 // export const CLEAR_STORY_ERROR = '@error/set-error';
 
@@ -197,6 +198,21 @@ export function deleteFile(file) {
       return resp
     } catch (error) {
       dispatch(setError(error));
+      throw error;
+    }
+  };
+}
+
+export function saveStoryQuery(storyQuery) {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: SET_STORY_QUERY,
+        payload: {
+          storyQuery
+        }
+      });
+    } catch (error) {
       throw error;
     }
   };

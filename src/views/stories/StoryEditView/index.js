@@ -90,9 +90,9 @@ function StoryEditView({ match }) {
     }
   }, [sections]);
 
-  useEffect(() => {
-    console.log(story)
-  }, [story]);
+  // useEffect(() => {
+  //   console.log('story==>', story)
+  // }, [story]);
 
 
   return (

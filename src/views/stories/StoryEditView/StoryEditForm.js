@@ -154,7 +154,6 @@ function StoryEditForm({
   };
 
   const handleSectionChange = (event, setFieldValue) => {
-    // console.log(event.target.value)
     event.persist();
     subsectionOptionsUpdate(event.target.value, setFieldValue)
     setFieldValue('subsection', '');
@@ -179,7 +178,6 @@ function StoryEditForm({
       const images = [...serverImages, ...loadedImages.filter(image => image.filename).map((image) => {
         return { filename: image.filename, ratio: image.ratio, label: image.label }
       })]
-      // console.log('images:', images)
       setImages(images)
     }
   }

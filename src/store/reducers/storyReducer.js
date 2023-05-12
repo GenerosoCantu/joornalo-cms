@@ -6,13 +6,15 @@ import {
   CREATE_STORY,
   UPDATE_STORY,
   DELETE_STORY,
-  GET_STORY_REQUEST
+  GET_STORY_REQUEST,
+  SET_STORY_QUERY
 } from 'src/store/actions/storyActions';
 
 const initialState = {
   stories: [],
   metadata: {},
-  story: null
+  story: null,
+  storyQuery: null
 };
 
 const storyReducer = (state = initialState, action) => {
@@ -46,6 +48,14 @@ const storyReducer = (state = initialState, action) => {
 
       return produce(state, (draft) => {
         draft.story = story;
+      });
+    }
+
+    case SET_STORY_QUERY: {
+      const { storyQuery } = action.payload;
+
+      return produce(state, (draft) => {
+        draft.storyQuery = storyQuery;
       });
     }
 

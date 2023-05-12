@@ -8,6 +8,10 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
+import {
   Avatar,
   Box,
   Card,
@@ -31,6 +35,8 @@ import {
   Trash as TrashIcon
 } from 'react-feather';
 import { Status } from 'src/constants';
+import { saveStoryQuery } from 'src/store/actions/storyActions';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -82,13 +88,17 @@ function Results({
     }
   ];
 
+  const dispatch = useDispatch();
+
+  const [newSearch, setNewSearch] = useState(true)
   const [page, setPage] = useState(0)
   const [limit, setLimit] = useState(10)
   const [sort, setSort] = useState('date|-1')
   const [section, setSection] = useState('All')
   const [status, setStatus] = useState('All')
   const [date, setDate] = useState(null)
-  const [query, setQuery] = useState(null)
+
+  const { storyQuery } = useSelector((state) => state.story);
 
   useEffect(() => {
     const search = {
@@ -99,10 +109,21 @@ function Results({
       status,
       date
     }
-    if (query && JSON.stringify(search) !== JSON.stringify(query)) {
-      newQuery(search)
+    if (newSearch && storyQuery) {
+      setPage(storyQuery.page)
+      setLimit(storyQuery.limit)
+      setSort(storyQuery.sort)
+      setSection(storyQuery.section)
+      setStatus(storyQuery.status)
+      setDate(storyQuery.date)
+      newQuery(storyQuery)
+    } else {
+      if (JSON.stringify(search) !== JSON.stringify(storyQuery)) {
+        newQuery(search)
+        dispatch(saveStoryQuery(search))
+      }
     }
-    setQuery(search)
+    setNewSearch(false)
   }, [page, limit, sort, section, status, date]);
 
   const handleDateChange = (date) => {
