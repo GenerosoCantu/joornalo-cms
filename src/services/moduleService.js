@@ -3,7 +3,7 @@ import apiService from 'src/services/apiService';
 class ModuleService {
 
   getModules = () => {
-    return apiService.makeRequest('get', `http://localhost:4000/modules/`, 'mdl-gs');
+    return apiService.makeRequest('get', `${process.env.REACT_APP_JOORNALO_API_URL}modules/`, 'mdl-gs');
   }
 
 }

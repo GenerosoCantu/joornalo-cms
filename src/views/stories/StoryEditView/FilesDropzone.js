@@ -355,7 +355,7 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
                   key={i + 100}
                 >
                   <img
-                    src={`http://localhost:5000/${imagePath}${image.filename}`}
+                    src={`${process.env.REACT_APP_JOORNALO_CDN_SERVER_URL}${imagePath}${image.filename}`}
                     className={classes.img}
                   />
                   <ListItemIcon className={classes.listElement}>
@@ -418,7 +418,7 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
       >
         <div className={classes.deleteContainer}>
           <img
-            src={`http://localhost:5000/${isDeleteImageInitial ? imagePath : 'tmp/'}${!!deleteImage ? deleteImage : viewImage}`}
+            src={`${process.env.REACT_APP_JOORNALO_CDN_SERVER_URL}${isDeleteImageInitial ? imagePath : 'tmp/'}${!!deleteImage ? deleteImage : viewImage}`}
             className={classes.deleteImg}
           />
 

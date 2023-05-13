@@ -34,7 +34,7 @@ class AuthService {
   }
 
   loginWithEmailAndPassword = (email, password) => new Promise((resolve, reject) => {
-    axios.post('http://localhost:4000/login', { username: email, password })
+    axios.post(`${process.env.REACT_APP_JOORNALO_API_URL}login`, { username: email, password })
       .then((response) => {
         if (response.data.user) {
           this.setSession(response.data.accessToken);
@@ -51,7 +51,7 @@ class AuthService {
   })
 
   loginInWithToken = () => new Promise((resolve, reject) => {
-    axios.get('http://localhost:4000/users/profile')
+    axios.get(`${process.env.REACT_APP_JOORNALO_API_URL}users/profile`)
       .then((response) => {
         if (response.data) {
           resolve(response.data);

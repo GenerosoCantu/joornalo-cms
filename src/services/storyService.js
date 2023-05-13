@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 class StoryService {
 
   getStory = (storyid) => {
-    return apiService.makeRequest('get', `http://localhost:4000/stories/${storyid}`, 'sct-g');
+    return apiService.makeRequest('get', `${process.env.REACT_APP_JOORNALO_API_URL}stories/${storyid}`, 'sct-g');
   }
 
   getStories = (storyQuery) => {
@@ -17,20 +17,20 @@ class StoryService {
       `&sortBy=${sortBy}&sortOrder=${sortOrder}` +
       (date ? `&date=${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}` : "")
 
-    return apiService.makeRequest('get', `http://localhost:4000/stories/${params}`, 'sct-gs');
+    return apiService.makeRequest('get', `${process.env.REACT_APP_JOORNALO_API_URL}stories/${params}`, 'sct-gs');
   }
 
   updateStory = (story) => {
-    return apiService.makeRequest('patch', `http://localhost:4000/stories/${story._id}`, 'sct-u', story);
+    return apiService.makeRequest('patch', `${process.env.REACT_APP_JOORNALO_API_URL}stories/${story._id}`, 'sct-u', story);
   }
 
   createStory = (story) => {
     const newStory = { ...story, _id: uuidv4() };
-    return apiService.makeRequest('post', `http://localhost:4000/stories/`, 'sct-c', newStory);
+    return apiService.makeRequest('post', `${process.env.REACT_APP_JOORNALO_API_URL}stories/`, 'sct-c', newStory);
   }
 
   deleteStory = (storyId) => {
-    return apiService.makeRequest('delete', `http://localhost:4000/stories/${storyId}`, 'sct-d');
+    return apiService.makeRequest('delete', `${process.env.REACT_APP_JOORNALO_API_URL}stories/${storyId}`, 'sct-d');
   }
 
 }
