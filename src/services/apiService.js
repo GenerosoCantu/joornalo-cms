@@ -16,7 +16,7 @@ class ApiService {
 
     axios(config)
       .then((response) => {
-        if (response.data) {
+        if (response.data || response.status === 200) {
           resolve(response.data);
         } else {
           reject(`${errorCode}-01`);

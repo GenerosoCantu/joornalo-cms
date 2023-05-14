@@ -11,7 +11,7 @@ class UploadService {
 
   deleteImage = (file) => {
     console.log('deleteImage:', file)
-    return apiService.makeRequest('delete', `${process.env.REACT_APP_JOORNALO_CDN_API_URL}files/${file}`, 'usr-d');
+    return apiService.makeRequest('delete', `${process.env.REACT_APP_JOORNALO_CDN_API_URL}files/tmp/${file}`, 'file-d');
   }
 
 }
