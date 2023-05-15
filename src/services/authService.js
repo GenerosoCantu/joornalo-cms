@@ -34,7 +34,7 @@ class AuthService {
   }
 
   loginWithEmailAndPassword = (email, password) => new Promise((resolve, reject) => {
-    axios.post(`${process.env.REACT_APP_JOORNALO_API_URL}login`, { username: email, password })
+    axios.post(`${process.env.REACT_APP_JOORNALO_API_URL}auth/login`, { username: email, password })
       .then((response) => {
         if (response.data.user) {
           this.setSession(response.data.accessToken);
