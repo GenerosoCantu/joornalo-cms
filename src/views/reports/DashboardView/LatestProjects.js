@@ -57,19 +57,19 @@ function LatestProjects({ className, ...rest }) {
   const isMountedRef = useIsMountedRef();
   const [projects, setProjects] = useState(null);
 
-  const getProjects = useCallback(() => {
-    axios
-      .get('/api/reports/latest-projects')
-      .then((response) => {
-        if (isMountedRef.current) {
-          setProjects(response.data.projects);
-        }
-      });
-  }, [isMountedRef]);
+  // const getProjects = useCallback(() => {
+  //   axios
+  //     .get('/api/reports/latest-projects')
+  //     .then((response) => {
+  //       if (isMountedRef.current) {
+  //         setProjects(response.data.projects);
+  //       }
+  //     });
+  // }, [isMountedRef]);
 
-  useEffect(() => {
-    getProjects();
-  }, [getProjects]);
+  // useEffect(() => {
+  //   getProjects();
+  // }, [getProjects]);
 
   if (!projects) {
     return null;

@@ -382,7 +382,7 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
                       <img
                         onClick={() => editImage(file)}
                         file={file.name}
-                        src={file.croppedImage ? file.croppedImage : file.imageSrc}
+                        src={file.croppedImage ? process.env.REACT_APP_JOORNALO_CDN_SERVER_URL + file.croppedImage : file.imageSrc}
                         alt="Cropped"
                         className={classes.imgEditable}
                       />

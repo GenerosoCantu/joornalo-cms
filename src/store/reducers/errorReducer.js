@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import produce from 'immer';
+import { produce } from 'immer';
 import {
   CLEAR_ERROR,
   SET_ERROR

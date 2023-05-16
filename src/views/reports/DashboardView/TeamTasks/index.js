@@ -28,19 +28,19 @@ function TeamTasks({ className, ...rest }) {
   const isMountedRef = useIsMountedRef();
   const [tasks, setTasks] = useState(null);
 
-  const getTasks = useCallback(() => {
-    axios
-      .get('/api/reports/tasks')
-      .then((response) => {
-        if (isMountedRef.current) {
-          setTasks(response.data.tasks);
-        }
-      });
-  }, [isMountedRef]);
+  // const getTasks = useCallback(() => {
+  //   axios
+  //     .get('/api/reports/tasks')
+  //     .then((response) => {
+  //       if (isMountedRef.current) {
+  //         setTasks(response.data.tasks);
+  //       }
+  //     });
+  // }, [isMountedRef]);
 
-  useEffect(() => {
-    getTasks();
-  }, [getTasks]);
+  // useEffect(() => {
+  //   getTasks();
+  // }, [getTasks]);
 
   if (!tasks) {
     return null;

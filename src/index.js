@@ -8,7 +8,7 @@ import 'src/assets/css/prism.css';
 import 'src/mixins/chartjs';
 import 'src/mixins/prismjs';
 import 'src/mock';
-import { enableES5 } from 'immer';
+// import { enableES5 } from 'immer';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -18,7 +18,7 @@ import { configureStore } from 'src/store';
 import { restoreSettings } from 'src/utils/settings';
 import App from 'src/App';
 
-enableES5();
+// enableES5();
 
 const store = configureStore();
 const settings = restoreSettings();
