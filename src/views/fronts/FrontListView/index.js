@@ -50,7 +50,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function FrontListView() {
+function FrontListView({ match }) {
+  const {
+    params: { tenant },
+  } = match;
+
   const { t, i18n } = useTranslation(['translation', 'fronts']);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -65,7 +69,7 @@ function FrontListView() {
   const breadcrumbs = [
     {
       label: t('Dashboard'),
-      link: "/app"
+      link: `/app/${tenant}`
     },
     {
       label: t('Fronts')
@@ -73,7 +77,7 @@ function FrontListView() {
   ];
 
   const hifront = useHistory();
-  const handleNewFront = () => hifront.push('/app/management/fronts/create');
+  const handleNewFront = () => hifront.push(`/app/${tenant}/management/fronts/create`);
 
   useEffect(() => {
     dispatch(getFronts({
@@ -154,7 +158,7 @@ function FrontListView() {
         <Error />
         {fronts && (
           <Box mt={3}>
-            <Results fronts={fronts} metadata={metadata} sections={sections} onFrontDelete={handleFrontDeleteClick} newQuery={updateSearch} />
+            <Results tenant={tenant} fronts={fronts} metadata={metadata} sections={sections} onFrontDelete={handleFrontDeleteClick} newQuery={updateSearch} />
           </Box>
         )}
         {/* 

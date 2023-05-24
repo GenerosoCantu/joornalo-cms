@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SectionEditView({ match }) {
   const {
-    params: { sectionid },
+    params: { sectionid, tenant },
   } = match;
 
   const classes = useStyles();
@@ -47,11 +47,11 @@ function SectionEditView({ match }) {
   const breadcrumbs = [
     {
       label: "Dashboard",
-      link: "/app"
+      link: `/app/${tenant}`
     },
     {
       label: "Sections",
-      link: "/app/management/sections"
+      link: `/app/${tenant}/management/sections`
     },
     {
       label: pageTitle
@@ -74,7 +74,7 @@ function SectionEditView({ match }) {
         <Header breadcrumbs={breadcrumbs} headerTitle={pageTitle} />
         <Error />
         {(section || sectionid === 'create') && covers.length > 0 && (
-          <SectionEditForm section={section} covers={covers} />
+          <SectionEditForm tenant={tenant} section={section} covers={covers} />
         )}
       </Container>
     </Page>

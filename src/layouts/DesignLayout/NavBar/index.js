@@ -58,173 +58,6 @@ import {
 import Logo from 'src/components/Logo';
 import NavItem from './NavItem';
 
-const navConfig = [
-  {
-    subheader: 'Reports',
-    items: [
-      {
-        title: 'Dashboard',
-        icon: PieChartIcon,
-        href: '/app/reports/dashboard'
-      }
-    ]
-  },
-  {
-    subheader: 'Management',
-    items: [
-      {
-        title: 'Security',
-        icon: ShieldIcon,
-        items: [
-          {
-            title: 'Users',
-            icon: UsersIcon,
-            href: '/app/management/users'
-          },
-          {
-            title: 'Roles',
-            icon: GitPullRequestIcon,
-            href: '/app/management/users/1'
-          }
-        ]
-      },
-      {
-        title: 'Configuration',
-        icon: SettingsIcon,
-        items: [
-          {
-            title: 'Sections',
-            icon: ListIcon,
-            href: '/app/management/sections'
-          },
-          {
-            title: 'Menus',
-            icon: MenuIcon,
-            href: '/app/management/products/create'
-          },
-          {
-            title: 'Authors',
-            icon: UsersIcon,
-            href: '/app/management/products/create'
-          },
-          {
-            title: 'Banners',
-            icon: ServerIcon,
-            href: '/app/management/products/create'
-          },
-          {
-            title: 'Analytics',
-            icon: BarChartIcon,
-            href: '/app/management/products/create'
-          },
-          {
-            title: 'Weather',
-            icon: CloudLightningIcon,
-            href: '/app/management/products/create'
-          },
-          {
-            title: 'Social Platforms',
-            icon: ShareIcon,
-            href: '/app/management/products/create'
-          },
-          {
-            title: 'Setup',
-            icon: SlidersIcon,
-            href: '/app/management/products/create'
-          },
-          {
-            title: 'Notifications',
-            href: '/app/mail',
-            icon: BellIcon
-          }
-        ]
-      },
-      {
-        title: 'Stats',
-        icon: BarChartIcon,
-        href: '/app/management/customers',
-        items: [
-          {
-            title: 'Overview',
-            href: '/app/management/customers'
-          },
-          {
-            title: 'Sections',
-            href: '/app/management/customers/1'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    subheader: 'Stories',
-    items: [
-      {
-        title: 'News Stories',
-        icon: EditIcon,
-        href: '/app/stories'
-      },
-      {
-        title: 'Featured Stories',
-        href: '/app/kanban2',
-        icon: TrelloIcon
-      },
-      {
-        title: 'Front Sections',
-        icon: LayoutIcon,
-        href: '/app/fronts'
-      },
-      {
-        title: 'Publish',
-        icon: UploadIcon,
-        href: '/app/kanban'
-      }
-    ]
-  },
-  {
-    subheader: 'Modules',
-    items: [
-      {
-        title: 'Multimedia',
-        href: '/app/kanban',
-        icon: PlayCircleIcon
-      },
-      {
-        title: 'Galleries',
-        href: '/app/kanban',
-        icon: ImageIcon
-      },
-      {
-        title: 'Print Edition',
-        href: '/app/kanban',
-        icon: PrinterIcon
-      },
-      {
-        title: 'Polls',
-        href: '/app/kanban',
-        icon: ActivityIcon
-      },
-      {
-        title: 'Comments',
-        href: '/app/kanban',
-        icon: MessageCircleIcon
-      },
-      {
-        title: 'Calendar',
-        href: '/app/calendar',
-        icon: CalendarIcon,
-        info: () => (
-          <Chip
-            color="secondary"
-            size="small"
-            label="Updated"
-          />
-        )
-      },
-    ]
-  }
-];
-
 function renderNavItems({ items, ...rest }) {
   return (
     <List disablePadding>
@@ -298,10 +131,177 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function NavBar({ openMobile, onMobileClose, }) {
+function NavBar({ tenant, openMobile, onMobileClose, }) {
   const classes = useStyles();
   const location = useLocation();
   const { user } = useSelector((state) => state.account);
+
+  const navConfig = [
+    {
+      subheader: 'Reports',
+      items: [
+        {
+          title: 'Dashboard',
+          icon: PieChartIcon,
+          href: `/app/${tenant}/reports/dashboard`
+        }
+      ]
+    },
+    {
+      subheader: 'Management',
+      items: [
+        {
+          title: 'Security',
+          icon: ShieldIcon,
+          items: [
+            {
+              title: 'Users',
+              icon: UsersIcon,
+              href: `/app/${tenant}/management/users`
+            },
+            {
+              title: 'Roles',
+              icon: GitPullRequestIcon,
+              href: `/app/${tenant}/management/users/1`
+            }
+          ]
+        },
+        {
+          title: 'Configuration',
+          icon: SettingsIcon,
+          items: [
+            {
+              title: 'Sections',
+              icon: ListIcon,
+              href: `/app/${tenant}/management/sections`
+            },
+            {
+              title: 'Menus',
+              icon: MenuIcon,
+              href: `/app/${tenant}/management/products/create`
+            },
+            {
+              title: 'Authors',
+              icon: UsersIcon,
+              href: `/app/${tenant}/management/products/create`
+            },
+            {
+              title: 'Banners',
+              icon: ServerIcon,
+              href: `/app/${tenant}/management/products/create`
+            },
+            {
+              title: 'Analytics',
+              icon: BarChartIcon,
+              href: `/app/${tenant}/management/products/create`
+            },
+            {
+              title: 'Weather',
+              icon: CloudLightningIcon,
+              href: `/app/${tenant}/management/products/create`
+            },
+            {
+              title: 'Social Platforms',
+              icon: ShareIcon,
+              href: `/app/${tenant}/management/products/create`
+            },
+            {
+              title: 'Setup',
+              icon: SlidersIcon,
+              href: `/app/${tenant}/management/products/create`
+            },
+            {
+              title: 'Notifications',
+              href: `/app/${tenant}/mail`,
+              icon: BellIcon
+            }
+          ]
+        },
+        {
+          title: 'Stats',
+          icon: BarChartIcon,
+          href: `/app/${tenant}/management/customers`,
+          items: [
+            {
+              title: 'Overview',
+              href: `/app/${tenant}/management/customers`
+            },
+            {
+              title: 'Sections',
+              href: `/app/${tenant}/management/customers/1`
+            }
+          ]
+        }
+      ]
+    },
+    {
+      subheader: 'Stories',
+      items: [
+        {
+          title: 'News Stories',
+          icon: EditIcon,
+          href: `/app/${tenant}/stories`
+        },
+        {
+          title: 'Featured Stories',
+          href: `/app/${tenant}/kanban2`,
+          icon: TrelloIcon
+        },
+        {
+          title: 'Front Sections',
+          icon: LayoutIcon,
+          href: `/app/${tenant}/fronts`
+        },
+        {
+          title: 'Publish',
+          icon: UploadIcon,
+          href: `/app/${tenant}/kanban`
+        }
+      ]
+    },
+    {
+      subheader: 'Modules',
+      items: [
+        {
+          title: 'Multimedia',
+          href: `/app/${tenant}/kanban`,
+          icon: PlayCircleIcon
+        },
+        {
+          title: 'Galleries',
+          href: `/app/${tenant}/kanban`,
+          icon: ImageIcon
+        },
+        {
+          title: 'Print Edition',
+          href: `/app/${tenant}/kanban`,
+          icon: PrinterIcon
+        },
+        {
+          title: 'Polls',
+          href: `/app/${tenant}/kanban`,
+          icon: ActivityIcon
+        },
+        {
+          title: 'Comments',
+          href: `/app/${tenant}/kanban`,
+          icon: MessageCircleIcon
+        },
+        {
+          title: 'Calendar',
+          href: `/app/${tenant}/calendar`,
+          icon: CalendarIcon,
+          info: () => (
+            <Chip
+              color="secondary"
+              size="small"
+              label="Updated"
+            />
+          )
+        },
+      ]
+    }
+  ];
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -333,7 +333,7 @@ function NavBar({ openMobile, onMobileClose, }) {
             display="flex"
             justifyContent="center"
           >
-            <RouterLink to="/app/account">
+            <RouterLink to={`/app/${tenant}/account`}>
               <Avatar
                 alt="User"
                 className={classes.avatar}
@@ -347,7 +347,7 @@ function NavBar({ openMobile, onMobileClose, }) {
           >
             <Link
               component={RouterLink}
-              to="/app/account"
+              to={`/app/${tenant}/account`}
               variant="h5"
               color="textPrimary"
               underline="none"

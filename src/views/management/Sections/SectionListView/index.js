@@ -47,7 +47,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function SectionListView() {
+function SectionListView({ match }) {
+  const {
+    params: { tenant },
+  } = match;
+
   const { t, i18n } = useTranslation(['translation', 'sections']);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -60,7 +64,7 @@ function SectionListView() {
   const breadcrumbs = [
     {
       label: t('Dashboard'),
-      link: "/app"
+      link: `/app/${tenant}`
     },
     {
       label: t('Sections')
@@ -68,7 +72,7 @@ function SectionListView() {
   ];
 
   const history = useHistory();
-  const handleCreateSection = () => history.push('/app/management/sections/create');
+  const handleCreateSection = () => history.push(`/app/${tenant}/management/sections/create`);
 
   useEffect(() => {
     dispatch(getSections());
@@ -138,7 +142,7 @@ function SectionListView() {
         <Error />
         {sections && (
           <Box mt={3}>
-            <Results sections={sections} onSectionDelete={handleSectionDeleteClick} />
+            <Results tenant={tenant} sections={sections} onSectionDelete={handleSectionDeleteClick} />
           </Box>
         )}
 

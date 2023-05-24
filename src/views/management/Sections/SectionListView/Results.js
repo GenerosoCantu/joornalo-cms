@@ -86,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Results({
   className,
+  tenant,
   sections,
   onSectionDelete,
   ...rest
@@ -202,7 +203,7 @@ function Results({
                           <Link
                             color="inherit"
                             component={RouterLink}
-                            to={`/app/management/sections/${section.id}`}
+                            to={`/app/${tenant}/management/sections/${section.id}`}
                             variant="h6"
                           >
                             {section.name}
@@ -219,7 +220,7 @@ function Results({
                     <TableCell align="right">
                       <IconButton
                         component={RouterLink}
-                        to={`/app/management/sections/${section.id}`}
+                        to={`/app/${tenant}/management/sections/${section.id}`}
                       >
                         <SvgIcon fontSize="small">
                           <EditIcon />

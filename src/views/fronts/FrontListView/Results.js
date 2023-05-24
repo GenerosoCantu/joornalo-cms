@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Results({
   className,
+  tenant,
   fronts,
   metadata,
   sections,
@@ -281,7 +282,7 @@ function Results({
                     <TableCell align="right">
                       <IconButton
                         component={RouterLink}
-                        to={`/app/fronts/${front._id}`}
+                        to={`/app/${tenant}/fronts/${front._id}`}
                       >
                         <SvgIcon fontSize="small">
                           <EditIcon />

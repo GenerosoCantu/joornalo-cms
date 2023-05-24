@@ -49,7 +49,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function StoryListView() {
+function StoryListView({ match }) {
+  const {
+    params: { tenant },
+  } = match;
+
   const { t, i18n } = useTranslation(['translation', 'stories']);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -73,7 +77,7 @@ function StoryListView() {
   const breadcrumbs = [
     {
       label: t('Dashboard'),
-      link: "/app"
+      link: `/app/${tenant}`
     },
     {
       label: t('Stories')
@@ -83,7 +87,7 @@ function StoryListView() {
   const history = useHistory();
   const handleNewStory = () => {
     dispatch(newStory());
-    history.push('/app/stories/create');
+    history.push(`/app/${tenant}/stories/create`);
   }
 
   useEffect(() => {
@@ -159,7 +163,7 @@ function StoryListView() {
         <Error />
         {stories && (
           <Box mt={3}>
-            <Results stories={stories} metadata={metadata} sections={sections} onStoryDelete={handleStoryDeleteClick} newQuery={updateSearch} />
+            <Results tenant={tenant} stories={stories} metadata={metadata} sections={sections} onStoryDelete={handleStoryDeleteClick} newQuery={updateSearch} />
           </Box>
         )}
 

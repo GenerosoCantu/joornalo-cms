@@ -7,7 +7,9 @@ function AuthGuard({ children }) {
   const account = useSelector((state) => state.account);
 
   if (!account.user) {
-    return <Redirect to="/login" />;
+    const tenant = localStorage.getItem("JoornaloTenant");
+    const goto = tenant ? `/app/${tenant}/login` : '/home'
+    return <Redirect to={goto} />;
   }
 
   return children;

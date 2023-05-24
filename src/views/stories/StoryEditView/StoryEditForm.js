@@ -111,6 +111,7 @@ const useStyles = makeStyles((theme) => ({
 
 function StoryEditForm({
   className,
+  tenant,
   story,
   sectionOptions,
   // covers,
@@ -277,7 +278,7 @@ function StoryEditForm({
           });
           setStatus({ success: true });
           resetForm();
-          history.push('/app/stories');
+          history.push(`/app/${tenant}/stories`);
         } catch (error) {
           setStatus({ success: false });
           setErrors({ submit: error.message });

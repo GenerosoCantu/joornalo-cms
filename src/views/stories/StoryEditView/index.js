@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 function StoryEditView({ match }) {
   const {
-    params: { storyId },
+    params: { storyId, tenant },
   } = match;
 
   const classes = useStyles();
@@ -51,11 +51,11 @@ function StoryEditView({ match }) {
   const breadcrumbs = [
     {
       label: "Dashboard",
-      link: "/app"
+      link: `/app/${tenant}`
     },
     {
       label: "Stories",
-      link: "/app/stories"
+      link: `/app/${tenant}/stories`
     },
     {
       label: pageTitle
@@ -106,7 +106,7 @@ function StoryEditView({ match }) {
         <Header breadcrumbs={breadcrumbs} headerTitle={pageTitle} />
         <Error />
         {(story || storyId === 'create') && sectionOptions && (
-          <StoryEditForm story={story} sectionOptions={sectionOptions} />
+          <StoryEditForm tenant={tenant} story={story} sectionOptions={sectionOptions} />
         )}
       </Container>
     </Page>

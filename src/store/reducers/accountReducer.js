@@ -23,10 +23,10 @@ const accountReducer = (state = initialState, action) => {
     }
 
     case LOGIN_SUCCESS: {
-      const { user } = action.payload;
+      const { user, tenant } = action.payload;
 
       return produce(state, (draft) => {
-        draft.user = user;
+        draft.user = { ...user, tenant };
       });
     }
 

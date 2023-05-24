@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Results({
   className,
+  tenant,
   stories,
   metadata,
   sections,
@@ -308,7 +309,7 @@ function Results({
                     <TableCell align="right">
                       <IconButton
                         component={RouterLink}
-                        to={`/app/stories/${story._id}`}
+                        to={`/app/${tenant}/stories/${story._id}`}
                       >
                         <SvgIcon fontSize="small">
                           <EditIcon />

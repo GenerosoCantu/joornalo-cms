@@ -79,12 +79,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function LoginView() {
+function LoginView({ match }) {
+  const {
+    params: { tenant },
+  } = match;
+
   const classes = useStyles();
   const history = useHistory();
 
   const handleSubmitSuccess = () => {
-    history.push('/app');
+    history.push(`/app/${tenant}`);
   };
 
   return (
@@ -131,7 +135,7 @@ function LoginView() {
               Sign in on the internal platform
             </Typography>
             <Box mt={3}>
-              <LoginForm onSubmitSuccess={handleSubmitSuccess} />
+              <LoginForm tenant={tenant} onSubmitSuccess={handleSubmitSuccess} />
             </Box>
             <Box my={2}>
               <Divider />

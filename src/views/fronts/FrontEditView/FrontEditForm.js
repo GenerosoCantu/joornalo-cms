@@ -111,6 +111,7 @@ const useStyles = makeStyles((theme) => ({
 
 function FrontEditForm({
   className,
+  tenant,
   front,
   sectionOptions,
   // covers,
@@ -219,7 +220,7 @@ function FrontEditForm({
           });
           setStatus({ success: true });
           resetForm();
-          history.push('/app/fronts');
+          history.push(`/app/${tenant}/fronts`);
         } catch (error) {
           setStatus({ success: false });
           setErrors({ submit: error.message });

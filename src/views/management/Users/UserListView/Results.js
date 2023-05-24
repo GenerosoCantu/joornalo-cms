@@ -130,6 +130,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Results({
   className,
+  tenant,
   users,
   onUserDelete,
   ...rest
@@ -342,7 +343,7 @@ function Results({
                           <Link
                             color="inherit"
                             component={RouterLink}
-                            to={`/app/management/users/${user._id}`}
+                            to={`/app/${tenant}/management/users/${user._id}`}
                             variant="h6"
                           >
                             {user.firstName} {user.lastName}
@@ -362,7 +363,7 @@ function Results({
                     <TableCell align="right">
                       <IconButton
                         component={RouterLink}
-                        to={`/app/management/users/${user._id}`}
+                        to={`/app/${tenant}/management/users/${user._id}`}
                       >
                         <SvgIcon fontSize="small">
                           <EditIcon />

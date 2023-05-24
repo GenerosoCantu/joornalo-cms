@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 function UserEditView({ match }) {
   const {
-    params: { userid },
+    params: { userid, tenant },
   } = match;
 
   const classes = useStyles();
@@ -49,11 +49,11 @@ function UserEditView({ match }) {
   const breadcrumbs = [
     {
       label: "Dashboard",
-      link: "/app"
+      link: `/app/${tenant}`
     },
     {
       label: "Users",
-      link: "/app/management/users"
+      link: `/app/${tenant}/management/users`
     },
     {
       label: pageTitle
@@ -76,7 +76,7 @@ function UserEditView({ match }) {
         <Header breadcrumbs={breadcrumbs} headerTitle={pageTitle} />
         <Error />
         {(user || userid === 'create') && sections.length > 0 && modules.length > 0 && (
-          <UserEditForm user={user} sections={sections} modules={modules} />
+          <UserEditForm tenant={tenant} user={user} sections={sections} modules={modules} />
         )}
       </Container>
     </Page>

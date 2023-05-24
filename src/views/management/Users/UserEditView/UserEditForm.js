@@ -34,6 +34,7 @@ const useStyles = makeStyles(() => ({
 
 function UserEditForm({
   className,
+  tenant,
   user,
   sections,
   modules,
@@ -130,7 +131,7 @@ function UserEditForm({
           });
           setStatus({ success: true });
           resetForm();
-          history.push('/app/management/users');
+          history.push(`/app/${tenant}/management/users`);
         } catch (error) {
           setStatus({ success: false });
           setErrors({ submit: error.message });
@@ -225,14 +226,14 @@ function UserEditForm({
                           color="textPrimary"
                         >
                           Email Verified
-                          </Typography>
+                        </Typography>
                         <Typography
                           variant="body2"
                           color="textSecondary"
                         >
                           Disabling this will automatically send the user a verification
                           email
-                          </Typography>
+                        </Typography>
                         <Switch
                           checked={values.verified}
                           color="secondary"
@@ -253,13 +254,13 @@ function UserEditForm({
                           color="textPrimary"
                         >
                           Locked
-                          </Typography>
+                        </Typography>
                         <Typography
                           variant="body2"
                           color="textSecondary"
                         >
                           Locked account can not login into the system.
-                          </Typography>
+                        </Typography>
                         <Switch
                           checked={values.locked}
                           color="secondary"
@@ -296,7 +297,7 @@ function UserEditForm({
                         </TableCell>
                         <TableCell>
                           Access to this Sections
-                          </TableCell>
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -351,7 +352,7 @@ function UserEditForm({
                         </TableCell>
                         <TableCell>
                           Access to this Modules
-                          </TableCell>
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>

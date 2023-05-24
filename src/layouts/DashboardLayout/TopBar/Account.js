@@ -48,9 +48,10 @@ function Account() {
 
   const handleLogout = async () => {
     try {
+      const tenant = account.user.tenant;
       handleClose();
       await dispatch(logout());
-      history.push('/login');
+      history.push(`/app/${tenant}/login`);
     } catch (error) {
       enqueueSnackbar('Unable to logout', {
         variant: 'error'

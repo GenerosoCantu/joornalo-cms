@@ -47,7 +47,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function UserListView() {
+function UserListView({ match }) {
+  const {
+    params: { tenant },
+  } = match;
+
   const { t, i18n } = useTranslation(['translation', 'users']);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -60,7 +64,7 @@ function UserListView() {
   const breadcrumbs = [
     {
       label: t('Dashboard'),
-      link: "/app"
+      link: `/app/${tenant}`
     },
     {
       label: t('Users')
@@ -68,7 +72,7 @@ function UserListView() {
   ];
 
   const history = useHistory();
-  const handleNewUser = () => history.push('/app/management/users/create');
+  const handleNewUser = () => history.push(`/app/${tenant}/management/users/create`);
 
   useEffect(() => {
     dispatch(getUsers());
@@ -138,7 +142,7 @@ function UserListView() {
         <Error />
         {users && (
           <Box mt={3}>
-            <Results users={users} onUserDelete={handleUserDeleteClick} />
+            <Results tenant={tenant} users={users} onUserDelete={handleUserDeleteClick} />
           </Box>
         )}
 

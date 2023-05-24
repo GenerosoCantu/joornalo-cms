@@ -96,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SectionEditForm({
   className,
+  tenant,
   section,
   covers,
   ...rest
@@ -273,7 +274,7 @@ function SectionEditForm({
           });
           setStatus({ success: true });
           resetForm();
-          history.push('/app/management/sections');
+          history.push(`/app/${tenant}/management/sections`);
         } catch (error) {
           setStatus({ success: false });
           setErrors({ submit: error.message });

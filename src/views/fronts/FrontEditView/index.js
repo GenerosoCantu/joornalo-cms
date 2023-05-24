@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 function FrontEditView({ match }) {
   const {
-    params: { frontId },
+    params: { frontId, tenant },
   } = match;
 
   const classes = useStyles();
@@ -51,11 +51,11 @@ function FrontEditView({ match }) {
   const breadcrumbs = [
     {
       label: "Dashboard",
-      link: "/app"
+      link: `/app/${tenant}`
     },
     {
       label: "Fronts",
-      link: "/app/fronts"
+      link: `/app/${tenant}/fronts`
     },
     {
       label: pageTitle
@@ -106,7 +106,7 @@ function FrontEditView({ match }) {
         <Header breadcrumbs={breadcrumbs} headerTitle={pageTitle} />
         <Error />
         {(front || frontId === 'create') && sectionOptions && (
-          <FrontEditForm front={front} sectionOptions={sectionOptions} />
+          <FrontEditForm tenant={tenant} front={front} sectionOptions={sectionOptions} />
         )}
       </Container>
     </Page>

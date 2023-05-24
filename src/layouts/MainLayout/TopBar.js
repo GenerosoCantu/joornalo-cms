@@ -43,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
 function TopBar({ className, ...rest }) {
   const classes = useStyles();
 
+  const tenant = localStorage.getItem("JoornaloTenant");
+
   return (
     <AppBar
       className={clsx(classes.root, className)}
@@ -84,16 +86,20 @@ function TopBar({ className, ...rest }) {
         >
           Documentation
         </Link>
-        <Divider className={classes.divider} />
-        <Button
-          color="secondary"
-          component="a"
-          href="https://material-ui.com/store/items/devias-kit-pro"
-          variant="contained"
-          size="small"
-        >
-          Get the kit
-        </Button>
+        {tenant && (
+          <>
+            <Divider className={classes.divider} />
+            <Button
+              color="secondary"
+              component="a"
+              href={`/app/${tenant}/login`}
+              variant="contained"
+              size="small"
+            >
+              Login
+            </Button>
+          </>
+        )}
       </Toolbar>
     </AppBar>
   );

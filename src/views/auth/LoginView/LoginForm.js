@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function LoginForm({ className, onSubmitSuccess, ...rest }) {
+function LoginForm({ className, tenant, onSubmitSuccess, ...rest }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -37,7 +37,7 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
         setSubmitting
       }) => {
         try {
-          await dispatch(login(values.email, values.password));
+          await dispatch(login(values.email, values.password, tenant));
           onSubmitSuccess();
         } catch (error) {
           const message = (error.response && error.response.data.message) || 'Something went wrong';

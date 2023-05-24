@@ -9,17 +9,20 @@ export const LOGOUT = '@account/logout';
 export const REGISTER = '@account/register';
 export const UPDATE_PROFILE = '@account/update-profile';
 
-export function login(email, password) {
+export function login(email, password, tenant) {
   return async (dispatch) => {
     try {
       dispatch({ type: LOGIN_REQUEST });
 
       const user = await authService.loginWithEmailAndPassword(email, password);
 
+      localStorage.setItem("JoornaloTenant", tenant);
+
       dispatch({
         type: LOGIN_SUCCESS,
         payload: {
-          user
+          user,
+          tenant
         }
       });
     } catch (error) {

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
 
@@ -37,10 +38,26 @@ function DashboardLayout({ children }) {
   const classes = useStyles();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
+  useEffect(() => {
+    console.log('DashboardLayout.........')
+  }, []);
+
+  let tenant = null;
+  const { pathname } = useLocation();
+  const params = pathname.split('/');
+
+  if (params[1] === 'app' && params[2]) {
+    tenant = params[2]
+  }
+
   return (
     <div className={classes.root}>
-      <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
+      <TopBar
+        tenant={tenant}
+        onMobileNavOpen={() => setMobileNavOpen(true)}
+      />
       <NavBar
+        tenant={tenant}
         onMobileClose={() => setMobileNavOpen(false)}
         openMobile={isMobileNavOpen}
       />
