@@ -40,9 +40,9 @@ function StoryEditView({ match }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();
-  const { story } = useSelector((state) => { return state.story; });
+  const { story } = useSelector((state) => state.story);
   const { sections } = useSelector((state) => state.section);
-  // const { covers } = useSelector((state) => { return state.cover; });
+  // const { covers } = useSelector((state) => state.cover);
 
   const [sectionOptions, setSectionOptions] = useState([]);
 

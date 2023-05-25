@@ -187,6 +187,8 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const { tenant } = useSelector((state) => state.tenant);
+
   const [serverImages, setServerImages] = useState(initialImages);
   const [loadedImages, setLoadedImages] = useState([]);
   const [currentImg, setCurrentImg] = useState(null)
@@ -355,7 +357,7 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
                   key={i + 100}
                 >
                   <img
-                    src={`${process.env.REACT_APP_JOORNALO_CDN_SERVER_URL}${imagePath}${image.filename}`}
+                    src={`${tenant?.urls?.cdnurl}${imagePath}${image.filename}`}
                     className={classes.img}
                   />
                   <ListItemIcon className={classes.listElement}>
@@ -382,7 +384,7 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
                       <img
                         onClick={() => editImage(file)}
                         file={file.name}
-                        src={file.croppedImage ? process.env.REACT_APP_JOORNALO_CDN_SERVER_URL + file.croppedImage : file.imageSrc}
+                        src={file.croppedImage ? tenant?.urls?.cdnurl + file.croppedImage : file.imageSrc}
                         alt="Cropped"
                         className={classes.imgEditable}
                       />
@@ -418,12 +420,9 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
       >
         <div className={classes.deleteContainer}>
           <img
-            src={`${process.env.REACT_APP_JOORNALO_CDN_SERVER_URL}${isDeleteImageInitial ? imagePath : 'tmp/'}${!!deleteImage ? deleteImage : viewImage}`}
+            src={`${tenant?.urls?.cdnurl}${isDeleteImageInitial ? imagePath : 'tmp/'}${!!deleteImage ? deleteImage : viewImage}`}
             className={classes.deleteImg}
           />
-
-
-
         </div>
         <div className={classes.deleteControls}>
           {!!deleteImage && (
@@ -443,7 +442,6 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
           </Button>
         </div>
       </Dialog>
-
 
       <Dialog
         maxWidth="md"

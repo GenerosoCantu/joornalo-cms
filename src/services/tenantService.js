@@ -1,6 +1,4 @@
 import apiService from 'src/services/apiService';
-import { v4 as uuidv4 } from 'uuid';
-import { tenantUrls } from 'src/constants'
 
 class TenantService {
 
