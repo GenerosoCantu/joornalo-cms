@@ -1,27 +1,28 @@
 import apiService from 'src/services/apiService';
 import { v4 as uuidv4 } from 'uuid';
+import { tenantUrls } from 'src/constants'
 
 class UserService {
 
   getUser = (userid) => {
-    return apiService.makeRequest('get', `${process.env.REACT_APP_JOORNALO_API_URL}users/${userid}`, 'usr-g');
+    return apiService.makeRequest('get', tenantUrls.cmsapi, `users/${userid}`, 'usr-g');
   }
 
   getUsers = () => {
-    return apiService.makeRequest('get', `${process.env.REACT_APP_JOORNALO_API_URL}users/`, 'usr-gs');
+    return apiService.makeRequest('get', tenantUrls.cmsapi, `users/`, 'usr-gs');
   }
 
   updateUser = (user) => {
-    return apiService.makeRequest('patch', `${process.env.REACT_APP_JOORNALO_API_URL}users/${user._id}`, 'usr-u', user);
+    return apiService.makeRequest('patch', tenantUrls.cmsapi, `users/${user._id}`, 'usr-u', user);
   }
 
   createUser = (user) => {
     const newUser = { ...user, _id: uuidv4() };
-    return apiService.makeRequest('post', `${process.env.REACT_APP_JOORNALO_API_URL}users/`, 'usr-c', newUser);
+    return apiService.makeRequest('post', tenantUrls.cmsapi, `users/`, 'usr-c', newUser);
   }
 
   deleteUser = (userid) => {
-    return apiService.makeRequest('delete', `${process.env.REACT_APP_JOORNALO_API_URL}users/${userid}`, 'usr-d');
+    return apiService.makeRequest('delete', tenantUrls.cmsapi, `users/${userid}`, 'usr-d');
   }
 
 }

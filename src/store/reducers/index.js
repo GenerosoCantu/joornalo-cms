@@ -10,6 +10,7 @@ import storyReducer from './storyReducer';
 import frontReducer from './frontReducer';
 import moduleReducer from './moduleReducer';
 import coverReducer from './coverReducer';
+import tenantReducer from './tenantReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   section: sectionReducer,
   story: storyReducer,
   front: frontReducer,
+  tenant: tenantReducer,
   module: moduleReducer,
   cover: coverReducer
 

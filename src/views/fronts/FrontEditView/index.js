@@ -40,7 +40,7 @@ function FrontEditView({ match }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();
-  const { front } = useSelector((state) => { return state.front; });
+  const { front } = useSelector((state) => state.front);
   const { sections } = useSelector((state) => state.section);
   // const { covers } = useSelector((state) => { return state.cover; });
 

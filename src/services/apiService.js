@@ -2,12 +2,15 @@ import axios from 'src/utils/axios';
 
 class ApiService {
 
-  makeRequest = (method, url, errorCode, data, headers) => new Promise((resolve, reject) => {
+  makeRequest = (method, base, url, errorCode, data, headers) => new Promise((resolve, reject) => {
+
+    const tenantUrls = JSON.parse(sessionStorage.getItem("tenantUrls"));
+    const fullUrl = base ? `${tenantUrls[base]}${url}` : url;
 
     // https://kapeli.com/cheat_sheets/Axios.docset/Contents/Resources/Documents/index
     const config = {
       method,
-      url,
+      url: fullUrl,
       data,
       headers
     }

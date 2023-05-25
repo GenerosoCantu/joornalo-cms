@@ -11,6 +11,13 @@ i18n.on('languageChanged', (language) => {
   StatusTypes[3].name = i18n.t('translation:StatusTypes-Suspended');
 });
 
+export const tenantUrls = {
+  cdnapi: 'cdnapi',
+  cdnurl: 'cdnurl',
+  cmsapi: 'cmsapi',
+  front: 'front'
+}
+
 /* eslint-disable import/prefer-default-export */
 export const THEMES = {
   LIGHT: 'LIGHT',

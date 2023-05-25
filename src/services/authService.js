@@ -1,5 +1,7 @@
 import jwtDecode from 'jwt-decode';
+import apiService from 'src/services/apiService';
 import axios from 'src/utils/axios';
+import { tenantUrls } from 'src/constants'
 
 class AuthService {
   setAxiosInterceptors = ({ onLogout }) => {
@@ -33,36 +35,19 @@ class AuthService {
     }
   }
 
-  loginWithEmailAndPassword = (email, password) => new Promise((resolve, reject) => {
-    axios.post(`${process.env.REACT_APP_JOORNALO_API_URL}auth/login`, { username: email, password })
-      .then((response) => {
-        if (response.data.user) {
-          this.setSession(response.data.accessToken);
-          resolve(response.data.user);
-        } else {
-          console.log('login fail---------------------------1');
-          reject(response.data.error);
-        }
-      })
-      .catch((error) => {
-        console.log('login fail---------------------------0');
-        reject(error);
-      });
-  })
+  loginWithEmailAndPassword = async (email, password) => {
+    const response = await apiService.makeRequest('post', tenantUrls.cmsapi, `auth/login`, 'aut-p', { username: email, password });
+    if (response.user) {
+      this.setSession(response.accessToken);
+      console.log('Login response', response.user);
+      return response.user;
+    }
+  }
 
-  loginInWithToken = () => new Promise((resolve, reject) => {
-    axios.get(`${process.env.REACT_APP_JOORNALO_API_URL}users/profile`)
-      .then((response) => {
-        if (response.data) {
-          resolve(response.data);
-        } else {
-          reject(response.data.error);
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  })
+  loginInWithToken = async () => {
+    const response = await apiService.makeRequest('get', tenantUrls.cmsapi, `users/profile`, 'aut-g');
+    return response;
+  }
 
   logout = () => {
     this.setSession(null);

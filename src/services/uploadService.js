@@ -1,4 +1,5 @@
 import apiService from 'src/services/apiService';
+import { tenantUrls } from 'src/constants'
 
 class UploadService {
 
@@ -6,12 +7,12 @@ class UploadService {
     const formData = new FormData();
     formData.append("file", file);
     const headers = { "Content-Type": "multipart/form-data" }
-    return apiService.makeRequest('post', `${process.env.REACT_APP_JOORNALO_CDN_API_URL}files/upload/`, 'upl-u', formData, headers);
+    return apiService.makeRequest('post', tenantUrls.cdnapi, `files/upload/`, 'upl-u', formData, headers);
   }
 
   deleteImage = (file) => {
     console.log('deleteImage:', file)
-    return apiService.makeRequest('delete', `${process.env.REACT_APP_JOORNALO_CDN_API_URL}files/tmp/${file}`, 'file-d');
+    return apiService.makeRequest('delete', tenantUrls.cdnapi, `files/tmp/${file}`, 'file-d');
   }
 
 }

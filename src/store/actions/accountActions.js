@@ -58,12 +58,12 @@ export function register() {
 }
 
 export function updateProfile(update) {
-  const request = axios.post('/api/account/profile', { update });
+  // const request = axios.post('/api/account/profile', { update });
 
-  return (dispatch) => {
-    request.then((response) => dispatch({
-      type: UPDATE_PROFILE,
-      payload: response.data
-    }));
-  };
+  // return (dispatch) => {
+  //   request.then((response) => dispatch({
+  //     type: UPDATE_PROFILE,
+  //     payload: response.data
+  //   }));
+  // };
 }

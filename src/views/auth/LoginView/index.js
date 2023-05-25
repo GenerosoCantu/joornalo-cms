@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
 import {
   Avatar,
   Button,
@@ -20,6 +24,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
 import LoginForm from './LoginForm';
+import { getTenant } from 'src/store/actions/tenantActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,12 +89,19 @@ function LoginView({ match }) {
     params: { tenant },
   } = match;
 
+  const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
 
   const handleSubmitSuccess = () => {
     history.push(`/app/${tenant}`);
   };
+
+  useEffect(() => {
+    if (tenant) {
+      dispatch(getTenant(tenant));
+    }
+  }, [tenant]);
 
   return (
     <Page
