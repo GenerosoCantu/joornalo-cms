@@ -35,6 +35,7 @@ function Account() {
   const ref = useRef(null);
   const dispatch = useDispatch();
   const account = useSelector((state) => state.account);
+  const { tenant } = useSelector((state) => state.tenant);
   const { enqueueSnackbar } = useSnackbar();
   const [isOpen, setOpen] = useState(false);
 
@@ -48,10 +49,9 @@ function Account() {
 
   const handleLogout = async () => {
     try {
-      const tenant = account.user.tenant;
       handleClose();
       await dispatch(logout());
-      history.push(`/app/${tenant}/login`);
+      history.push(`/app/${tenant.tenant}/login`);
     } catch (error) {
       enqueueSnackbar('Unable to logout', {
         variant: 'error'

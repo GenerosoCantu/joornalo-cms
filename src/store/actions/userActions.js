@@ -1,4 +1,3 @@
-import axios from 'src/utils/axios';
 import userService from 'src/services/userService';
 import { setError, clearError } from 'src/store/actions/errorActions';
 

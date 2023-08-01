@@ -16,6 +16,7 @@ const tenantReducer = (state = initialState, action) => {
     case GET_TENANT: {
       const { tenant } = action.payload;
       sessionStorage.setItem("tenantUrls", JSON.stringify(tenant.urls));
+      sessionStorage.setItem("tenant", tenant.tenant);
       return produce(state, (draft) => {
         draft.tenant = tenant;
       });

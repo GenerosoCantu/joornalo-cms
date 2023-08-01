@@ -2,7 +2,7 @@ export function restoreSettings() {
   let settings = null;
 
   try {
-    const storedData = localStorage.getItem('settings');
+    const storedData = sessionStorage.getItem('settings');
 
     if (storedData) {
       settings = JSON.parse(storedData);
@@ -16,5 +16,5 @@ export function restoreSettings() {
 }
 
 export function storeSettings(settings) {
-  localStorage.setItem('settings', JSON.stringify(settings));
+  sessionStorage.setItem('settings', JSON.stringify(settings));
 }

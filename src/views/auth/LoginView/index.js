@@ -128,7 +128,7 @@ function LoginView({ match }) {
         <Card className={classes.card}>
 
           <CardContent className={classes.media}>
-            <img className={classes.logo} src="./static/joornalo_logo.png" alt="Joornalo" height="80" width="293"></img>
+            <img className={classes.logo} src="/static/joornalo_logo.png" alt="Joornalo" height="80" width="293"></img>
           </CardContent>
           <CardContent className={classes.content}>
             <Avatar className={classes.icon}>

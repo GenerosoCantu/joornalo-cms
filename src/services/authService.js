@@ -44,9 +44,13 @@ class AuthService {
     }
   }
 
-  loginInWithToken = async () => {
-    const response = await apiService.makeRequest('get', tenantUrls.cmsapi, `users/profile`, 'aut-g');
-    return response;
+  loginInWithToken = async (currentTenant) => {
+    const savedTenant = sessionStorage.getItem("tenant");
+    if (currentTenant !== savedTenant) {
+      this.logout();
+    }
+    const user = await apiService.makeRequest('get', tenantUrls.cmsapi, `users/profile`, 'aut-g');
+    return user;
   }
 
   logout = () => {
@@ -55,15 +59,17 @@ class AuthService {
 
   setSession = (accessToken) => {
     if (accessToken) {
-      localStorage.setItem('accessToken', accessToken);
+      sessionStorage.setItem('accessToken', accessToken);
       axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
     } else {
-      localStorage.removeItem('accessToken');
+      sessionStorage.removeItem('tenant');
+      sessionStorage.removeItem('tenantUrls');
+      sessionStorage.removeItem('accessToken');
       delete axios.defaults.headers.common.Authorization;
     }
   }
 
-  getAccessToken = () => localStorage.getItem('accessToken');
+  getAccessToken = () => sessionStorage.getItem('accessToken');
 
   isValidToken = (accessToken) => {
     if (!accessToken) {
