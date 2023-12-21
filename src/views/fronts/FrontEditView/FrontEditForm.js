@@ -7,6 +7,7 @@ import {
   useSelector
 } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -60,7 +61,8 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import {
   Edit as EditIcon,
-  Trash as TrashIcon
+  Trash as TrashIcon,
+  Grid as GridIcon
 } from 'react-feather';
 import { updateFront, createFront } from 'src/store/actions/frontActions';
 import { Status, PhotoSizes } from 'src/constants';
@@ -69,44 +71,12 @@ import { CompareArrowsOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  // configCell: {
-  //   width: '180px'
-  // },
-  // hidden: {
-  //   display: 'none'
-  // },
-  // subsec: {
-  //   width: '43%',
-  //   cursor: 'pointer'
-  // },
-  // denseInput: {
-  //   margin: '2px 0',
-  // },
   editorMain: {
     padding: '0 14px'
+  },
+  fontWeightMedium: {
+    fontWeight: theme.typography.fontWeightMedium
   }
-
-  // cssOutlinedInput: {
-  //   borderWidth: '1px',
-  //   '&$cssFocused:not($error)': {
-  //     borderColor: `${theme.palette.primary.main} !important`,
-  //   }
-  // },
-  // cssHover: {
-  //   '&:hover': {
-  //     borderColor: "red !important"
-  //   }
-  // },
-  // cssFocused: {},
-  // notchedOutline: {
-  //   borderWidth: '1px',
-  //   '&not($error)': {
-  //     borderColor: 'white !important'
-  //   },
-  //   '&$error': {
-  //     borderColor: 'red !important'
-  //   }
-  // }
 }));
 
 function FrontEditForm({
@@ -259,11 +229,95 @@ function FrontEditForm({
                   <CardContent>
                     <Grid
                       container
-                      spacing={3}
+                      spacing={1}
                     >
                       <Grid
                         item
-                        md={6}
+                        xs={12}
+                      >
+
+                        <Table>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>Section</TableCell>
+                              <TableCell>Title</TableCell>
+                              <TableCell>Image</TableCell>
+                              <TableCell align="center">Action</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {front.stories.map((story, i) => (
+                              <TableRow>
+                                <TableCell className={classes.fontWeightMedium}>
+                                  {i} - {story.section}
+                                </TableCell>
+                                <TableCell>
+                                  <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                  >
+                                    {story.headline}
+                                  </Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                  >
+                                    Image
+                                  </Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <IconButton
+                                  // onClick={() => onFrontDelete(front)}
+                                  >
+                                    <SvgIcon fontSize="small">
+                                      <GridIcon />
+                                    </SvgIcon>
+                                  </IconButton>
+                                  <IconButton
+                                    component={RouterLink}
+                                    to={`/app/${tenant}/fronts/${story._id}`}
+                                  >
+                                    <SvgIcon fontSize="small">
+                                      <EditIcon />
+                                    </SvgIcon>
+                                  </IconButton>
+                                  <IconButton
+                                  // onClick={() => onFrontDelete(front)}
+                                  >
+                                    <SvgIcon fontSize="small">
+                                      <TrashIcon />
+                                    </SvgIcon>
+                                  </IconButton>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </Box>
+            </Grid>
+
+            <Grid
+              item
+              xs={3}
+              lg={3}
+            >
+              <Box mt={3}>
+                <Card>
+                  <CardContent>
+
+                    <Grid
+                      container
+                      spacing={1}
+                    >
+                      <Grid
+                        item
                         xs={12}
                       >
                         <KeyboardDatePicker
@@ -281,70 +335,24 @@ function FrontEditForm({
                           clearLabel={t('translation:Clear')}
                           showTodayButton={true}
                           todayLabel={t('translation:Today')}
+                          margin="dense"
                         // onChange={handleDateChange}
                         />
                       </Grid>
 
                       <Grid
                         item
-                        md={6}
                         xs={12}
                       >
-                        <JooTextField label="Status" name="status" options={Status} />
+                        <JooTextField label="Status" name="status" options={Status} margin="dense" />
                       </Grid>
 
                       <Grid
                         item
-                        md={6}
                         xs={12}
                       >
-                        <JooTextField label="Section" name="section" options={sectionOptions} onBlur={ev => handleSectionChange(ev, setFieldValue)} />
+                        <JooTextField label="Section" name="section" options={sectionOptions} onBlur={ev => handleSectionChange(ev, setFieldValue)} margin="dense" />
                       </Grid>
-
-                      {/* <Grid
-                        item
-                        md={12}
-                        xs={12}
-                      >
-                        <JooTextField label="Title" name="title" />
-                      </Grid> */}
-
-                      {/* <Grid
-                        item
-                        md={6}
-                        xs={12}
-                      >
-                        <JooTextField label="Front Id" name="id" />
-                      </Grid> */}
-
-
-                      {/* <Grid
-                          item
-                          md={12}
-                          xs={12}
-                        >
-                          <Paper
-                            component={Box}
-                            mt={3}
-                          >
-                            <Editor
-                              editorState={editorState}
-                              editorClassName={classes.editorMain}
-                              onEditorStateChange={state => handleTextChange(state, setFieldValue)}
-                            />
-                          </Paper>
-                        </Grid> */}
-                      {/* 
-                      <Grid
-                        item
-                        md={12}
-                        xs={12}
-                      >
-                        <textarea
-                          name="text"
-                          value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
-                        />
-                      </Grid> */}
 
                     </Grid>
 
@@ -352,22 +360,6 @@ function FrontEditForm({
                 </Card>
               </Box>
             </Grid>
-
-            {/* <Grid
-              item
-              xs={3}
-              lg={3}
-            >
-              <Box mt={3}>
-                <Card>
-                  <CardHeader title="Upload Images" />
-                  <Divider />
-                  <CardContent>
-                    <FilesDropzone />
-                  </CardContent>
-                </Card>
-              </Box>
-            </Grid> */}
 
 
             <Grid

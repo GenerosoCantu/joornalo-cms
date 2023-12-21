@@ -2,6 +2,11 @@ import storyService from 'src/services/storyService';
 import uploadService from 'src/services/uploadService';
 import { setError, clearError } from 'src/store/actions/errorActions';
 
+import {
+  SPINNER_ON,
+  SPINNER_OFF
+} from 'src/store/actions/spinnerActions';
+
 export const GET_STORIES = '@story/get-stories';
 export const GET_STORY = '@story/get-story';
 export const CREATE_STORY = '@story/create-story';
@@ -109,8 +114,10 @@ export function newStory() {
 export function updateStory(story) {
   return async (dispatch) => {
     try {
+      dispatch({
+        type: SPINNER_ON,
+      });
       const request = await storyService.updateStory(story);
-
       dispatch({
         type: UPDATE_STORY,
         payload: {
@@ -121,6 +128,10 @@ export function updateStory(story) {
     } catch (error) {
       dispatch(setError(error));
       throw error;
+    } finally {
+      dispatch({
+        type: SPINNER_OFF,
+      });
     }
   };
 }
@@ -162,11 +173,11 @@ export function deleteStory(storyId) {
   };
 }
 
-export function uploadImage(file) {
+export function uploadImage(tenant, file) {
   return async (dispatch) => {
     try {
       dispatch({ type: UPLOAD_IMAGE_REQUEST });
-      const image = await uploadService.uploadImage(file);
+      const image = await uploadService.uploadImage(tenant, file);
       dispatch({
         type: UPLOAD_IMAGE,
         payload: {
@@ -182,12 +193,12 @@ export function uploadImage(file) {
   };
 }
 
-export function deleteFile(file) {
+export function deleteFile(tenant, file) {
   return async (dispatch) => {
     console.log('deleteFile:', file)
     try {
       dispatch({ type: DELETE_IMAGE_REQUEST });
-      const resp = await uploadService.deleteImage(file);
+      const resp = await uploadService.deleteImage(tenant, file);
       dispatch({
         type: DELETE_IMAGE,
         payload: {

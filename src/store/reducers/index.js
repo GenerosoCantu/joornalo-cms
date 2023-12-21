@@ -11,6 +11,7 @@ import frontReducer from './frontReducer';
 import moduleReducer from './moduleReducer';
 import coverReducer from './coverReducer';
 import tenantReducer from './tenantReducer';
+import spinnerReducer from './spinnerReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -23,8 +24,8 @@ const rootReducer = combineReducers({
   front: frontReducer,
   tenant: tenantReducer,
   module: moduleReducer,
-  cover: coverReducer
-
+  cover: coverReducer,
+  spinner: spinnerReducer
 });
 
 export default rootReducer;

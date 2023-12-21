@@ -219,8 +219,7 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
       });
 
       if (croppedImage) {
-
-        const response = await dispatch(uploadImage(croppedImage));
+        const response = await dispatch(uploadImage(tenant.tenant, croppedImage));
 
         setTimeout(() => {
           setLoadedImages(oldArray => [
@@ -306,7 +305,7 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
       setLoadedImages(loadedImages.filter((image) => image.filename !== deleteImage))
       // Delete image from server
       console.log('====>', deleteImage)
-      dispatch(deleteFile(deleteImage));
+      dispatch(deleteFile(tenant.tenant, deleteImage));
       setDeleteImage(null)
     }
   }
@@ -384,7 +383,7 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
                       <img
                         onClick={() => editImage(file)}
                         file={file.name}
-                        src={file.croppedImage ? tenant?.urls?.cdnurl + file.croppedImage : file.imageSrc}
+                        src={file.croppedImage ? tenant?.urls?.cdnurl + tenant?.tenant + '/' + file.croppedImage : tenant?.tenant + '/' + file.imageSrc}
                         alt="Cropped"
                         className={classes.imgEditable}
                       />
@@ -420,7 +419,7 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
       >
         <div className={classes.deleteContainer}>
           <img
-            src={`${tenant?.urls?.cdnurl}${isDeleteImageInitial ? imagePath : 'tmp/'}${!!deleteImage ? deleteImage : viewImage}`}
+            src={`${tenant?.urls?.cdnurl}${isDeleteImageInitial ? imagePath : tenant.tenant + '/'}${!!deleteImage ? deleteImage : viewImage}`}
             className={classes.deleteImg}
           />
         </div>

@@ -18,20 +18,20 @@ class StoryService {
       `&sortBy=${sortBy}&sortOrder=${sortOrder}` +
       (date ? `&date=${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}` : "")
 
-    return apiService.makeRequest('get', tenantUrls.cmsapi, `stories/${params}`, 'sct-gs');
+    return apiService.makeRequest('get', tenantUrls.cmsapi, `stories/${params}`, 'stry-gs');
   }
 
   updateStory = (story) => {
-    return apiService.makeRequest('patch', tenantUrls.cmsapi, `stories/${story._id}`, 'sct-u', story);
+    return apiService.makeRequest('patch', tenantUrls.cmsapi, `stories/${story._id}`, 'stry-u', story);
   }
 
   createStory = (story) => {
     const newStory = { ...story, _id: uuidv4() };
-    return apiService.makeRequest('post', tenantUrls.cmsapi, `stories/`, 'sct-c', newStory);
+    return apiService.makeRequest('post', tenantUrls.cmsapi, `stories/`, 'stry-c', newStory);
   }
 
   deleteStory = (storyId) => {
-    return apiService.makeRequest('delete', tenantUrls.cmsapi, `stories/${storyId}`, 'sct-d');
+    return apiService.makeRequest('delete', tenantUrls.cmsapi, `stories/${storyId}`, 'stry-d');
   }
 
 }

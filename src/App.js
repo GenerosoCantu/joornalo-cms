@@ -18,6 +18,7 @@ import CookiesNotification from 'src/components/CookiesNotification';
 import SettingsNotification from 'src/components/SettingsNotification';
 import GoogleAnalytics from 'src/components/GoogleAnalytics';
 import ScrollReset from 'src/components/ScrollReset';
+import Spinner from 'src/components/Spinner';
 import useSettings from 'src/hooks/useSettings';
 import { createTheme } from 'src/theme';
 import Routes from 'src/Routes';
@@ -66,6 +67,7 @@ function App() {
                 <GoogleAnalytics />
                 <CookiesNotification />
                 <SettingsNotification />
+                <Spinner />
                 <Routes />
               </Auth>
             </Router>

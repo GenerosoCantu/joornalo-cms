@@ -70,23 +70,12 @@ function StoryEditView({ match }) {
   }, [isMountedRef]);
 
   useEffect(() => {
-    console.log(sections)
     if (sections) {
       setSectionOptions(
-        sections.map((section) => {
-          if (section.status === 'Active') {
-            return { id: section.id, name: section.name, subsections: section.subsections }
-          }
+        sections.filter((section) => section.status === 'Active').map((section) => {
+          return { id: section.id, name: section.name, subsections: section.subsections }
         })
       )
-      // setSectionOptions([
-      //   ...[{ id: '', name: '' }],
-      //   ...sections.map((section) => {
-      //     if (section.status === 'Active') {
-      //       return { id: section.id, name: section.name }
-      //     }
-      //   })
-      // ])
     }
   }, [sections]);
 

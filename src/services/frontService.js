@@ -18,20 +18,20 @@ class FrontService {
       `&sortBy=${sortBy}&sortOrder=${sortOrder}` +
       (date ? `&date=${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}` : "")
 
-    return apiService.makeRequest('get', tenantUrls.cmsapi, `fronts/${params}`, 'sct-gs');
+    return apiService.makeRequest('get', tenantUrls.cmsapi, `fronts/${params}`, 'frnt-gs');
   }
 
   updateFront = (front) => {
-    return apiService.makeRequest('patch', tenantUrls.cmsapi, `fronts/${front._id}`, 'sct-u', front);
+    return apiService.makeRequest('patch', tenantUrls.cmsapi, `fronts/${front._id}`, 'frnt-u', front);
   }
 
   createFront = (front) => {
     const newFront = { ...front, _id: uuidv4() };
-    return apiService.makeRequest('post', tenantUrls.cmsapi, `fronts/`, 'sct-c', newFront);
+    return apiService.makeRequest('post', tenantUrls.cmsapi, `fronts/`, 'frnt-c', newFront);
   }
 
   deleteFront = (frontId) => {
-    return apiService.makeRequest('delete', tenantUrls.cmsapi, `fronts/${frontId}`, 'sct-d');
+    return apiService.makeRequest('delete', tenantUrls.cmsapi, `fronts/${frontId}`, 'frnt-d');
   }
 
 }

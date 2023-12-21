@@ -3,16 +3,17 @@ import { tenantUrls } from 'src/constants'
 
 class UploadService {
 
-  uploadImage = (file) => {
+  uploadImage = (tenant, file) => {
     const formData = new FormData();
     formData.append("file", file);
     const headers = { "Content-Type": "multipart/form-data" }
-    return apiService.makeRequest('post', tenantUrls.cdnapi, `files/upload/`, 'upl-u', formData, headers);
+    return apiService.makeRequest('post', tenantUrls.cdnapi, `files/upload/${tenant}`, 'upl-u', formData, headers);
   }
 
-  deleteImage = (file) => {
+  deleteImage = (tenant, file) => {
     console.log('deleteImage:', file)
-    return apiService.makeRequest('delete', tenantUrls.cdnapi, `files/tmp/${file}`, 'file-d');
+    return apiService.makeRequest('delete', tenantUrls.cdnapi, `files/${tenant}/${file}`, 'file-d');
+    // return apiService.makeRequest('delete', tenantUrls.cdnapi, `files/tmp/${file}`, 'file-d');
   }
 
 }
