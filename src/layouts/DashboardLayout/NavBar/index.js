@@ -16,11 +16,9 @@ import {
   Link,
   List,
   ListSubheader,
-  Typography,
-  makeStyles,
-  ListItemIcon
-} from '@material-ui/core';
-import ReceiptIcon from '@material-ui/icons/ReceiptOutlined';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import {
   Briefcase as BriefcaseIcon,
   Calendar as CalendarIcon,
@@ -59,6 +57,8 @@ import Logo from 'src/components/Logo';
 import NavItem from './NavItem';
 
 function renderNavItems({ items, ...rest }) {
+  console.log('ITEMS--------------------')
+  console.log(items)
   return (
     <List disablePadding>
       {items.reduce(
@@ -77,11 +77,18 @@ function reduceChildRoutes({
 }) {
   const key = item.title + depth;
 
+  console.log('item--------------------')
+  console.log(item)
   if (item.items) {
-    const open = matchPath(pathname, {
-      path: item.href,
-      exact: false
-    });
+    console.log('item.items--------------------', item.items)
+    console.log('pathname--------------------', pathname)
+    console.log('item.href-------------------', item.href)
+
+    const open = pathname.localeCompare(item.href)
+    // open = matchPath(pathname, {
+    //   path: item.href,
+    //   exact: false
+    // });
 
     acc.push(
       <NavItem
@@ -100,6 +107,7 @@ function reduceChildRoutes({
       </NavItem>
     );
   } else {
+    console.log('item.items NO--------------------', item)
     acc.push(
       <NavItem
         depth={depth}

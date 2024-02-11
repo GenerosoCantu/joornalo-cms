@@ -15,19 +15,18 @@ import {
   ListItemIcon,
   ListItemText,
   Tooltip,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
-import ImageIcon from '@material-ui/icons/Image';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import PageviewIcon from '@material-ui/icons/Pageview';
-import CropIcon from '@material-ui/icons/Crop';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import bytesToSize from 'src/utils/bytesToSize';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import PageviewIcon from '@mui/icons-material/Pageview';
+import CropIcon from '@mui/icons-material/Crop';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import bytesToSize from 'src/utils/bytesToSize';
 import Cropper from 'react-easy-crop'
-import Slider from '@material-ui/core/Slider'
+import { Slider } from '@mui/material';
 import { getCroppedImg } from '../../../utils/canvas'
-import { CompareArrowsOutlined, TimerOutlined } from '@material-ui/icons';
+// import { CompareArrowsOutlined, TimerOutlined } from '@mui/icons-material';
 import { uploadImage, deleteFile } from 'src/store/actions/storyActions';
 import {
   useDispatch,

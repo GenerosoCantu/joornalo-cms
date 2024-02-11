@@ -5,10 +5,10 @@ import {
   Avatar,
   Box,
   Card,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import Label from 'src/components/Label';
 
 const useStyles = makeStyles((theme) => ({

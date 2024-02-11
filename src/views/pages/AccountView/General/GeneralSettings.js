@@ -16,9 +16,9 @@ import {
   Grid,
   Switch,
   TextField,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { updateProfile } from 'src/store/actions/accountActions';
 
 const roleOptions = ['Admin', 'Editor', 'Reporter'];
@@ -81,170 +81,170 @@ function GeneralSettings({ user, className, ...rest }) {
         touched,
         values
       }) => (
-          <form onSubmit={handleSubmit}>
-            <Card
-              className={clsx(classes.root, className)}
-              {...rest}
-            >
-              <CardHeader title="Profile" />
-              <Divider />
-              <CardContent>
-                <Grid
-                  container
-                  spacing={4}
-                >
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
-                    <TextField
-                      error={Boolean(touched.firstName && errors.firstName)}
-                      fullWidth
-                      helperText={touched.firstName && errors.firstName}
-                      label="First Name"
-                      name="firstName"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      required
-                      type="firstName"
-                      value={values.firstName}
-                      variant="outlined"
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
-                    <TextField
-                      error={Boolean(touched.lastName && errors.lastName)}
-                      fullWidth
-                      helperText={touched.lastName && errors.lastName}
-                      label="Last Name"
-                      name="lastName"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      required
-                      type="lastName"
-                      value={values.lastName}
-                      variant="outlined"
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
-                    <TextField
-                      error={Boolean(touched.email && errors.email)}
-                      fullWidth
-                      helperText={touched.email && errors.email ? errors.email : 'We will use this email to contact you'}
-                      label="Email Address"
-                      name="email"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      required
-                      type="email"
-                      value={values.email}
-                      variant="outlined"
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
-                    <TextField
-                      error={Boolean(touched.phone && errors.phone)}
-                      fullWidth
-                      helperText={touched.phone && errors.phone}
-                      label="Phone Number"
-                      name="phone"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.phone}
-                      variant="outlined"
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
-                    <TextField
-                      fullWidth
-                      label="Select Role"
-                      name="role"
-                      onChange={handleChange}
-                      select
-                      SelectProps={{ native: true }}
-                      value={values.role}
-                      variant="outlined"
-                    >
-                      {roleOptions.map((role) => (
-                        <option
-                          key={role}
-                          value={role}
-                        >
-                          {role}
-                        </option>
-                      ))}
-                    </TextField>
-                  </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
-                    <Typography
-                      variant="h6"
-                      color="textPrimary"
-                    >
-                      Make Contact Info Public
-                  </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                    >
-                      Means that anyone viewing your profile will be able to see your
-                      contacts details
-                  </Typography>
-                    <Switch
-                      checked={values.isPublic}
-                      edge="start"
-                      name="isPublic"
-                      onChange={handleChange}
-                    />
-                  </Grid>
-
-                </Grid>
-                {errors.submit && (
-                  <Box mt={3}>
-                    <FormHelperText error>
-                      {errors.submit}
-                    </FormHelperText>
-                  </Box>
-                )}
-              </CardContent>
-              <Divider />
-              <Box
-                p={2}
-                display="flex"
-                justifyContent="flex-end"
+        <form onSubmit={handleSubmit}>
+          <Card
+            className={clsx(classes.root, className)}
+            {...rest}
+          >
+            <CardHeader title="Profile" />
+            <Divider />
+            <CardContent>
+              <Grid
+                container
+                spacing={4}
               >
-                <Button
-                  color="secondary"
-                  disabled={isSubmitting}
-                  type="submit"
-                  variant="contained"
+                <Grid
+                  item
+                  md={6}
+                  xs={12}
                 >
-                  Save Changes
+                  <TextField
+                    error={Boolean(touched.firstName && errors.firstName)}
+                    fullWidth
+                    helperText={touched.firstName && errors.firstName}
+                    label="First Name"
+                    name="firstName"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    required
+                    type="firstName"
+                    value={values.firstName}
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid
+                  item
+                  md={6}
+                  xs={12}
+                >
+                  <TextField
+                    error={Boolean(touched.lastName && errors.lastName)}
+                    fullWidth
+                    helperText={touched.lastName && errors.lastName}
+                    label="Last Name"
+                    name="lastName"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    required
+                    type="lastName"
+                    value={values.lastName}
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid
+                  item
+                  md={6}
+                  xs={12}
+                >
+                  <TextField
+                    error={Boolean(touched.email && errors.email)}
+                    fullWidth
+                    helperText={touched.email && errors.email ? errors.email : 'We will use this email to contact you'}
+                    label="Email Address"
+                    name="email"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    required
+                    type="email"
+                    value={values.email}
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid
+                  item
+                  md={6}
+                  xs={12}
+                >
+                  <TextField
+                    error={Boolean(touched.phone && errors.phone)}
+                    fullWidth
+                    helperText={touched.phone && errors.phone}
+                    label="Phone Number"
+                    name="phone"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.phone}
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid
+                  item
+                  md={6}
+                  xs={12}
+                >
+                  <TextField
+                    fullWidth
+                    label="Select Role"
+                    name="role"
+                    onChange={handleChange}
+                    select
+                    SelectProps={{ native: true }}
+                    value={values.role}
+                    variant="outlined"
+                  >
+                    {roleOptions.map((role) => (
+                      <option
+                        key={role}
+                        value={role}
+                      >
+                        {role}
+                      </option>
+                    ))}
+                  </TextField>
+                </Grid>
+                <Grid
+                  item
+                  md={6}
+                  xs={12}
+                >
+                  <Typography
+                    variant="h6"
+                    color="textPrimary"
+                  >
+                    Make Contact Info Public
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                  >
+                    Means that anyone viewing your profile will be able to see your
+                    contacts details
+                  </Typography>
+                  <Switch
+                    checked={values.isPublic}
+                    edge="start"
+                    name="isPublic"
+                    onChange={handleChange}
+                  />
+                </Grid>
+
+              </Grid>
+              {errors.submit && (
+                <Box mt={3}>
+                  <FormHelperText error>
+                    {errors.submit}
+                  </FormHelperText>
+                </Box>
+              )}
+            </CardContent>
+            <Divider />
+            <Box
+              p={2}
+              display="flex"
+              justifyContent="flex-end"
+            >
+              <Button
+                color="secondary"
+                disabled={isSubmitting}
+                type="submit"
+                variant="contained"
+              >
+                Save Changes
               </Button>
-              </Box>
-            </Card>
-          </form>
-        )}
+            </Box>
+          </Card>
+        </form>
+      )}
     </Formik>
   );
 }

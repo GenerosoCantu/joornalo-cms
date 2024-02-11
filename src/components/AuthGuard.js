@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function AuthGuard({ children }) {
@@ -9,7 +9,7 @@ function AuthGuard({ children }) {
   if (!account.user) {
     const tenant = localStorage.getItem("JoornaloTenant");
     const goto = tenant ? `/app/${tenant}/login` : '/home'
-    return <Redirect to={goto} />;
+    return <Navigate to={goto} />;
   }
 
   return children;

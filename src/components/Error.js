@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Box } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Box } from '@mui/material';
+import { Alert } from '@mui/lab';
 
 function Error() {
 

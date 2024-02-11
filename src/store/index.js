@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { applyMiddleware, createStore, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from '@redux-devtools/extension';
 import { createLogger } from 'redux-logger';
 import rootReducer from 'src/store/reducers';
 import { ENABLE_REDUX_LOGGER } from 'src/config';

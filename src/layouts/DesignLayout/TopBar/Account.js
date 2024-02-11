@@ -3,7 +3,7 @@ import React, {
   useState
 } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import {
@@ -13,9 +13,9 @@ import {
   Hidden,
   Menu,
   MenuItem,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { logout } from 'src/store/actions/accountActions';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Account() {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const ref = useRef(null);
   const dispatch = useDispatch();
   const account = useSelector((state) => state.account);
@@ -50,7 +50,7 @@ function Account() {
     try {
       handleClose();
       await dispatch(logout());
-      history.push('/login');
+      navigate('/login');
     } catch (error) {
       enqueueSnackbar('Unable to logout', {
         variant: 'error'

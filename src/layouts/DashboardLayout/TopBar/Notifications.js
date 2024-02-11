@@ -20,9 +20,9 @@ import {
   Popover,
   SvgIcon,
   Tooltip,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import {
   Bell as BellIcon,
   Package as PackageIcon,

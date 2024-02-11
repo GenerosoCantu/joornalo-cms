@@ -4,11 +4,10 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'react-quill/dist/quill.snow.css';
 import 'nprogress/nprogress.css';
-import 'src/assets/css/prism.css';
-import 'src/mixins/chartjs';
-import 'src/mixins/prismjs';
-import 'src/mock';
-// import { enableES5 } from 'immer';
+// import 'src/assets/css/prism.css';
+// import 'src/mixins/chartjs';
+// import 'src/mixins/prismjs';
+import { enableES5 } from 'immer';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -31,5 +30,13 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// );
+
 
 serviceWorker.unregister();

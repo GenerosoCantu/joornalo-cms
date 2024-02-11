@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Doughnut } from 'react-chartjs-2';
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/styles';
 
 function Chart({ data: dataProp, ...rest }) {
   const theme = useTheme();

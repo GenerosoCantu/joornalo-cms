@@ -6,12 +6,12 @@ import {
   IconButton,
   Tooltip,
   Typography,
-  colors,
-  makeStyles
-} from '@material-ui/core';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import ShareIcon from '@material-ui/icons/Share';
+  colors
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ShareIcon from '@mui/icons-material/Share';
 
 const useStyles = makeStyles(() => ({
   root: {

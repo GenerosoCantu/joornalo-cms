@@ -20,10 +20,10 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
-  Tooltip,
-  makeStyles
-} from '@material-ui/core';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+  Tooltip
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Label from 'src/components/Label';
 import GenericMoreButton from 'src/components/GenericMoreButton';
 import axios from 'src/utils/axios';

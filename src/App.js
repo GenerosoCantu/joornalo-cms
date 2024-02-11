@@ -1,18 +1,18 @@
 import React from 'react';
-import { Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { create } from 'jss';
 import rtl from 'jss-rtl';
-import MomentUtils from '@date-io/moment';
 import { SnackbarProvider } from 'notistack';
 import {
   createStyles,
-  jssPreset,
-  makeStyles,
-  StylesProvider,
   ThemeProvider
-} from '@material-ui/core';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { StylesProvider, jssPreset } from '@mui/styles';
+// import AdapterDateFns from '@mui/lab/AdapterDateFns';
+// import LocalizationProvider from '@mui/lab/LocalizationProvider';
+
 import Auth from 'src/components/Auth';
 import CookiesNotification from 'src/components/CookiesNotification';
 import SettingsNotification from 'src/components/SettingsNotification';
@@ -21,7 +21,7 @@ import ScrollReset from 'src/components/ScrollReset';
 import Spinner from 'src/components/Spinner';
 import useSettings from 'src/hooks/useSettings';
 import { createTheme } from 'src/theme';
-import Routes from 'src/Routes';
+import AppRoutes from 'src/Routes';
 import './i18n';
 
 const history = createBrowserHistory();
@@ -57,22 +57,26 @@ function App() {
   const { settings } = useSettings();
 
   return (
+
     <ThemeProvider theme={createTheme(settings)}>
+
       <StylesProvider jss={jss}>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <SnackbarProvider maxSnack={1}>
-            <Router history={history}>
-              <Auth>
-                <ScrollReset />
-                <GoogleAnalytics />
-                <CookiesNotification />
-                <SettingsNotification />
-                <Spinner />
-                <Routes />
-              </Auth>
-            </Router>
-          </SnackbarProvider>
-        </MuiPickersUtilsProvider>
+        {/* <LocalizationProvider dateAdapter={AdapterDateFns}> */}
+        <SnackbarProvider maxSnack={1}>
+          <BrowserRouter>
+            {/* <AppRoutes> */}
+            <Auth>
+              <ScrollReset />
+              <GoogleAnalytics />
+              <CookiesNotification />
+              <SettingsNotification />
+              <Spinner />
+              <AppRoutes />
+            </Auth>
+            {/* </AppRoutes> */}
+          </BrowserRouter>
+        </SnackbarProvider>
+        {/* </LocalizationProvider> */}
       </StylesProvider>
     </ThemeProvider>
   );

@@ -8,9 +8,9 @@ import {
   Button,
   Paper,
   Portal,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import useSettings from 'src/hooks/useSettings';
 import { THEMES } from 'src/constants';
 

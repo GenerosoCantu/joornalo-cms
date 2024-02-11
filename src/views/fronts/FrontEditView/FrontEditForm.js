@@ -8,13 +8,13 @@ import {
 } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { KeyboardDatePicker } from '@material-ui/pickers';
+import DatePicker from '@mui/lab/DatePicker';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import * as Yup from 'yup';
 import { Formik, FieldArray } from 'formik';
 import { useSnackbar } from 'notistack';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import JooTextField from 'src/components/JooTextField';
 // import { EditorState, convertToRaw, convertFromHTML, ContentState } from 'draft-js'
 // https://jpuri.github.io/react-draft-wysiwyg/#/demo
@@ -55,10 +55,9 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-  makeStyles,
   FormHelperText
-} from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import {
   Edit as EditIcon,
   Trash as TrashIcon,
@@ -66,7 +65,7 @@ import {
 } from 'react-feather';
 import { updateFront, createFront } from 'src/store/actions/frontActions';
 import { Status, PhotoSizes } from 'src/constants';
-import { CompareArrowsOutlined } from '@material-ui/icons';
+import { CompareArrowsOutlined } from '@mui/icons-material';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -91,7 +90,7 @@ function FrontEditForm({
   const { t, i18n } = useTranslation(['translation', 'fronts']);
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(front.text))))
   // const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(front.text))))
@@ -190,7 +189,7 @@ function FrontEditForm({
           });
           setStatus({ success: true });
           resetForm();
-          history.push(`/app/${tenant}/fronts`);
+          navigate(`/app/${tenant}/fronts`);
         } catch (error) {
           setStatus({ success: false });
           setErrors({ submit: error.message });
@@ -320,9 +319,9 @@ function FrontEditForm({
                         item
                         xs={12}
                       >
-                        <KeyboardDatePicker
+                        <DatePicker
                           className={classes.datePicker}
-                          label="Date"
+                          renderInput={props => <TextField label="Date" />}
                           format="MM/DD/YYYY"
                           name="date"
                           inputVariant="outlined"

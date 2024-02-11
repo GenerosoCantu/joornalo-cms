@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useDispatch,
   useSelector
@@ -16,11 +16,11 @@ import {
   Divider,
   Link,
   Typography,
-  colors,
-  makeStyles
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import LockIcon from '@material-ui/icons/Lock';
+  colors
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { Alert } from '@mui/lab';
+import LockIcon from '@mui/icons-material/Lock';
 import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
 import LoginForm from './LoginForm';
@@ -85,16 +85,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function LoginView({ match }) {
-  const {
-    params: { tenant },
-  } = match;
+  // const {
+  //   params: { tenant },
+  // } = match;
+
+  let { tenant } = useParams();
+
+  console.log('tenant==>', tenant)
 
   const dispatch = useDispatch();
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmitSuccess = () => {
-    history.push(`/app/${tenant}`);
+    console.log('handleSubmitSuccess tenant==>', `/app/${tenant}`)
+    navigate(`/app/${tenant}`);
   };
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useField } from 'formik';
-import { TextField } from '@material-ui/core';
+import { TextField } from '@mui/material';
 
 const JooTextField = ({
   label,

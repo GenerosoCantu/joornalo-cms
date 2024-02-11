@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@mui/styles';
 import Page from 'src/components/Page';
 import Hero from './Hero';
 import Features from './Features';

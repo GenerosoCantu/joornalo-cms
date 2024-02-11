@@ -4,7 +4,7 @@ import React, {
   useCallback
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink, useHistory } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useDispatch,
   useSelector
@@ -15,9 +15,9 @@ import {
   Container,
   Grid,
   Link,
-  makeStyles,
   SvgIcon
-} from '@material-ui/core';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import {
   PlusCircle as PlusCircleIcon
 } from 'react-feather';
@@ -47,11 +47,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function SectionListView({ match }) {
-  const {
-    params: { tenant },
-  } = match;
-
+function SectionListView() {
+  let { tenant } = useParams();
   const { t, i18n } = useTranslation(['translation', 'sections']);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -71,8 +68,8 @@ function SectionListView({ match }) {
     }
   ];
 
-  const history = useHistory();
-  const handleCreateSection = () => history.push(`/app/${tenant}/management/sections/create`);
+  const navigate = useNavigate();
+  const handleCreateSection = () => navigate(`/app/${tenant}/management/sections/create`);
 
   useEffect(() => {
     dispatch(getSections());

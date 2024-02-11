@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { KeyboardDatePicker } from '@material-ui/pickers';
+import DatePicker from '@mui/lab/DatePicker';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -27,8 +27,8 @@ import {
   TablePagination,
   TableRow,
   TextField,
-  makeStyles
-} from '@material-ui/core';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import {
   Edit as EditIcon,
   Search as SearchIcon,
@@ -171,9 +171,9 @@ function Results({
         display="flex"
         alignItems="center"
       >
-        <KeyboardDatePicker
+        <DatePicker
           className={classes.datePicker}
-          label="Date"
+          renderInput={props => <TextField label="Date" />}
           format="MM/DD/YYYY"
           name="date"
           inputVariant="outlined"

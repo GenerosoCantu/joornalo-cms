@@ -1,9 +1,9 @@
 import React from 'react';
 import {
   Box,
-  CircularProgress,
-  makeStyles
-} from '@material-ui/core';
+  CircularProgress
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import Logo from 'src/components/Logo';
 
 const useStyles = makeStyles((theme) => ({

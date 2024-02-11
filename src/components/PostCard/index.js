@@ -13,10 +13,10 @@ import {
   CardMedia,
   Divider,
   Link,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import Reactions from './Reactions';
 import Comment from './Comment';
 import CommentAdd from './CommentAdd';
@@ -87,14 +87,14 @@ function PostCard({ className, post, ...rest }) {
             {post.message}
           </Typography>
           {post.media && (
-          <Box mt={2}>
-            <CardActionArea onClick={() => setOpenedFile(post.media)}>
-              <CardMedia
-                className={classes.media}
-                image={post.media}
-              />
-            </CardActionArea>
-          </Box>
+            <Box mt={2}>
+              <CardActionArea onClick={() => setOpenedFile(post.media)}>
+                <CardMedia
+                  className={classes.media}
+                  image={post.media}
+                />
+              </CardActionArea>
+            </Box>
           )}
           <Box
             mt={2}

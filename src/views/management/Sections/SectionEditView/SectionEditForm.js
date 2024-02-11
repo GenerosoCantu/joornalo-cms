@@ -10,7 +10,7 @@ import clsx from 'clsx';
 import * as Yup from 'yup';
 import { Formik, FieldArray } from 'formik';
 import { useSnackbar } from 'notistack';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import JooTextField from 'src/components/JooTextField';
 import ConfirmationDialog from 'src/components/ConfirmationDialog'
 import {
@@ -43,17 +43,17 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-  makeStyles,
   FormHelperText
-} from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import AddIcon from '@mui/icons-material/Add';
 import {
   Edit as EditIcon,
   Trash as TrashIcon
 } from 'react-feather';
 import { updateSection, createSection } from 'src/store/actions/sectionActions';
 import { SectionStatus, PhotoSizes } from 'src/constants';
-import { CompareArrowsOutlined } from '@material-ui/icons';
+import { CompareArrowsOutlined } from '@mui/icons-material';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -104,7 +104,7 @@ function SectionEditForm({
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [confirmDialog, setConfirmDialog] = useState(false);
   const [activeSubSection, setActiveSubSection] = useState({});
@@ -274,7 +274,7 @@ function SectionEditForm({
           });
           setStatus({ success: true });
           resetForm();
-          history.push(`/app/${tenant}/management/sections`);
+          navigate(`/app/${tenant}/management/sections`);
         } catch (error) {
           setStatus({ success: false });
           setErrors({ submit: error.message });

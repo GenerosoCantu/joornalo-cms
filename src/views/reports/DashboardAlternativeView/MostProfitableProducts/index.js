@@ -18,10 +18,10 @@ import {
   TableCell,
   TableRow,
   Typography,
-  colors,
-  makeStyles
-} from '@material-ui/core';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+  colors
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import axios from 'src/utils/axios';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import GenericMoreButton from 'src/components/GenericMoreButton';

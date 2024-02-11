@@ -21,10 +21,10 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
-  Tooltip,
-  makeStyles
-} from '@material-ui/core';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+  Tooltip
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import axios from 'src/utils/axios';
 import getInitials from 'src/utils/getInitials';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';

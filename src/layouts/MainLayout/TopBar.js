@@ -10,9 +10,9 @@ import {
   Toolbar,
   Hidden,
   Typography,
-  Link,
-  makeStyles
-} from '@material-ui/core';
+  Link
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { APP_VERSION } from 'src/config';
 import Logo from 'src/components/Logo';
 

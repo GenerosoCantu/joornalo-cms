@@ -4,9 +4,9 @@ import clsx from 'clsx';
 import {
   Card,
   Grid,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import Label from 'src/components/Label';
 
 const useStyles = makeStyles((theme) => ({

@@ -10,10 +10,10 @@ import {
   Menu,
   MenuItem,
   SvgIcon,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Calendar as CalendarIcon } from 'react-feather';
 
 const timeRanges = [

@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Bar } from 'react-chartjs-2';
-import {
-  fade,
-  makeStyles,
-  useTheme
-} from '@material-ui/core';
+import { useTheme, makeStyles } from '@mui/styles';
+// import { alpha } from '@mui/material/styles';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -36,7 +33,7 @@ function Chart({
       },
       {
         label: 'Last year',
-        backgroundColor: fade(theme.palette.secondary.main, 0.25),
+        // backgroundColor: alpha(theme.palette.secondary.main, 0.25),
         data: dataProp.lastYear,
         barThickness: 12,
         maxBarThickness: 10,
@@ -107,7 +104,7 @@ function Chart({
       bodyFontColor: theme.palette.text.secondary,
       footerFontColor: theme.palette.text.secondary,
       callbacks: {
-        title: () => {},
+        title: () => { },
         label: (tooltipItem) => {
           let label = `Sales: ${tooltipItem.yLabel}`;
 

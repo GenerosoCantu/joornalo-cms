@@ -4,7 +4,8 @@ import React, {
   useCallback
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink, useHistory } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useDispatch,
   useSelector
@@ -15,9 +16,9 @@ import {
   Container,
   Grid,
   Link,
-  makeStyles,
   SvgIcon
-} from '@material-ui/core';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import {
   PlusCircle as PlusCircleIcon
 } from 'react-feather';
@@ -50,11 +51,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function FrontListView({ match }) {
-  const {
-    params: { tenant },
-  } = match;
-
+function FrontListView() {
+  let { tenant } = useParams();
   const { t, i18n } = useTranslation(['translation', 'fronts']);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -76,8 +74,8 @@ function FrontListView({ match }) {
     }
   ];
 
-  const hifront = useHistory();
-  const handleNewFront = () => hifront.push(`/app/${tenant}/management/fronts/create`);
+  const navigate = useNavigate();
+  const handleNewFront = () => navigate(`/app/${tenant}/management/fronts/create`);
 
   useEffect(() => {
     dispatch(getFronts({

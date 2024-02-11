@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dialog } from '@material-ui/core';
+import { Dialog } from '@mui/material';
 import StoryDeleteForm from './StoryDeleteForm';
 
 function storyDeleteModal({

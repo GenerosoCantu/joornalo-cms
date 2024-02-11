@@ -8,9 +8,9 @@ import {
   Box,
   Button,
   TextField,
-  FormHelperText,
-  makeStyles
-} from '@material-ui/core';
+  FormHelperText
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { login } from 'src/store/actions/accountActions';
 
 const useStyles = makeStyles(() => ({

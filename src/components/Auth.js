@@ -13,6 +13,7 @@ function Auth({ children }) {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(true);
 
+  // let tenant = 'joornalo';
   let tenant = null;
   const { pathname } = useLocation();
   const params = pathname.split('/');

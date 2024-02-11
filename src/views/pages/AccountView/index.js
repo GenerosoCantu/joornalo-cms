@@ -4,9 +4,9 @@ import {
   Container,
   Divider,
   Tab,
-  Tabs,
-  makeStyles
-} from '@material-ui/core';
+  Tabs
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import Page from 'src/components/Page';
 import Header from './Header';
 import General from './General';

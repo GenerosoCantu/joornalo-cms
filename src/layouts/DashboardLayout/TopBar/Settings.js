@@ -11,9 +11,9 @@ import {
   Switch,
   TextField,
   Tooltip,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { Settings as SettingsIcon } from 'react-feather';
 import useSettings from 'src/hooks/useSettings';
 import { LANGUAGES, THEMES } from 'src/constants';

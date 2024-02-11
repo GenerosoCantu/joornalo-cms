@@ -20,9 +20,9 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  TextField,
-  makeStyles
-} from '@material-ui/core';
+  TextField
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import {
   Edit as EditIcon,
   Search as SearchIcon,

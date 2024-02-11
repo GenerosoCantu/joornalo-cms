@@ -5,10 +5,10 @@ import {
   Avatar,
   Box,
   Card,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
-import FolderOpenIcon from '@material-ui/icons/FolderOpenOutlined';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import FolderOpenOutlinedIcon from '@mui/icons-material/FolderOpenOutlined';
 import Label from 'src/components/Label';
 
 const useStyles = makeStyles((theme) => ({
@@ -72,7 +72,7 @@ function NewProjects({ className, ...rest }) {
         </Box>
       </Box>
       <Avatar className={classes.avatar}>
-        <FolderOpenIcon />
+        <FolderOpenOutlinedIcon />
       </Avatar>
     </Card>
   );

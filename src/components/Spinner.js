@@ -3,9 +3,9 @@ import {
 } from 'react-redux';
 import {
   CircularProgress,
-  Backdrop,
-  makeStyles
-} from '@material-ui/core';
+  Backdrop
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {

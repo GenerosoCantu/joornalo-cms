@@ -2,11 +2,9 @@ import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Line } from 'react-chartjs-2';
-import {
-  fade,
-  makeStyles,
-  useTheme
-} from '@material-ui/core';
+import { useTheme, makeStyles } from '@mui/styles';
+import { alpha } from '@mui/material/styles';
+
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -27,7 +25,7 @@ function Chart({
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
 
-    gradient.addColorStop(0, fade(theme.palette.secondary.main, 0.2));
+    gradient.addColorStop(0, alpha(theme.palette.secondary.main, 0.2));
     gradient.addColorStop(0.9, 'rgba(255,255,255,0)');
     gradient.addColorStop(1, 'rgba(255,255,255,0)');
 
@@ -106,7 +104,7 @@ function Chart({
       bodyFontColor: theme.palette.text.secondary,
       footerFontColor: theme.palette.text.secondary,
       callbacks: {
-        title: () => {},
+        title: () => { },
         label: (tooltipItem) => {
           let label = `Income: ${tooltipItem.yLabel}`;
 
@@ -120,15 +118,17 @@ function Chart({
     }
   };
 
+  console.log('data-->', data)
+  console.log('options-->', options)
   return (
     <div
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Line
+      {/* <Line
         data={data}
         options={options}
-      />
+      /> */}
     </div>
   );
 }

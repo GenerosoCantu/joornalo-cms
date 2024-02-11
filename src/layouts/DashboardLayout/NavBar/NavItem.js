@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import {
   Button,
   Collapse,
-  ListItem,
-  makeStyles
-} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+  ListItem
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 const useStyles = makeStyles((theme) => ({
   item: {

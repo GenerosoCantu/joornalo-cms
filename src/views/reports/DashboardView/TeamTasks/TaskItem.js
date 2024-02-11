@@ -6,10 +6,10 @@ import {
   ListItem,
   ListItemText,
   IconButton,
-  Tooltip,
-  makeStyles
-} from '@material-ui/core';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+  Tooltip
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import StackAvatars from 'src/components/StackAvatars';
 
 const useStyles = makeStyles((theme) => ({

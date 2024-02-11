@@ -5,10 +5,9 @@ import {
   Button,
   Container,
   Typography,
-  useTheme,
-  useMediaQuery,
-  makeStyles
-} from '@material-ui/core';
+  useMediaQuery
+} from '@mui/material';
+import { useTheme, makeStyles } from '@mui/styles';
 import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({

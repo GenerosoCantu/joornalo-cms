@@ -1,4 +1,4 @@
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 import apiService from 'src/services/apiService';
 import axios from 'src/utils/axios';
 import { tenantUrls } from 'src/constants'

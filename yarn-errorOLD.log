@@ -1,0 +1,148 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
+
+PATH: 
+  C:\Program Files\PowerShell\7;C:\Python27\;C:\Python27\Scripts;C:\Program Files\Amazon Corretto\jdk11.0.4_10\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\gcant\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Program Files (x86)\Yarn\bin\;C:\ProgramData\chocolatey\bin;C:\Program Files\PuTTY\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\PowerShell\7-preview\preview;C:\Program Files\PowerShell\7\;C:\Users\gcant\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\gcant\AppData\Local\Programs\Python\Python37\;C:\Users\gcant\AppData\Local\Microsoft\WindowsApps;C:\Users\gcant\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\gcant\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\gcant\AppData\Local\Yarn\bin;C:\ProgramData\chocolatey\lib\msys2;C:\tools\msys64;C:\kubectl;C:\Program Files\heroku\bin;C:\ProgramData\gcant\GitHubDesktop\bin;C:\Program Files (x86)\MongoDB Atlas CLI\;C:\Users\gcant\AppData\Local\Programs\mongosh\;C:\Program Files\MongoDB\Tools\100\bin;
+
+Yarn version: 
+  1.17.3
+
+Node version: 
+  18.0.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@material-ui/icons/-/icons-4.11.3.tgz: ESOCKETTIMEDOUT
+      at ClientRequest.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141091:19)
+      at Object.onceWrapper (node:events:641:28)
+      at ClientRequest.emit (node:events:527:28)
+      at TLSSocket.emitRequestTimeout (node:_http_client:770:9)
+      at Object.onceWrapper (node:events:641:28)
+      at TLSSocket.emit (node:events:539:35)
+      at Socket._onTimeout (node:net:522:8)
+      at listOnTimeout (node:internal/timers:564:17)
+      at process.processTimers (node:internal/timers:507:7)
+
+npm manifest: 
+  {
+    "name": "@joornalo/cms.joornalo",
+    "author": "Joornalo",
+    "email": "info@joornalo.com",
+    "licence": "UNLICENSED",
+    "version": "2.0.0",
+    "private": true,
+    "scripts": {
+      "lint": "eslint ./src",
+      "start3": "react-scripts start",
+      "start": "set PORT=3006 && react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test",
+      "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+      "extends": [
+        "react-app"
+      ]
+    },
+    "browserslist": {
+      "production": [
+        ">0.2%",
+        "ie 11",
+        "not dead",
+        "not op_mini all"
+      ],
+      "development": [
+        "ie 11",
+        "last 1 chrome version",
+        "last 1 firefox version",
+        "last 1 safari version"
+      ]
+    },
+    "dependencies": {
+      "@date-io/core": "^1.3.6",
+      "@date-io/moment": "^1.3.13",
+      "@fullcalendar/core": "^4.4.0",
+      "@fullcalendar/daygrid": "^4.4.0",
+      "@fullcalendar/interaction": "^4.4.0",
+      "@fullcalendar/list": "^4.4.0",
+      "@fullcalendar/react": "^4.4.0",
+      "@fullcalendar/timegrid": "^4.4.0",
+      "@fullcalendar/timeline": "^4.4.0",
+      "@material-ui/core": "^4.9.9",
+      "@material-ui/icons": "^4.9.1",
+      "@material-ui/lab": "^4.0.0-alpha.48",
+      "@material-ui/pickers": "^3.2.10",
+      "@material-ui/styles": "^4.9.6",
+      "@mdx-js/react": "^1.5.8",
+      "@react-pdf/renderer": "^1.6.8",
+      "apexcharts": "^3.18.0",
+      "axios": "^1.4.0",
+      "axios-mock-adapter": "^1.17.0",
+      "change-case": "^4.1.1",
+      "chart.js": "^2.9.3",
+      "clsx": "^1.1.0",
+      "draft-js": "^0.11.5",
+      "draftjs-to-html": "^0.9.1",
+      "formik": "^2.1.4",
+      "history": "^4.10.1",
+      "html-to-draftjs": "^1.5.0",
+      "i18next": "^19.9.2",
+      "i18next-browser-languagedetector": "^6.0.1",
+      "i18next-http-backend": "^1.1.1",
+      "immer": "^10.0.2",
+      "immutable": "^4.0.0-rc.12",
+      "js-cookie": "^2.2.1",
+      "jsonwebtoken": "^9.0.0",
+      "jss": "^10.1.1",
+      "jss-rtl": "^0.3.0",
+      "jwt-decode": "^2.2.0",
+      "lodash": "^4.17.15",
+      "moment": "^2.24.0",
+      "notistack": "^0.9.9",
+      "nprogress": "^0.2.0",
+      "prismjs": "^1.20.0",
+      "prop-types": "^15.7.2",
+      "react": "^16.13.1",
+      "react-apexcharts": "^1.3.7",
+      "react-app-polyfill": "^1.0.6",
+      "react-avatar-editor": "^12.0.0",
+      "react-beautiful-dnd": "^13.0.0",
+      "react-big-calendar": "^0.24.1",
+      "react-chartjs-2": "^2.9.0",
+      "react-dom": "^16.13.1",
+      "react-draft-wysiwyg": "^1.14.7",
+      "react-dropzone": "^10.2.2",
+      "react-easy-crop": "^4.6.3",
+      "react-feather": "^2.0.3",
+      "react-helmet": "^5.2.1",
+      "react-i18next": "^11.8.10",
+      "react-markdown": "^8.0.7",
+      "react-modal-image": "^2.5.0",
+      "react-perfect-scrollbar": "^1.5.8",
+      "react-quill": "^2.0.0",
+      "react-redux": "^7.2.0",
+      "react-router": "^5.1.2",
+      "react-router-dom": "^5.1.2",
+      "react-scripts": "^5.0.1",
+      "redux": "^4.0.5",
+      "redux-devtools-extension": "^2.13.8",
+      "redux-form": "^8.3.2",
+      "redux-logger": "^3.0.6",
+      "redux-thunk": "^2.3.0",
+      "uuid": "^7.0.3",
+      "yup": "^0.28.3"
+    },
+    "devDependencies": {
+      "mdx-loader": "^1.1.1",
+      "prettier": "^1.19.1",
+      "typescript": "^3.8.3"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

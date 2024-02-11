@@ -8,9 +8,9 @@ import {
   Hidden,
   IconButton,
   Toolbar,
-  makeStyles,
   SvgIcon
-} from '@material-ui/core';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { Menu as MenuIcon } from 'react-feather';
 import Logo from 'src/components/Logo';
 import { THEMES } from 'src/constants';

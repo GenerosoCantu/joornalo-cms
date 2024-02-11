@@ -10,12 +10,12 @@ import {
   List,
   ListItem,
   ListItemText,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import Chart from './Chart';
+// import Chart from './Chart';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -131,10 +131,10 @@ function RealTime({ className, ...rest }) {
         title="Active users"
         titleTypographyProps={{ color: 'textPrimary' }}
       />
-      <Chart
+      {/* <Chart
         data={data}
         labels={labels}
-      />
+      /> */}
       <List>
         {pages.map((page) => (
           <ListItem

@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 /* eslint-disable import/prefer-default-export */
 import _ from 'lodash';
-import { colors, createMuiTheme, responsiveFontSizes } from '@material-ui/core';
+import { colors, createMuiTheme, responsiveFontSizes } from '@mui/material';
 import typography from './typography';
 import { softShadows, strongShadows } from './shadows';
 import { THEMES } from '../constants';
-import { enUS, esES } from '@material-ui/core/locale';
+import { enUS, esES } from '@mui/material/locale';
 
 const baseConfig = {
   direction: 'ltr',

@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Bar } from 'react-chartjs-2';
-import { makeStyles, useTheme } from '@material-ui/core';
+import { useTheme, makeStyles } from '@mui/styles';
+
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -85,8 +86,8 @@ function Chart({
       bodyFontColor: theme.palette.text.secondary,
       footerFontColor: theme.palette.text.secondary,
       callbacks: {
-        legend: () => {},
-        title: () => {},
+        legend: () => { },
+        title: () => { },
         label: (tooltipItem) => {
           const label = `Views: ${tooltipItem.yLabel}`;
 

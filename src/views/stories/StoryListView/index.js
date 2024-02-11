@@ -4,7 +4,7 @@ import React, {
   useCallback
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink, useHistory } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useDispatch,
   useSelector
@@ -15,9 +15,9 @@ import {
   Container,
   Grid,
   Link,
-  makeStyles,
   SvgIcon
-} from '@material-ui/core';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import {
   PlusCircle as PlusCircleIcon
 } from 'react-feather';
@@ -49,11 +49,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function StoryListView({ match }) {
-  const {
-    params: { tenant },
-  } = match;
-
+function StoryListView() {
+  let { tenant } = useParams();
   const { t, i18n } = useTranslation(['translation', 'stories']);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -84,10 +81,10 @@ function StoryListView({ match }) {
     }
   ];
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleNewStory = () => {
     dispatch(newStory());
-    history.push(`/app/${tenant}/stories/create`);
+    navigate(`/app/${tenant}/stories/create`);
   }
 
   useEffect(() => {

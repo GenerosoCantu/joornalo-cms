@@ -15,12 +15,12 @@ import {
   SvgIcon,
   Tooltip,
   Typography,
-  colors,
-  makeStyles
-} from '@material-ui/core';
-import { Rating } from '@material-ui/lab';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+  colors
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { Rating } from '@mui/lab';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Users as UsersIcon } from 'react-feather';
 import getInitials from 'src/utils/getInitials';
 

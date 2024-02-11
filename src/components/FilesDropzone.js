@@ -14,11 +14,11 @@ import {
   ListItemIcon,
   ListItemText,
   Tooltip,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import MoreIcon from '@material-ui/icons/MoreVert';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import bytesToSize from 'src/utils/bytesToSize';
 
 const useStyles = makeStyles((theme) => ({

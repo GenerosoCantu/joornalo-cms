@@ -11,9 +11,9 @@ import {
   Typography,
   TextField,
   Button,
-  Divider,
-  makeStyles
-} from '@material-ui/core';
+  Divider
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { deleteUser } from 'src/store/actions/userActions';
 
 const useStyles = makeStyles((theme) => ({

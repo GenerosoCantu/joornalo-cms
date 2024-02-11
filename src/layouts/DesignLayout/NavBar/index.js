@@ -17,10 +17,9 @@ import {
   List,
   ListSubheader,
   Typography,
-  makeStyles,
   ListItemIcon
-} from '@material-ui/core';
-import ReceiptIcon from '@material-ui/icons/ReceiptOutlined';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import {
   Briefcase as BriefcaseIcon,
   Calendar as CalendarIcon,

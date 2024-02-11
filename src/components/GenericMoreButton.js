@@ -10,14 +10,14 @@ import {
   Tooltip,
   IconButton,
   Menu,
-  MenuItem,
-  makeStyles
-} from '@material-ui/core';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
-import AchiveIcon from '@material-ui/icons/ArchiveOutlined';
+  MenuItem
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import GetAppIcon from '@mui/icons-material/GetApp';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 
 const useStyles = makeStyles(() => ({
   menu: {
@@ -47,7 +47,7 @@ function GenericMoreButton(props) {
           onClick={handleMenuOpen}
           ref={moreRef}
         >
-          <MoreIcon fontSize="small" />
+          <MoreVertIcon fontSize="small" />
         </IconButton>
       </Tooltip>
       <Menu
@@ -84,7 +84,7 @@ function GenericMoreButton(props) {
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <AchiveIcon />
+            <ArchiveOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Achive" />
         </MenuItem>

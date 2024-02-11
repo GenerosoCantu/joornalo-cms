@@ -9,12 +9,12 @@ import {
   IconButton,
   Input,
   Paper,
-  Tooltip,
-  makeStyles
-} from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
-import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
+  Tooltip
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import SendIcon from '@mui/icons-material/Send';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 
 const useStyles = makeStyles(() => ({
   root: {

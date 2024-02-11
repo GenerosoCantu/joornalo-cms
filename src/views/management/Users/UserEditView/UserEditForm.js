@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { useSnackbar } from 'notistack';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import JooTextField from 'src/components/JooTextField';
 import {
   Box,
@@ -22,9 +22,9 @@ import {
   TableHead,
   TableRow,
   Typography,
-  makeStyles,
   FormHelperText
-} from '@material-ui/core';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { updateUser, createUser } from 'src/store/actions/userActions';
 import { UserRoles, StatusTypes } from 'src/constants';
 
@@ -43,7 +43,7 @@ function UserEditForm({
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const sectionsOption = sections.map(({ id, name }) => ({ id, name, selected: user.sections.includes(id) }));
   const modulesOption = modules.map(({ id, name }) => ({ id, name, selected: user.modules.includes(id) }));
@@ -131,7 +131,7 @@ function UserEditForm({
           });
           setStatus({ success: true });
           resetForm();
-          history.push(`/app/${tenant}/management/users`);
+          navigate(`/app/${tenant}/management/users`);
         } catch (error) {
           setStatus({ success: false });
           setErrors({ submit: error.message });

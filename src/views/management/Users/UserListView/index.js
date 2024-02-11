@@ -4,7 +4,8 @@ import React, {
   useCallback
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink, useHistory } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
+
 import {
   useDispatch,
   useSelector
@@ -15,9 +16,9 @@ import {
   Container,
   Grid,
   Link,
-  makeStyles,
   SvgIcon
-} from '@material-ui/core';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import {
   PlusCircle as PlusCircleIcon
 } from 'react-feather';
@@ -47,11 +48,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function UserListView({ match }) {
-  const {
-    params: { tenant },
-  } = match;
-
+function UserListView() {
+  let { tenant } = useParams();
   const { t, i18n } = useTranslation(['translation', 'users']);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -71,8 +69,8 @@ function UserListView({ match }) {
     }
   ];
 
-  const history = useHistory();
-  const handleNewUser = () => history.push(`/app/${tenant}/management/users/create`);
+  const navigate = useNavigate();
+  const handleNewUser = () => navigate(`/app/${tenant}/management/users/create`);
 
   useEffect(() => {
     dispatch(getUsers());

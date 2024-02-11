@@ -1,14 +1,14 @@
 import React from 'react';
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@mui/styles';
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
-  makeStyles,
   useMediaQuery
-} from '@material-ui/core';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -71,7 +71,7 @@ const ConfirmationDialog = ({
             autoFocus
           >
             Delete
-            </Button>
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

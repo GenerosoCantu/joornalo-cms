@@ -14,9 +14,9 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import GenericMoreButton from 'src/components/GenericMoreButton';
 import axios from 'src/utils/axios';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';

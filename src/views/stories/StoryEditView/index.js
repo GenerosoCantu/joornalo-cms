@@ -7,12 +7,13 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import {
   Box,
   Container,
-  makeStyles,
   FormHelperText
-} from '@material-ui/core';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Page from 'src/components/Page';
 import StoryEditForm from './StoryEditForm';
@@ -32,11 +33,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function StoryEditView({ match }) {
-  const {
-    params: { storyId, tenant },
-  } = match;
-
+function StoryEditView() {
+  let { storyId, tenant } = useParams();
   const classes = useStyles();
   const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();

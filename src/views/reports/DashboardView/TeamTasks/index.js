@@ -11,9 +11,9 @@ import {
   Card,
   CardHeader,
   Divider,
-  List,
-  makeStyles
-} from '@material-ui/core';
+  List
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import axios from 'src/utils/axios';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import GenericMoreButton from 'src/components/GenericMoreButton';

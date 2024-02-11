@@ -1,9 +1,9 @@
 import React from 'react';
 import {
   Container,
-  Grid,
-  makeStyles
-} from '@material-ui/core';
+  Grid
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import Page from 'src/components/Page';
 import CustomerActivity from './CustomerActivity';
 import EarningsSegmentation from './EarningsSegmentation';

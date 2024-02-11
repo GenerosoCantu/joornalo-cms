@@ -5,10 +5,10 @@ import clsx from 'clsx';
 import {
   Breadcrumbs,
   Link,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+  Typography
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const useStyles = makeStyles(() => ({
   root: {}
