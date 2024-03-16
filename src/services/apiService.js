@@ -16,11 +16,12 @@ class ApiService {
             method,
             url: fullUrl,
             data,
-            headers
+            headers,
+            // withCredentials: true
           }
 
           // Convert to async await and get rid of .then
-
+          // { withCredentials: true }
           axios(config)
             .then((response) => {
               if (response.data || response.status === 200) {

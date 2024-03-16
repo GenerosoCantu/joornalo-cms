@@ -11,7 +11,6 @@ class UploadService {
   }
 
   deleteImage = (tenant, file) => {
-    console.log('deleteImage:', file)
     return apiService.makeRequest('delete', tenantUrls.cdnapi, `files/${tenant}/${file}`, 'file-d');
     // return apiService.makeRequest('delete', tenantUrls.cdnapi, `files/tmp/${file}`, 'file-d');
   }

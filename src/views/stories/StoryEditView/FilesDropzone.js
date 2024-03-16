@@ -356,17 +356,17 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
                   key={i + 100}
                 >
                   <img
-                    src={`${tenant?.urls?.cdnurl}${imagePath}${image.filename}`}
+                    src={`${tenant?.urls?.cdnurl}${tenant?.tenant}/${imagePath}${image.filename}`}
                     className={classes.img}
                   />
                   <ListItemIcon className={classes.listElement}>
                     <>
                       <PageviewIcon
-                        onClick={() => onViewImage(image.filename, true)}
+                        onClick={() => onViewImage(`${image.filename}`, true)}
                         className={classes.listIcon}
                       />
                       <DeleteForeverIcon
-                        onClick={() => onDeleteImage(image.filename, true)}
+                        onClick={() => onDeleteImage(`${image.filename}`, true)}
                         className={classes.listIcon}
                       />
                     </>
@@ -383,7 +383,7 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
                       <img
                         onClick={() => editImage(file)}
                         file={file.name}
-                        src={file.croppedImage ? tenant?.urls?.cdnurl + tenant?.tenant + '/' + file.croppedImage : tenant?.tenant + '/' + file.imageSrc}
+                        src={file.croppedImage ? tenant?.urls?.cdnurl + tenant?.tenant + '/tmp/' + file.croppedImage : tenant?.tenant + '/' + file.imageSrc}
                         alt="Cropped"
                         className={classes.imgEditable}
                       />
@@ -394,11 +394,11 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
                           className={classes.listIcon}
                         />
                         <PageviewIcon
-                          onClick={() => onViewImage(file.filename, false)}
+                          onClick={() => onViewImage(`tmp/${file.filename}`, false)}
                           className={classes.listIcon}
                         />
                         <DeleteForeverIcon
-                          onClick={() => onDeleteImage(file.filename, false)}
+                          onClick={() => onDeleteImage(`tmp/${file.filename}`, false)}
                           className={classes.listIcon}
                         />
                       </ListItemIcon>
@@ -419,7 +419,7 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
       >
         <div className={classes.deleteContainer}>
           <img
-            src={`${tenant?.urls?.cdnurl}${isDeleteImageInitial ? imagePath : tenant.tenant + '/'}${!!deleteImage ? deleteImage : viewImage}`}
+            src={`${tenant?.urls?.cdnurl}${tenant.tenant}/${isDeleteImageInitial ? imagePath : ''}${!!deleteImage ? deleteImage : viewImage}`}
             className={classes.deleteImg}
           />
         </div>
