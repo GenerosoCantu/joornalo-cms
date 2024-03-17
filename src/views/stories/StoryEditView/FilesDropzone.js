@@ -302,9 +302,8 @@ function FilesDropzone({ className, onImageUpdate, initialImages, imagePath, ...
       setServerImages(serverImages.filter((image) => image.filename !== deleteImage))
       setDeleteImage(null)
     } else {
-      setLoadedImages(loadedImages.filter((image) => image.filename !== deleteImage))
+      setLoadedImages(loadedImages.filter((image) => `tmp/${image.filename}` !== deleteImage))
       // Delete image from server
-      console.log('====>', deleteImage)
       dispatch(deleteFile(tenant.tenant, deleteImage));
       setDeleteImage(null)
     }
